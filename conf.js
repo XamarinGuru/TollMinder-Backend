@@ -1,4 +1,5 @@
 module.exports = {
-  port : 7000,
-  mongoURI : 'mongodb://localhost/'
+  secret: 'tollminder',
+  port: 7000,
+  mongoURI: 'mongodb://localhost/'
 }

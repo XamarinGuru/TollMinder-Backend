@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const conf = require('./../conf');
+const crypto = require('crypto');
 const schemas = {
   user: {
     name: {type: String, default: 'Anonymous'},
@@ -30,5 +32,25 @@ class User {
     this.user = mongoose.model('User', new mongoose.Schema(schemas.user));
   }
 
+  create(user) {
+    user.token = crypto.createHmac('sha256', conf.secret).update(user.email + user.password + Date.now()).digest('hex');
+    return new Promise((resolve, reject) => {
+      let document = new this.user(user);
+      document.save()
+      .then(resolve)
+      .catch(reject);
+    });
+  }
 
+  read(_id, token) {
+    return new Promise((resolve, reject) => {
+      this.user.findOne()
+      .and({_id}, {token})
+      .exec()
+      .then(resolve)
+      .catch(reject);
+    });
+  }
 }
+
+module.exports = User;

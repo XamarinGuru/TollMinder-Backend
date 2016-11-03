@@ -1,3 +1,7 @@
-/**
- * Created by groumand on 03.11.16.
- */
+const User = require('./User');
+const WayPoint = require('./WayPoint');
+
+module.exports = {
+  user : new User,
+  wayPoint : new WayPoint,
+};

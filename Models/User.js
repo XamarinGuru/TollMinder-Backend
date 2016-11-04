@@ -33,7 +33,7 @@ class User {
   }
 
   create(user) {
-    user.token = crypto.createHmac('sha256', conf.secret).update(user.email + user.password + Date.now()).digest('hex');
+    user.token = createToken(user);
     return new Promise((resolve, reject) => {
       let document = new this.user(user);
       document.save()
@@ -51,6 +51,50 @@ class User {
       .catch(reject);
     });
   }
+
+  update(_id, token, changes) {
+    return new Promise((resolve, reject) => {
+      this.read(_id, token)
+      .then(document => {
+        if (!document) return reject('User not found');
+        for (let change in changes) if (schemas.user.hasOwnProperty(change)) document[change] = changes[change];
+        document.updatedAt = Date.now();
+        return resolve(document.save());
+      });
+    });
+  }
+
+  auth(email, password) {
+    return new Promise((resolve, reject) => {
+      this.user.findOne({email})
+      .exec()
+      .then(user => {
+        if (!passwordVerify(password, user.password)) return reject('Wrong password');
+        return this.update(user._id, user.token, {token: createToken(user)});
+      })
+      .then(resolve)
+      .catch(reject);
+    });
+  }
+}
+
+function createPasswordHash(password) {
+  return
+  crypto.createHmac('sha256', conf.secret)
+  .update(password)
+  .digest('hex');
+}
+
+function createToken(user) {
+  return
+  crypto.createHmac('sha256', conf.secret)
+  .update(user.email + user.password + Date.now())
+  .digest('hex');
+}
+
+function passwordVerify(password, hash) {
+  let passwordHashed = createPasswordHash(password);
+  return passwordHashed == hash ? true : false
 }
 
 module.exports = User;

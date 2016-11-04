@@ -13,7 +13,7 @@ router.get('/:_id?', (req, res) => {
 });
 
 // Sign up (email strategy)
-router.post('/', (req, res) => {
+router.post('/signup', (req, res) => {
   let User = req.app.locals.settings.models.user;
   let {name, email, password} = req.body;
   if (!email || !password) return res.status(400).json({err: 'Missed email or password'});
@@ -21,6 +21,10 @@ router.post('/', (req, res) => {
   User.create(user)
   .then(result => res.status(200).json(result))
   .catch(err => res.status(500).json({err}));
+});
+
+router.post('/oauth', (req, res) => {
+  // Ask Maxim
 });
 
 router.post('/signin', (req, res) => {

@@ -11,6 +11,14 @@ class TollRoad {
   constructor() {
     this.TollRoad = mongoose.model('TollRoad', new mongoose.Schema(schemas.TollRoad));
   }
+
+  create(tollRoad) { return super._create(this.TollRoad, tollRoad); }
+
+  read(_id, limit, skip) { return super._read(this.TollRoad, _id, '_wayPoints', limit, skip); }
+
+  update(_id, changes) { return super._update(this.TollRoad, _id, schemas.TollRoad, changes); }
+
+  remove(_id) { return super._remove(this.TollRoad, _id); }
 }
 
 module.exports = TollRoad;

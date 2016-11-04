@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const conf = require('./../conf');
 const crypto = require('crypto');
+const Crud = require('./../Classes/Crud');
 const schemas = {
   user: {
     name: {type: String, default: 'Anonymous'},
@@ -21,12 +22,13 @@ const schemas = {
      * Photo is link to image (default link to gray person avatar)
      */
     photo: {type: String, default: 'http://hotchillitri.co.uk/wp-content/uploads/2016/10/empty-avatar.jpg'},
+    oauthURL : {type: String, required: false},
     createdAt: {type: Date, default: Date.now()},
     updatedAt: {type: Date}
   }
 };
 
-class User {
+class User extends Crud{
 
   constructor() {
     this.user = mongoose.model('User', new mongoose.Schema(schemas.user));
@@ -34,12 +36,7 @@ class User {
 
   create(user) {
     user.token = createToken(user);
-    return new Promise((resolve, reject) => {
-      let document = new this.user(user);
-      document.save()
-      .then(resolve)
-      .catch(reject);
-    });
+    return super._create(this.user, user);
   }
 
   read(_id, token) {
@@ -76,6 +73,8 @@ class User {
       .catch(reject);
     });
   }
+
+  delete(_id) { return super._remove(this.user, _id); }
 }
 
 function createPasswordHash(password) {

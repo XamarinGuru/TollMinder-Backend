@@ -8,6 +8,7 @@
 // Require dependencies
 const app = require('express')();
 const conf = require('./conf');
+const dummyData = require('./dummyData');
 const mongoose = require('mongoose');
 
 // Connect to database
@@ -16,6 +17,7 @@ mongoose.connect(conf.mongoURI);
 
 // Configure application
 app.use(require('body-parser')());
+
 // Init models
 const models = require("./Models/All");
 app.set('models', models);
@@ -30,5 +32,5 @@ app.use((req, res, next) => {
 });
 app.use('/user', user);
 
-// Start http listening
-app.listen(conf.port, () => console.log(`REST API listen on ${conf.port} port`));
+dummyData()
+.then(app.listen(conf.port, () => console.log(`REST API listen on ${conf.port} port`)));

@@ -14,7 +14,7 @@ const schemas = {
      * Password is SHA256 hash string
      */
     password: {type: String, required: false},
-    token: {type: String, required: true},
+    token: {type: String, required: false},
     /**
      * Source can takes the following values:
      *  'epp'*String (default) - self registration with email, phone and password
@@ -42,7 +42,23 @@ class User extends Crud{
     return new Promise((resolve, reject) => {
       user.token = createToken(user);
       user.password = createHash(user.password);
-      super._create(this.User, user)
+      let {phone, email} = user;
+      this.User.find()
+      .or([{phone}, {email}])
+      .exec()
+      .then(users => {
+        if (!users.length > 0) {
+          if (users[0].token) return resolve({_id: users[0]._id, token: users[0].token});
+          users[0].token = createToken(users[0]);
+          users[0].save()
+          .then(document => {
+            return resolve({_id: document._id, token: document.token});
+          })
+          .catch(reject);
+          return;
+        }
+        return super._create(this.User, user);
+      })
       .then(user => {
         if (user.email) {
           Email.sendVerifyRequest(user.name, user.email, createEmailVerifyLink(user.email))
@@ -58,10 +74,11 @@ class User extends Crud{
 
   read(_id, token) {
     return new Promise((resolve, reject) => {
-      this.User.findOne()
-      .and({_id}, {token})
+      if (!token) reject('Unauthorized', 403);
+      this.User.find()
+      .and([{_id}, {token}])
       .exec()
-      .then(resolve)
+      .then(documents => resolve(documents[0] || false))
       .catch(reject);
     });
   }
@@ -70,7 +87,8 @@ class User extends Crud{
     return new Promise((resolve, reject) => {
       this.read(_id, token)
       .then(document => {
-        if (!document) return reject('User not found');
+        if (!document) return reject('User not found', 404);
+        console.log(document)
         for (let change in changes) if (schemas.user.hasOwnProperty(change)) document[change] = changes[change];
         document.updatedAt = Date.now();
         return resolve(document.save());
@@ -102,6 +120,14 @@ class User extends Crud{
         return Promise.reject('Invalid hash')
       })
       .then(resolve)
+      .catch(reject);
+    });
+  }
+
+  out(_id, token) {
+    return new Promise((resolve, reject) => {
+      this.update(_id, token, {token: ''})
+      .then(user => resolve({msg: 'Success'}))
       .catch(reject);
     });
   }

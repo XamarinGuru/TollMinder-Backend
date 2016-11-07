@@ -24,8 +24,8 @@ const models = require("./Models/All");
 app.set('models', models);
 // Init controllers (routes)
 const user = require('./Controllers/User');
-
 const validator = require('./Controllers/Validator');
+const file = require('./Controllers/File');
 
 // Attach controllers
 app.use((req, res, next) => {
@@ -37,6 +37,7 @@ app.use((req, res, next) => {
 });
 app.use('/doc', express.static(path.join(__dirname, 'public')));
 app.use('/user', user);
-app.use('/validator', validator)
+app.use('/validator', validator);
+app.use('/file', file);
 
 app.listen(conf.port, () => console.log(`REST API listen on ${conf.port} port`));

@@ -2,19 +2,15 @@ const mongoose = require('mongoose');
 const Crud = require('./../Classes/Crud');
 const schemas = {
   Location: {
-    _tollPoint: {type: mongoose.Schema.Types.ObjectId, ref: 'TollPoints'},
-    speed: {type: Number},
     latitude: {type: Number, required: true},
-    longitude: {type: Number, required: true},
-    accuracy: {type: Number, required: true},
-    altitude: {type: Number, required: true},
-    altitudeAccuracy: {type: Number, required: true}
+    longitude: {type: Number, required: true}
   }
 };
 
 class Location extends Crud {
 
   constructor() {
+    super();
     this.Location = mongoose.model('Location', new mongoose.Schema(schemas.Location));
   }
 

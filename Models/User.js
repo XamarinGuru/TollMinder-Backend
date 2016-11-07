@@ -2,10 +2,14 @@ const mongoose = require('mongoose');
 const conf = require('./../conf');
 const crypto = require('crypto');
 const Crud = require('./../Classes/Crud');
+const Email = require('./../Classes/Email');
 const schemas = {
   user: {
     name: {type: String, default: 'Anonymous'},
     email: {type: String, required: false},
+    emailValidate: {type: Boolean, default: false},
+    phone: {type : String, required: true},
+    phoneValidate: {type: Boolean, default: false},
     /**
      * Password is SHA256 hash string
      */
@@ -13,7 +17,7 @@ const schemas = {
     token: {type: String, required: true},
     /**
      * Source can takes the following values:
-     *  'enp'*String (default) - self registration with email and password
+     *  'epp'*String (default) - self registration with email, phone and password
      *  'gplus'*String - OAuth2 from Google+
      *  'facebook'*String - OAuth from Facebook
      */
@@ -22,7 +26,6 @@ const schemas = {
      * Photo is link to image (default link to gray person avatar)
      */
     photo: {type: String, default: 'http://hotchillitri.co.uk/wp-content/uploads/2016/10/empty-avatar.jpg'},
-    oauthURL : {type: String, required: false},
     createdAt: {type: Date, default: Date.now()},
     updatedAt: {type: Date}
   }
@@ -31,17 +34,31 @@ const schemas = {
 class User extends Crud{
 
   constructor() {
-    this.user = mongoose.model('User', new mongoose.Schema(schemas.user));
+    super();
+    this.User = mongoose.model('User', new mongoose.Schema(schemas.user));
   }
 
   create(user) {
-    user.token = createToken(user);
-    return super._create(this.user, user);
+    return new Promise((resolve, reject) => {
+      user.token = createToken(user);
+      user.password = createHash(user.password);
+      super._create(this.User, user)
+      .then(user => {
+        if (user.email) {
+          Email.sendVerifyRequest(user.name, user.email, createEmailVerifyLink(user.email))
+          .then(_ => Promise.resolve(user))
+          .catch(reject);
+        }
+        return Promise.resolve(user);
+      })
+      .then(resolve)
+      .catch(reject)
+    });
   }
 
   read(_id, token) {
     return new Promise((resolve, reject) => {
-      this.user.findOne()
+      this.User.findOne()
       .and({_id}, {token})
       .exec()
       .then(resolve)
@@ -61,39 +78,54 @@ class User extends Crud{
     });
   }
 
-  auth(email, password) {
+  auth(phone, password) {
     return new Promise((resolve, reject) => {
-      this.user.findOne({email})
+      this.User.findOne({phone})
       .exec()
       .then(user => {
-        if (!passwordVerify(password, user.password)) return reject('Wrong password');
-        return this.update(user._id, user.token, {token: createToken(user)});
+        if (!passwordVerify(password, user.password)) return Promise.reject('Wrong password');
+        return this.update(user._id, user.token, {token: createToken(user)})
+      })
+      .then(user => resolve({_id: user._id, token: user.token}))
+      .catch(reject);
+    });
+  }
+
+  remove(_id) { return super._remove(this.User, _id); }
+
+  validateEmail(hash) {
+    return new Promise((resolve, reject) => {
+      this.User.findOne({email})
+      .exec()
+      .then(user => {
+        if (hash == createHash(user.email)) return this.update(user._id, user.token, {emailValidate: true});
+        return Promise.reject('Invalid hash')
       })
       .then(resolve)
       .catch(reject);
     });
   }
-
-  delete(_id) { return super._remove(this.user, _id); }
 }
 
-function createPasswordHash(password) {
-  return
-  crypto.createHmac('sha256', conf.secret)
+function createHash(password) {
+  return crypto.createHmac('sha256', conf.secret)
   .update(password)
   .digest('hex');
 }
 
 function createToken(user) {
-  return
-  crypto.createHmac('sha256', conf.secret)
-  .update(user.email + user.password + Date.now())
+  return crypto.createHmac('sha256', conf.secret)
+  .update(user.phone + user.password + Date.now())
   .digest('hex');
 }
 
 function passwordVerify(password, hash) {
-  let passwordHashed = createPasswordHash(password);
-  return passwordHashed == hash ? true : false
+  let passwordHashed = createHash(password);
+  return passwordHashed == hash ? true : false;
+}
+
+function createEmailVerifyLink(email) {
+  return`${conf.host}/validator/email?hash=${createHash(email)}`;
 }
 
 module.exports = User;

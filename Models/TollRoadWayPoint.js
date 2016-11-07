@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Crud = require('./../Classes/Crud');
 const schemas = {
   TollRoadWayPoint: {
     name: {type: String},
@@ -8,9 +9,10 @@ const schemas = {
   }
 };
 
-class TollRoadWayPoint {
+class TollRoadWayPoint extends Crud {
 
   constructor() {
+    super();
     this.TollRoadWayPoint = mongoose.model('TollRoadWayPoint', new mongoose.Schema(schemas.TollRoadWayPoint));
   }
 

@@ -1,0 +1,273 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Tollminder API",
+        "version": "0.0.1"
+    },
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/user/{_id}": {
+            "get": {
+                "description": "Get user by _id",
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "auth token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User object",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update user",
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "auth token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User object",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/signup": {
+            "post": {
+                "description": "Register user in system",
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SignUpFields"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User object",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/signin": {
+            "post": {
+                "description": "Auth user in system",
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SignInFields"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User object",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "description": "Unique identifier."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "User name"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "User email"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "User password sha256 hash"
+                },
+                "phone": {
+                    "type": "string",
+                    "description": "User phone"
+                },
+                "photo": {
+                    "type": "string",
+                    "description": "link to image"
+                },
+                "token": {
+                    "type": "string",
+                    "description": "Auth token"
+                },
+                "sourse": {
+                    "type": "string",
+                    "description": "Source can takes the following values:\nepp - self registration with email, phone and password;\ngplus - OAuth2 from Google+;\nfacebook - OAuth from Facebook;\n"
+                }
+            }
+        },
+        "SignUpFields": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "User name"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "User email"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "User password"
+                },
+                "phone": {
+                    "type": "string",
+                    "description": "User phone"
+                },
+                "photo": {
+                    "type": "string",
+                    "description": "link to image"
+                },
+                "sourse": {
+                    "type": "string",
+                    "description": "Source can takes the following values:\nepp - self registration with email, phone and password;\ngplus - OAuth2 from Google+;\nfacebook - OAuth from Facebook;\n"
+                }
+            }
+        },
+        "SignInFields": {
+            "type": "object",
+            "properties": {
+                "phone": {
+                    "type": "string",
+                    "description": "User phone"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "User password"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

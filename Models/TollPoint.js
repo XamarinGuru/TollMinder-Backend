@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
+const Crud = require('./../Classes/Crud');
 const schemas = {
   TollPoint: {
     name: {type: String},
-    _wayPoint: {type: mongoose.Schema.Types.ObjectId, ref: 'TollRoadWayPoints'},
     _location: {type: mongoose.Schema.Types.ObjectId, ref: 'Locations'},
     /**
      * Action list
@@ -14,9 +14,10 @@ const schemas = {
   }
 };
 
-class TollPoint {
+class TollPoint extends Crud {
 
   constructor() {
+    super();
     this.TollPoint = mongoose.model('TollPoint', new mongoose.Schema(schemas.TollPoint));
   }
 

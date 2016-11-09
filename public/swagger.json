@@ -272,6 +272,40 @@
           }
         }
       }
+    },
+    "/sync/{lastSync}": {
+      "get": {
+        "description": "Sync databases",
+        "tags": [
+          "Sync"
+        ],
+        "parameters": [
+          {
+            "name": "lastSync",
+            "in": "path",
+            "type": "number",
+            "description": "Timestamp in ms",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of modified road",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TollRoad"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -351,6 +385,71 @@
         "password": {
           "type": "string",
           "description": "User password"
+        }
+      }
+    },
+    "TollRoad": {
+      "type": "object",
+      "properties": {
+        "name" : {
+          "type": "string",
+          "description": "Road name"
+        },
+        "wayPoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WayPoint"
+          }
+        }
+      }
+    },
+    "WayPoint": {
+      "type": "object",
+      "properties": {
+        "name" : {
+          "type": "string",
+          "description": "WayPoint name"
+        },
+        "location": {
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/Location"
+          }
+        },
+        "tollPoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TollPoint"
+          }
+        }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "latitude" : {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        }
+      }
+    },
+    "TollPoint": {
+      "type": "object",
+      "properties": {
+        "name" : {
+          "type": "string",
+          "description": "WayPoint name"
+        },
+        "location": {
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/Location"
+          }
+        },
+        "action": {
+          "type": "string"
         }
       }
     },

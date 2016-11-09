@@ -11,7 +11,7 @@ module.exports = class Crud {
 
   _read(model, _id, populate, limit, skip) {
     return new Promise((resolve, reject) => {
-      let query =_id ? model.findOne({_id}) : model.find();
+      let query = _id ? model.findOne({_id}) : model.find();
       query.limit(limit || 20);
       query.skip(skip || 0);
       if (populate) query.populate(populate);
@@ -28,6 +28,7 @@ module.exports = class Crud {
       .then(document => {
         if (!document) return reject('Not found');
         for (let change in changes) if (schema.hasOwnProperty(change)) document[change] = changes[change];
+        if (schema.hasOwnProperty('updatedAt')) document.updatedAt = Date.now();
         return document.save();
       })
       .then(resolve)
@@ -39,6 +40,21 @@ module.exports = class Crud {
     return new Promise((resolve, reject) => {
       if (!_id) return reject('Missed `_id`');
       model.remove({_id})
+      .then(resolve)
+      .catch(reject);
+    });
+  }
+
+  _findOlder(model, timestamp) {
+    return new Promise((resolve, reject) => {
+      if (!timestamp) return reject('Missed `timestamp`');
+      let targetDate = new Date(timestamp);
+      model.find({})
+      .or([
+        {createdAt: {$gte: targetDate}},
+        {updatedAt: {$gte: targetDate}}
+      ])
+      .exec()
       .then(resolve)
       .catch(reject);
     });

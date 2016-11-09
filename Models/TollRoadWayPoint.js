@@ -3,9 +3,10 @@ const Crud = require('./../Classes/Crud');
 const schemas = {
   TollRoadWayPoint: {
     name: {type: String},
-    _tollRoad: {type: mongoose.Schema.Types.ObjectId, ref: 'TollRoads'},
     _location: {type: mongoose.Schema.Types.ObjectId, ref: 'Locations'},
-    _tollPoints: [{type: mongoose.Schema.Types.ObjectId, ref: 'TollPoints'}]
+    _tollPoints: [{type: mongoose.Schema.Types.ObjectId, ref: 'TollPoints'}],
+    createdAt: {type: Date, default: Date.now()},
+    updatedAt: {type: Date}
   }
 };
 
@@ -23,6 +24,8 @@ class TollRoadWayPoint extends Crud {
   update(_id, changes) { return super._update(this.TollRoadWayPoint, _id, schemas.TollRoadWayPoint, changes); }
 
   remove(_id) { return super._remove(this.TollRoadWayPoint, _id); }
+
+  findOlder(timestamp) { return super._findOlder(this.TollRoadWayPoint, timestamp); }
 }
 
 module.exports = TollRoadWayPoint;

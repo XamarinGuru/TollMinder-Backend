@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const conf = require('./../conf');
 const crypto = require('crypto');
+const passwordGenerator = require('password-generator');
 const Crud = require('./../Classes/Crud');
 const Email = require('./../Classes/Email');
 const schemas = {
@@ -8,7 +9,7 @@ const schemas = {
     name: {type: String, default: 'Anonymous'},
     email: {type: String, required: false},
     emailValidate: {type: Boolean, default: false},
-    phone: {type : String, required: true},
+    phone: {type: String, required: true},
     phoneValidate: {type: Boolean, default: false},
     /**
      * Password is SHA256 hash string
@@ -31,7 +32,7 @@ const schemas = {
   }
 };
 
-class User extends Crud{
+class User extends Crud {
 
   constructor() {
     super();
@@ -47,7 +48,7 @@ class User extends Crud{
       .or([{phone}, {email}])
       .exec()
       .then(users => {
-        if (!users.length > 0) {
+        if (users.length > 0) {
           if (users[0].token) return resolve({_id: users[0]._id, token: users[0].token});
           users[0].token = createToken(users[0]);
           users[0].save()
@@ -88,9 +89,7 @@ class User extends Crud{
       this.read(_id, token)
       .then(document => {
         if (!document) return reject('User not found', 404);
-        console.log(document)
         for (let change in changes) if (schemas.user.hasOwnProperty(change)) document[change] = changes[change];
-        document.updatedAt = Date.now();
         return resolve(document.save());
       });
     });
@@ -109,7 +108,9 @@ class User extends Crud{
     });
   }
 
-  remove(_id) { return super._remove(this.User, _id); }
+  remove(_id) {
+    return super._remove(this.User, _id);
+  }
 
   validateEmail(hash) {
     return new Promise((resolve, reject) => {
@@ -131,6 +132,23 @@ class User extends Crud{
       .catch(reject);
     });
   }
+
+  forgotPassword(creadentialls) {
+    return new Promise((resolve, reject) => {
+      let {phone, email} = creadentialls;
+      this.User.find()
+      .or([{phone}, {email}])
+      .exec()
+      .then(user => {
+        if (!user) return reject('User not found', 404);
+        user.password = passwordGenerator(12, false);
+        return user.save();
+      })
+      .then(resolve)
+      .catch(reject);
+    });
+
+  }
 }
 
 function createHash(password) {
@@ -151,7 +169,7 @@ function passwordVerify(password, hash) {
 }
 
 function createEmailVerifyLink(email) {
-  return`${conf.host}/validator/email?hash=${createHash(email)}`;
+  return `${conf.host}/validator/email?hash=${createHash(email)}`;
 }
 
 module.exports = User;

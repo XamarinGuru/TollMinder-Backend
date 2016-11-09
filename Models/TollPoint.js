@@ -10,7 +10,9 @@ const schemas = {
      *  bridge
      *  exit
      */
-    action: {type: String}
+    action: {type: String},
+    createdAt: {type: Date, default: Date.now()},
+    updatedAt: {type: Date}
   }
 };
 
@@ -28,6 +30,8 @@ class TollPoint extends Crud {
   update(_id, changes) { return super._update(this.TollPoint, _id, schemas.TollPoint, changes); }
 
   remove(_id) { return super._remove(this.TollPoint, _id); }
+
+  findOlder(timestamp) { return super._findOlder(this.TollPoint, timestamp); }
 }
 
 module.exports = TollPoint;

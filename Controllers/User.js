@@ -55,7 +55,15 @@ router.put('/:_id?', (req, res) => {
 });
 
 router.post('/forgotPassword', (req, res) => {
-
+  let User = req.app.locals.settings.models.user;
+  let {phone, email} = req.body;
+  if (phone || email) {
+    User.forgotPassword({phone, email})
+    .then(result => res.status(200).json(result))
+    .catch((err, code) => res.status(code || 500).json({err}));
+  } else {
+    return res.status(400).json({err: 'Not found `email` or `phone` in request body'});
+  }
 });
 
 module.exports = router;

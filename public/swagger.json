@@ -290,7 +290,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of modified road",
+            "description": "Array of modified roads",
             "schema": {
               "type": "array",
               "items": {
@@ -303,9 +303,147 @@
             "schema": {
               "$ref": "#/definitions/Error"
             }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
+    },
+    "/tollPoint/{_id}": {
+      "get": {
+        "description": "Get TollPoint",
+        "tags": [
+          "TollPoint"
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "type": "string",
+            "description": "TollPoint id",
+            "required": false
+          },
+          {
+            "name": "_wayPoint",
+            "in": "query",
+            "type": "string",
+            "description": "WayPoint id",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "One and more TollPoints",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TollPoint"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update TollPoint",
+        "tags": [
+          "TollPoint"
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "type": "string",
+            "description": "TollPoint id",
+            "required": "true"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/TollPoint"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated TollPoint",
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/TollPoint"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete TollPoint",
+        "tags": [
+          "TollPoint"
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "type": "string",
+            "description": "TollPoint id",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+
     }
   },
   "definitions": {
@@ -391,7 +529,7 @@
     "TollRoad": {
       "type": "object",
       "properties": {
-        "name" : {
+        "name": {
           "type": "string",
           "description": "Road name"
         },
@@ -406,7 +544,7 @@
     "WayPoint": {
       "type": "object",
       "properties": {
-        "name" : {
+        "name": {
           "type": "string",
           "description": "WayPoint name"
         },
@@ -427,7 +565,7 @@
     "Location": {
       "type": "object",
       "properties": {
-        "latitude" : {
+        "latitude": {
           "type": "number"
         },
         "longitude": {
@@ -438,9 +576,13 @@
     "TollPoint": {
       "type": "object",
       "properties": {
-        "name" : {
+        "_wayPoint": {
           "type": "string",
-          "description": "WayPoint name"
+          "description": "WayPoint id"
+        },
+        "name": {
+          "type": "string",
+          "description": "TollPoint name"
         },
         "location": {
           "type": "object",

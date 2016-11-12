@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 router.get('/:_id?', (req, res) => {
-  let User = req.app.locals.settings.models.user;
+  let User = req.app.locals.settings.models.User;
   if (!req.headers['authorization']) return res.status(403).json({err: 'Not found auth header'});
   if (!req.params._id) return res.status(400).json({err: 'Not found `user id` in url'});
   User.read(req.params._id, req.headers['authorization'])
@@ -14,7 +14,7 @@ router.get('/:_id?', (req, res) => {
 
 // Sign up (phone strategy)
 router.post('/signup', (req, res) => {
-  let User = req.app.locals.settings.models.user;
+  let User = req.app.locals.settings.models.User;
   let {name, phone, email, password, source, photo} = req.body;
   if (!source && !phone) return res.status(400).json({err: 'Bad oauth'});
   else if (!phone || !password) return res.status(400).json({err: 'Missed phone or password'});
@@ -25,7 +25,7 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/signin', (req, res) => {
-  let User = req.app.locals.settings.models.user;
+  let User = req.app.locals.settings.models.User;
   let {phone, password} = req.body;
   if (!phone || !password) return res.status(400).json({err: 'Missed phone or password'});
   User.auth(phone, password)
@@ -34,7 +34,7 @@ router.post('/signin', (req, res) => {
 });
 
 router.delete('/signout/:_id?', (req, res) => {
-  let User = req.app.locals.settings.models.user;
+  let User = req.app.locals.settings.models.User;
   let {_id} = req.params;
   if (!req.headers['authorization']) return res.status(400).json({err: 'Not found auth header'});
   if (!_id) return res.status(400).json({err: 'Not found `_id` in path'});
@@ -44,7 +44,7 @@ router.delete('/signout/:_id?', (req, res) => {
  });
 
 router.put('/:_id?', (req, res) => {
-  let User = req.app.locals.settings.models.user;
+  let User = req.app.locals.settings.models.User;
   if (!req.headers['authorization']) return res.status(400).json({err: 'Not found auth header'});
   if (!req.params._id) return res.status(400).json({err: 'Not found `_id` in path'});
   let {name, email, photo, phone} = req.body;
@@ -55,7 +55,7 @@ router.put('/:_id?', (req, res) => {
 });
 
 router.post('/forgotPassword', (req, res) => {
-  let User = req.app.locals.settings.models.user;
+  let User = req.app.locals.settings.models.User;
   let {phone, email} = req.body;
   if (phone || email) {
     User.forgotPassword({phone, email})

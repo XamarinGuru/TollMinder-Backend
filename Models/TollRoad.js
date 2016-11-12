@@ -3,7 +3,7 @@ const Crud = require('./../Classes/Crud');
 const schemas = {
   TollRoad: {
     name : {type: String},
-    _wayPoints : [{type: mongoose.Schema.Types.ObjectId, ref: 'TollRoadWayPoints'}],
+    _wayPoints : [{type: mongoose.Schema.Types.ObjectId, ref: 'WayPoint'}],
     createdAt: {type: Date, default: Date.now()},
     updatedAt: {type: Date}
   }
@@ -24,7 +24,22 @@ class TollRoad extends Crud {
 
   remove(_id) { return super._remove(this.TollRoad, _id); }
 
-  findOlder(timestamp) { return super._findOlder(this.TollRoad, timestamp); }
+  findOlder(timestamp, Models) {
+    return Promise.resolve({msg: 'in developing...'});
+  }
+
+  addWayPoint(_id, _wayPoint) {
+    return new Promise((resolve, reject) => {
+      this.read(_id)
+      .then(road => {
+        road._wayPoints.push(_wayPoint);
+        road.updatedAt = Date.now();
+        return road.save();
+      })
+      .then(resolve)
+      .catch(reject);
+    })
+  }
 }
 
 module.exports = TollRoad;

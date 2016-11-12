@@ -27,8 +27,7 @@ const Data = [
     ret: true
   },
   {
-    collection: 'tollRoadWayPoints',
-
+    collection: 'wayPoints',
   }
 
 ];

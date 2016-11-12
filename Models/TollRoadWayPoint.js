@@ -4,11 +4,9 @@ const schemas = {
   WayPoint: {
     name: {type: String},
     _tollRoad: {type: mongoose.Schema.Types.ObjectId, ref: 'TollRoad'},
-    location: {
-      latitude: Number,
-      longitude: Number
-    },
     _tollPoints: [{type: mongoose.Schema.Types.ObjectId, ref: 'TollPoint'}],
+    latitude: Number,
+    longitude: Number,
     createdAt: {type: Date, default: Date.now()},
     updatedAt: {type: Date}
   }
@@ -40,19 +38,20 @@ class WayPoint extends Crud {
 
   update(_id, changes, Models) {
     return new Promise((resolve, reject) => {
-      let query;
-      if (changes._tollRoad) query = Models.TollRoad.update(wayPoint._tollRoad, {updatedAt: Date.now()});
-      else query = Promise.resolve(null);
-      query
-      .then(_ => super._update(this.WayPoint, _id, schemas.WayPoint, changes))
-      .then(resolve)
+      let WP;
+      super._update(this.WayPoint, _id, schemas.WayPoint, changes)
+      .then(wayPoint => {
+        WP = wayPoint;
+        return Models.TollRoad.update(wayPoint._tollRoad, {updatedAt: Date.now()});
+      })
+      .then(_ => resolve(WP))
       .catch(reject)
     });
   }
 
   remove(_id, Models) {
     return new Promise((resolve, reject) => {
-      Models.TollRoad.findOne({_wayPoints: _id})
+      Models.TollRoad.TollRoad.findOne({_wayPoints: _id})
       .exec()
       .then(tollRoad => {
         tollRoad._wayPoints.splice(tollRoad._wayPoints.indexOf(_id), 1);

@@ -4,10 +4,8 @@ const schemas = {
   TollPoint: {
     name: {type: String},
     _wayPoint: {type: mongoose.Schema.Types.ObjectId, ref: 'WayPoint'},
-    location: {
-      latitude: Number,
-      longitude: Number
-    },
+    latitude: Number,
+    longitude: Number,
     /**
      * Action list
      *  entrance
@@ -41,24 +39,35 @@ class TollPoint extends Crud {
   }
 
   read(_id, limit, skip) {
-    return super._read(this.TollPoint, _id, '_wayPoint _location', limit, skip);
+    return super._read(this.TollPoint, _id, '_wayPoint', limit, skip);
   }
 
   update(_id, changes, Models) {
+    let TP;
     return new Promise((resolve, reject) => {
-      this.TollPoint.findOne({_id})
+      super._update(this.TollPoint, _id, schemas.TollPoint, changes)
       .then(tollPoint => {
-        if (tollPoint._wayPoint) return Models.WayPoint.update(tollPoint._wayPoint, {updatedAt: Date.now()}, Models);
-        return Promise.resolve(null);
+        TP = tollPoint;
+        return Models.WayPoint.update(tollPoint._wayPoint, {updatedAt: Date.now()}, Models)
       })
-      .then(_ => super._update(this.TollPoint, _id, schemas.TollPoint, changes))
-      .then(resolve)
+      .then(_ => resolve(TP))
       .catch(reject);
     });
   }
 
-  remove(_id) {
-    return super._remove(this.TollPoint, _id);
+  remove(_id, Models) {
+    return new Promise((resolve, reject) => {
+      Models.WayPoint.WayPoint.findOne({_tollPoints: _id})
+      .exec()
+      .then(wayPoint => {
+        wayPoint._tollPoints.splice(wayPoint._tollPoints.indexOf(_id), 1);
+        return wayPoint.save();
+      })
+      .then(_ => super._remove(this.TollPoint, _id))
+      .then(resolve)
+      .catch(reject);
+    })
+
   }
 
   findOlder(timestamp) {

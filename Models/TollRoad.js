@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Crud = require('./../Classes/Crud');
 const schemas = {
   TollRoad: {
-    name : {type: String},
-    _wayPoints : [{type: mongoose.Schema.Types.ObjectId, ref: 'WayPoint'}],
+    name: {type: String},
+    _wayPoints: [{type: mongoose.Schema.Types.ObjectId, ref: 'WayPoint'}],
     createdAt: {type: Date, default: Date.now()},
     updatedAt: {type: Date}
   }
@@ -16,13 +16,21 @@ class TollRoad extends Crud {
     this.TollRoad = mongoose.model('TollRoad', new mongoose.Schema(schemas.TollRoad));
   }
 
-  create(tollRoad) { return super._create(this.TollRoad, tollRoad); }
+  create(tollRoad) {
+    return super._create(this.TollRoad, tollRoad);
+  }
 
-  read(_id, limit, skip) { return super._read(this.TollRoad, _id, '_wayPoints', limit, skip); }
+  read(_id, limit, skip) {
+    return super._read(this.TollRoad, _id, '_wayPoints', limit, skip);
+  }
 
-  update(_id, changes) { return super._update(this.TollRoad, _id, schemas.TollRoad, changes); }
+  update(_id, changes) {
+    return super._update(this.TollRoad, _id, schemas.TollRoad, changes);
+  }
 
-  remove(_id) { return super._remove(this.TollRoad, _id); }
+  remove(_id) {
+    return super._remove(this.TollRoad, _id);
+  }
 
   findOlder(timestamp, Models) {
     return Promise.resolve({msg: 'in developing...'});

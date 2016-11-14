@@ -55,7 +55,8 @@ class WayPoint extends Crud {
       .exec()
       .then(tollRoad => {
         tollRoad._wayPoints.splice(tollRoad._wayPoints.indexOf(_id), 1);
-        return tollRoad.save()
+        tollRoad.updatedAt = Date.now();
+        return tollRoad.save();
       })
       .then(_ => super._remove(this.WayPoint, _id))
       .then(resolve)

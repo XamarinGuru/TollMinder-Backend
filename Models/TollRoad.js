@@ -33,7 +33,42 @@ class TollRoad extends Crud {
   }
 
   findOlder(timestamp, Models) {
-    return Promise.resolve({msg: 'in developing...'});
+    const lastSyncDate = new Date(timestamp);
+    let {WayPoint, TollPoint}  = Models;
+    let TRs;
+    return new Promise((resolve, reject) => {
+      super._findOlder(this.TollRoad, lastSyncDate)
+      .then(tollRoads => {
+        TRs = tollRoads;
+        let tmp = tollRoads.map(item => item._wayPoints);
+        let wayPointIds = [];
+        for (let i in tmp) {
+          wayPointIds = wayPointIds.concat([], tmp[i]);
+        }
+        let or = wayPointIds.map(item => {
+          return {_id : item}
+        });
+        return Models.WayPoint
+        .WayPoint.find({})
+        .or(or)
+        .populate('_tollPoints')
+        .exec()
+      })
+      .then(wayPoints => {
+        console.log(wayPoints);
+        if (wayPoints.length == 0) return reject('Not found any WayPoint');
+        let result = TRs.map(item => {
+          for (let i in wayPoints) {
+            let index = item._wayPoints.indexOf(wayPoints[i]._id);
+            if (index != -1) item._wayPoints[index] = wayPoints[i];
+          }
+          return item;
+        });
+        console.log(result);
+        return resolve(result);
+      })
+      .catch(reject);
+    })
   }
 
   addWayPoint(_id, _wayPoint) {
@@ -49,5 +84,7 @@ class TollRoad extends Crud {
     })
   }
 }
+
+
 
 module.exports = TollRoad;

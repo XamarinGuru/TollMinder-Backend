@@ -45,10 +45,8 @@ module.exports = class Crud {
     });
   }
 
-  _findOlder(model, timestamp, populate) {
+  _findOlder(model, targetDate, populate) {
     return new Promise((resolve, reject) => {
-      if (!timestamp) return reject('Missed `timestamp`');
-      let targetDate = new Date(timestamp);
       model.find({})
       .or([
         {createdAt: {$gte: targetDate}},

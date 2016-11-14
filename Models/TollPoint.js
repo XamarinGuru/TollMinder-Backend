@@ -61,6 +61,7 @@ class TollPoint extends Crud {
       .exec()
       .then(wayPoint => {
         wayPoint._tollPoints.splice(wayPoint._tollPoints.indexOf(_id), 1);
+        wayPoint.updatedAt = Date.now();
         return wayPoint.save();
       })
       .then(_ => super._remove(this.TollPoint, _id))

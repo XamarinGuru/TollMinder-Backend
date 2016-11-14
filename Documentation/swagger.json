@@ -313,108 +313,26 @@
         }
       }
     },
-    "/tollPoint/{_id}": {
-      "get": {
-        "description": "Get TollPoint",
+    "/validator/phone": {
+      "post": {
+        "description": "Phone number existence check",
         "tags": [
-          "TollPoint"
+          "Validator"
         ],
         "parameters": [
           {
-            "name": "_id",
-            "in": "path",
-            "type": "string",
-            "description": "TollPoint id",
-            "required": false
+            "name": "phone",
+            "in": "formData",
+            "required": true,
+            "type" : "string",
+            "description": "Phone number for validation"
           },
           {
-            "name": "_wayPoint",
-            "in": "query",
-            "type": "string",
-            "description": "WayPoint id",
-            "required": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "One and more TollPoints",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/TollPoint"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "put": {
-        "description": "Update TollPoint",
-        "tags": [
-          "TollPoint"
-        ],
-        "parameters": [
-          {
-            "name": "_id",
-            "in": "path",
-            "type": "string",
-            "description": "TollPoint id",
-            "required": "true"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "type": "object",
-            "schema": {
-              "$ref": "#/definitions/TollPoint"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Updated TollPoint",
-            "type": "object",
-            "schema": {
-              "$ref": "#/definitions/TollPoint"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "Delete TollPoint",
-        "tags": [
-          "TollPoint"
-        ],
-        "parameters": [
-          {
-            "name": "_id",
-            "in": "path",
-            "type": "string",
-            "description": "TollPoint id",
-            "required": "true"
+            "name": "code",
+            "in": "formData",
+            "required": true,
+            "type" : "number",
+            "description": "Code from SMS"
           }
         ],
         "responses": {
@@ -434,16 +352,52 @@
             "schema": {
               "$ref": "#/definitions/Error"
             }
+          }
+        }
+      }
+    },
+    "/validator/email/{_id}": {
+      "get": {
+        "description": "Phone number existence check",
+        "tags": [
+          "Validator"
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "type" : "string",
+            "description": "User id"
           },
-          "404": {
-            "description": "Not found",
+          {
+            "name": "hash",
+            "in": "query",
+            "required": true,
+            "type" : "string",
+            "description": "hash"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
-
     }
   },
   "definitions": {
@@ -548,28 +502,19 @@
           "type": "string",
           "description": "WayPoint name"
         },
-        "location": {
-          "type": "object",
-          "schema": {
-            "$ref": "#/definitions/Location"
-          }
+        "latitude": {
+          "type": "string",
+          "description": "TollPoint latitude"
+        },
+        "longitude": {
+          "type": "string",
+          "description": "TollPoint latitude"
         },
         "tollPoints": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/TollPoint"
           }
-        }
-      }
-    },
-    "Location": {
-      "type": "object",
-      "properties": {
-        "latitude": {
-          "type": "number"
-        },
-        "longitude": {
-          "type": "number"
         }
       }
     },
@@ -584,11 +529,13 @@
           "type": "string",
           "description": "TollPoint name"
         },
-        "location": {
-          "type": "object",
-          "schema": {
-            "$ref": "#/definitions/Location"
-          }
+        "latitude": {
+          "type": "string",
+          "description": "TollPoint latitude"
+        },
+        "longitude": {
+          "type": "string",
+          "description": "TollPoint latitude"
         },
         "action": {
           "type": "string"

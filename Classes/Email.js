@@ -11,7 +11,7 @@ class Email {
   }
 
   sendVerifyRequest(name, email, link) {
-    return Promise.resolve(true);
+    return Promise.resolve(link);
     // dummy
     this.transporter.sendMail({
       from: conf.smtp.from,

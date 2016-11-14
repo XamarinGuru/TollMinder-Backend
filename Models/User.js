@@ -4,12 +4,14 @@ const crypto = require('crypto');
 const passwordGenerator = require('password-generator');
 const Crud = require('./../Classes/Crud');
 const Email = require('./../Classes/Email');
+const SMS = require('./../Classes/Sms');
 const schemas = {
   user: {
     name: {type: String, default: 'Anonymous'},
     email: {type: String, required: false},
     emailValidate: {type: Boolean, default: false},
     phone: {type: String, required: true},
+    phoneCode : {type: Number},
     phoneValidate: {type: Boolean, default: false},
     /**
      * Password is SHA256 hash string
@@ -41,34 +43,42 @@ class User extends Crud {
 
   create(user) {
     return new Promise((resolve, reject) => {
+      let U;
       user.token = createToken(user);
       user.password = createHash(user.password);
+      user.phoneCode = createRandomCode();
       let {phone, email} = user;
       this.User.find()
       .or([{phone}, {email}])
       .exec()
       .then(users => {
         if (users.length > 0) {
-          if (users[0].token) return resolve({_id: users[0]._id, token: users[0].token});
-          users[0].token = createToken(users[0]);
-          users[0].save()
-          .then(document => {
-            return resolve({_id: document._id, token: document.token});
-          })
-          .catch(reject);
-          return;
+          if (users[0].phone == phone && users[0].email == email) return resolve({_id: users[0]._id, token: users[0].token});
+          return reject({
+            err: 'Wrong source',
+            source: users[0].source
+          });
         }
         return super._create(this.User, user);
       })
       .then(user => {
+        U = user;
         if (user.email) {
-          Email.sendVerifyRequest(user.name, user.email, createEmailVerifyLink(user.email))
-          .then(_ => Promise.resolve(user))
-          .catch(reject);
+          return Email.sendVerifyRequest(user.name, user.email, createEmailVerifyLink(user._id, user.email))
+        } else {
+          return Promise.resolve(null);
         }
-        return Promise.resolve(user);
       })
-      .then(resolve)
+      .then(_ => {
+        console.log(_);
+        return Promise.resolve(null);
+        if (U.phone) {
+          return SMS.sendSms(`Your verification code is ${U.phoneCode}`, U.phone);
+        } else {
+          return Promise.resolve(null);
+        }
+      })
+      .then(_ => resolve(U))
       .catch(reject)
     });
   }
@@ -112,13 +122,30 @@ class User extends Crud {
     return super._remove(this.User, _id);
   }
 
-  validateEmail(hash) {
+  validateEmail(_id, hash) {
     return new Promise((resolve, reject) => {
-      this.User.findOne({email})
+      this.User.findOne({_id})
       .exec()
       .then(user => {
         if (hash == createHash(user.email)) return this.update(user._id, user.token, {emailValidate: true});
         return Promise.reject('Invalid hash')
+      })
+      .then(resolve)
+      .catch(reject);
+    });
+  }
+
+  validatePhone(phone, code) {
+    return new Promise((resolve, reject) => {
+      this.User.findOne({phone})
+      .exec()
+      .then(user => {
+        if (user.phoneCode == code) {
+          user.phoneValidate = true;
+          return user.save();
+        } else {
+          return reject('Wrong code');
+        }
       })
       .then(resolve)
       .catch(reject);
@@ -168,8 +195,20 @@ function passwordVerify(password, hash) {
   return passwordHashed == hash ? true : false;
 }
 
-function createEmailVerifyLink(email) {
-  return `${conf.host}/validator/email?hash=${createHash(email)}`;
+function createEmailVerifyLink(_id, email) {
+  return `${conf.host}/validator/email/${_id}/?hash=${createHash(email)}`;
+}
+
+function createRandomCode() {
+  let result = '';
+  for (let i=0; i<4; i++) result += getRandomIntInclusive(0,9);
+  return result;
+}
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 module.exports = User;

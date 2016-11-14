@@ -1,10 +1,10 @@
 module.exports = {
   // Main info
   secret: 'tollminder',
-  host: 'http://192.168.13.168:7001',
-  port: 7001,
+  host: 'http://54.152.103.212:7000',
+  port: 7000,
   mongoURI: 'mongodb://localhost/tollminder',
-  uploadDir: '/home/groumand/Projects/tollminder/Uploads',
+  uploadDir: '/home/ubuntu/tollminder-backend/Uploads',
 
   googleAPIKey : 'AIzaSyBEacqW7NBeaCpNgMgpHcA9GVHWvanZrK8',
 

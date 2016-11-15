@@ -29,6 +29,7 @@ const schemas = {
      * Photo is link to image (default link to gray person avatar)
      */
     photo: {type: String, default: 'http://hotchillitri.co.uk/wp-content/uploads/2016/10/empty-avatar.jpg'},
+    isAdmin: {type: Boolean, default: false},
     createdAt: {type: Date, default: Date.now()},
     updatedAt: {type: Date}
   }
@@ -67,7 +68,6 @@ class User extends Crud {
         }
       })
       .then(_ => {
-        console.log(_);
         return Promise.resolve(null);
         if (U.phone) {
           return SMS.sendSms(`Your verification code is ${U.phoneCode}`, U.phone);
@@ -171,6 +171,35 @@ class User extends Crud {
       .then(resolve)
       .catch(reject);
     });
+  }
+
+  authInAdminPanel(name, password) {
+    return new Promise((resolve, reject) => {
+      this.User.findOne({})
+      .and([{name}, {isAdmin: true}])
+      .exec()
+      .then(user => {
+        if (!user) {
+          let newUser = new this.User({
+            name : conf.defaultAdmin.name,
+            password: createHash(conf.defaultAdmin.password),
+            isAdmin: true,
+            phone : createRandomCode()
+          });
+          return newUser.save();
+        }
+        return Promise.resolve(user);
+      })
+      .then(admin => {
+        if (admin.name != name
+          || !passwordVerify(password, admin.password))
+          return reject({message : 'Wrong credentials', code: 401});
+        admin.token = createToken(admin);
+        return admin.save();
+      })
+      .then(admin => resolve({token: admin.token}))
+      .catch(reject);
+    })
 
   }
 }

@@ -11,7 +11,10 @@ module.exports = {
   tmUsername: 'nickolaykreshchenko',
   tmAPIKey : 'h6G4qK495pOcXSR0WHcfhVsZd6vL8h',
 
-
+  defaultAdmin : {
+    name: 'admin',
+    password: '1234'
+  },
   // Info for mail service
   smtp: {
     accessKey: 'AKIAIQET6AEIQ4HWOXCQ',

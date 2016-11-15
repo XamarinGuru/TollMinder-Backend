@@ -66,4 +66,13 @@ router.post('/forgotPassword', (req, res) => {
   }
 });
 
+router.post('/adminAuth', (req, res) => {
+  let User = req.app.locals.settings.models.User;
+  let {name, password} = req.body;
+  if (!name || !password) return res.status(400).json({err: 'Bad request'});
+  User.authInAdminPanel(name, password)
+  .then(result => res.status(200).json(result))
+  .catch((err) => res.status(err.code || 500).json({err: err.message}));
+});
+
 module.exports = router;

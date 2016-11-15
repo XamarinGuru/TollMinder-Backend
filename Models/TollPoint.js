@@ -68,7 +68,6 @@ class TollPoint extends Crud {
       .then(resolve)
       .catch(reject);
     })
-
   }
 
   findOlder(timestamp) {

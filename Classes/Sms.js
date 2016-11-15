@@ -10,9 +10,7 @@ class SMS {
     return new Promise((resolve, reject) => {
       let sms = {text, phones};
       this.tmc.Messages.send(sms, (err, resp) => {
-        console.log(err);
         if (err) return reject(err);
-        console.log(resp);
         return resolve(resp);
       });
     })

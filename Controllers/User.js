@@ -21,7 +21,7 @@ router.post('/signup', (req, res) => {
   let user = {name, phone, password, email, source, photo};
   User.create(user)
   .then(result => res.status(200).json(result))
-  .catch((err, code) => res.status(code || 500).json({err}));
+  .catch((err) => res.status(err.code || 500).json({err: err.message}));
 });
 
 router.post('/signin', (req, res) => {
@@ -30,7 +30,7 @@ router.post('/signin', (req, res) => {
   if (!phone || !password) return res.status(400).json({err: 'Missed phone or password'});
   User.auth(phone, password)
   .then(result => res.status(200).json(result))
-  .catch((err, code) => res.status(code || 500).json({err}));
+  .catch((err) => res.status(err.code || 500).json({err: err.message}));
 });
 
 router.delete('/signout/:_id?', (req, res) => {
@@ -40,7 +40,7 @@ router.delete('/signout/:_id?', (req, res) => {
   if (!_id) return res.status(400).json({err: 'Not found `_id` in path'});
   User.out(_id, req.headers['authorization'])
   .then(result => res.status(200).json(result))
-  .catch((err, code) => res.status(code || 500).json({err}));
+  .catch((err) => res.status(err.code || 500).json({err: err.message}));
  });
 
 router.put('/:_id?', (req, res) => {
@@ -51,7 +51,7 @@ router.put('/:_id?', (req, res) => {
   let changes = {name, email, photo, phone};
   User.update(req.params._id, req.headers['authorization'], changes)
   .then(result => res.status(200).json(result))
-  .catch((err, code) => res.status(code || 500).json({err}));
+  .catch((err) => res.status(err.code || 500).json({err: err.message}));
 });
 
 router.post('/forgotPassword', (req, res) => {
@@ -60,7 +60,7 @@ router.post('/forgotPassword', (req, res) => {
   if (phone || email) {
     User.forgotPassword({phone, email})
     .then(result => res.status(200).json(result))
-    .catch((err, code) => res.status(code || 500).json({err}));
+    .catch((err) => res.status(err.code || 500).json({err: err.message}));
   } else {
     return res.status(400).json({err: 'Not found `email` or `phone` in request body'});
   }

@@ -26,7 +26,7 @@ module.exports = class Crud {
       model.findOne({_id})
       .exec()
       .then(document => {
-        if (!document) return reject('Not found');
+        if (!document) return reject({message: 'Not found', code: 404});
         for (let change in changes) if (schema.hasOwnProperty(change)) document[change] = changes[change];
         if (schema.hasOwnProperty('updatedAt')) document.updatedAt = Date.now();
         return document.save();
@@ -38,7 +38,7 @@ module.exports = class Crud {
 
   _remove(model, _id) {
     return new Promise((resolve, reject) => {
-      if (!_id) return reject('Missed `_id`');
+      if (!_id) return reject({message:'Missed `_id`', code: 400 });
       model.remove({_id})
       .then(resolve)
       .catch(reject);

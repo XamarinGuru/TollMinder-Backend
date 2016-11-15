@@ -48,7 +48,7 @@ class TollRoad extends Crud {
         let or = wayPointIds.map(item => {
           return {_id : item}
         });
-        if (or.length == 0) return reject('Not found');
+        if (or.length == 0) return reject({message:'Not found', code: 404});
         return Models.WayPoint
         .WayPoint.find({})
         .or(or)
@@ -57,7 +57,7 @@ class TollRoad extends Crud {
       })
       .then(wayPoints => {
         console.log(wayPoints);
-        if (wayPoints.length == 0) return reject('Not found any WayPoint');
+        if (wayPoints.length == 0) return reject({message:'Not found', code: 404});
         let result = TRs.map(item => {
           for (let i in wayPoints) {
             let index = item._wayPoints.indexOf(wayPoints[i]._id);

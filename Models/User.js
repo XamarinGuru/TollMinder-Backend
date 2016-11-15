@@ -54,10 +54,7 @@ class User extends Crud {
       .then(users => {
         if (users.length > 0) {
           if (users[0].phone == phone && users[0].email == email) return resolve({_id: users[0]._id, token: users[0].token});
-          return reject({
-            err: 'Wrong source',
-            source: users[0].source
-          });
+          return reject({message: `User source is ${users[0].source}`, code: 302});
         }
         return super._create(this.User, user);
       })
@@ -85,7 +82,7 @@ class User extends Crud {
 
   read(_id, token) {
     return new Promise((resolve, reject) => {
-      if (!token) reject('Unauthorized', 403);
+      if (!token) reject({message: 'Unauthorized', code: 403});
       this.User.find()
       .and([{_id}, {token}])
       .exec()
@@ -98,7 +95,7 @@ class User extends Crud {
     return new Promise((resolve, reject) => {
       this.read(_id, token)
       .then(document => {
-        if (!document) return reject('User not found', 404);
+        if (!document) return reject({message: 'User not found', code: 404});
         for (let change in changes) if (schemas.user.hasOwnProperty(change)) document[change] = changes[change];
         return resolve(document.save());
       });
@@ -110,7 +107,7 @@ class User extends Crud {
       this.User.findOne({phone})
       .exec()
       .then(user => {
-        if (!passwordVerify(password, user.password)) return Promise.reject('Wrong password');
+        if (!passwordVerify(password, user.password)) return Promise.reject({message: 'Wrong password', code: 401});
         return this.update(user._id, user.token, {token: createToken(user)})
       })
       .then(user => resolve({_id: user._id, token: user.token}))
@@ -128,7 +125,7 @@ class User extends Crud {
       .exec()
       .then(user => {
         if (hash == createHash(user.email)) return this.update(user._id, user.token, {emailValidate: true});
-        return Promise.reject('Invalid hash')
+        return Promise.reject({message: 'Invalid hash', code: 400})
       })
       .then(resolve)
       .catch(reject);
@@ -144,7 +141,7 @@ class User extends Crud {
           user.phoneValidate = true;
           return user.save();
         } else {
-          return reject('Wrong code');
+          return reject({message: 'Wrong code', code: 400});
         }
       })
       .then(resolve)
@@ -167,7 +164,7 @@ class User extends Crud {
       .or([{phone}, {email}])
       .exec()
       .then(user => {
-        if (!user) return reject('User not found', 404);
+        if (!user) return reject({message:'User not found', code: 404});
         user.password = passwordGenerator(12, false);
         return user.save();
       })

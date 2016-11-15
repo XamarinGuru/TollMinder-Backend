@@ -6,7 +6,7 @@ router.get('/:lastSync?', (req, res) => {
   if (!lastSync) return res.status(400).json({err: 'Missed `lastSync` in path'});
   Models.TollRoad.findOlder(lastSync, Models)
   .then(result => res.status(200).json(result))
-  .catch((err, code) => res.status(code || 500).json({err}));
+  .catch((err) => res.status(err.code || 500).json({err: err.message}));
 });
 
 module.exports = router;

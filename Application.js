@@ -43,19 +43,18 @@ app.use((req, res, next) => {
 });
 
 // Set public dirs
-app.use('/doc', express.static(path.join(__dirname, 'Documentation')));
-app.use('/uploads', express.static(path.join(__dirname, 'Uploads')));
+app.use('/api/doc', express.static(path.join(__dirname, 'Documentation')));
+app.use('/api/uploads', express.static(path.join(__dirname, 'Uploads')));
 
 // Set routes
-app.use('/user', user);
-app.use('/sync', sync);
-app.use('/file', file);
-app.use('/validator', validator);
+app.use('/api/user', user);
+app.use('/api/sync', sync);
+app.use('/api/file', file);
+app.use('/api/validator', validator);
 
 // Routes for admin panel
-app.use('/tollRoad', tollRoad);
-app.use('/wayPoint', wayPoint);
-
-app.use('/tollPoint', tollPoint);
+app.use('/api/tollRoad', tollRoad);
+app.use('/api/wayPoint', wayPoint);
+app.use('/api/tollPoint', tollPoint);
 
 module.exports = app;

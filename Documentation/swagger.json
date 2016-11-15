@@ -7,7 +7,7 @@
   "schemes": [
     "http"
   ],
-  "basePath": "/",
+  "basePath": "/api",
   "produces": [
     "application/json"
   ],

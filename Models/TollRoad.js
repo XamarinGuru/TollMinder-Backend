@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Crud = require('./../Classes/Crud');
+const moment = require('moment');
 const schemas = {
   TollRoad: {
     name: {type: String},
@@ -33,7 +34,9 @@ class TollRoad extends Crud {
   }
 
   findOlder(timestamp, Models) {
-    const lastSyncDate = new Date(timestamp);
+    console.log(timestamp);
+    let lastSyncDate = moment.unix(parseInt(timestamp)).toISOString();
+    console.log(lastSyncDate);
     let {WayPoint, TollPoint}  = Models;
     let TRs;
     return new Promise((resolve, reject) => {

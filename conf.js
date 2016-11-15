@@ -1,7 +1,7 @@
 module.exports = {
   // Main info
   secret: 'tollminder',
-  host: 'http://54.152.103.212:7000',
+  host: 'http://54.152.103.212/api',
   port: 7000,
   mongoURI: 'mongodb://localhost/tollminder',
   uploadDir: '/home/ubuntu/tollminder-backend/Uploads',

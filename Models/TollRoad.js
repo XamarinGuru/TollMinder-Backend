@@ -48,6 +48,7 @@ class TollRoad extends Crud {
         let or = wayPointIds.map(item => {
           return {_id : item}
         });
+        if (or.length == 0) return reject('Not found');
         return Models.WayPoint
         .WayPoint.find({})
         .or(or)

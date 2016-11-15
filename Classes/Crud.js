@@ -49,8 +49,8 @@ module.exports = class Crud {
     return new Promise((resolve, reject) => {
       model.find({})
       .or([
-        {createdAt: {$gte: targetDate}},
-        {updatedAt: {$gte: targetDate}}
+        {createdAt: {gte: targetDate}},
+        {updatedAt: {gte: targetDate}}
       ])
       .populate(populate || '')
       .exec()

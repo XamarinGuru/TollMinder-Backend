@@ -478,13 +478,25 @@
           "type": "string",
           "description": "User email"
         },
+        "emailValidate": {
+          "type": "boolean",
+          "description": "Email validation passed?"
+        },
         "password": {
           "type": "string",
-          "description": "User password sha256 hash"
+          "description": "User password (sha256 hash)"
         },
         "phone": {
           "type": "string",
           "description": "User phone"
+        },
+        "phoneCode": {
+          "type": "string",
+          "description": "Phone validation code (md5 hash)"
+        },
+        "phoneValidate": {
+          "type": "boolean",
+          "description": "Phone validation passed?"
         },
         "photo": {
           "type": "string",

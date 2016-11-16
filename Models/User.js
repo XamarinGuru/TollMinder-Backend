@@ -212,7 +212,7 @@ class User extends Crud {
         if (user.phoneValidate) {
           user.token = createToken(user);
           user.save()
-          .then(user => resolve({_id: user._id, token: user.token}));
+          .then(user => resolve(user));
         } else {
           this.remove(user._id)
           .then(_ => reject({message: 'Phone validation is failed', code: 403}))

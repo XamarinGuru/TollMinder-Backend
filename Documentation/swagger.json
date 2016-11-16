@@ -241,7 +241,7 @@
       }
     },
     "/user/oauth": {
-      "delete": {
+      "post": {
         "description": "Sign in for social networks",
         "tags": [
           "User"

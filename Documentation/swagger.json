@@ -186,6 +186,55 @@
         }
       }
     },
+    "/user/oauth": {
+      "post": {
+        "description": "Sign in for social networks",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "in": "formData",
+            "description": "facebook or gplus",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User object",
+            "schema": {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/user/signout/{_id}": {
       "delete": {
         "description": "Sign out",
@@ -217,55 +266,6 @@
                   "type": "string"
                 }
               }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "403": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/user/oauth": {
-      "post": {
-        "description": "Sign in for social networks",
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "email",
-            "in": "formData",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "source",
-            "in": "formData",
-            "description": "facebook or gplus",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User object",
-            "schema": {
-              "$ref" : "#/definitions/User"
             }
           },
           "400": {

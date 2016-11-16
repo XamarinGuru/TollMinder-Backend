@@ -292,6 +292,13 @@
             "type": "number",
             "description": "Timestamp in ms",
             "required": true
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "auth token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -438,7 +445,7 @@
           "type": "string",
           "description": "Auth token"
         },
-        "sourse": {
+        "source": {
           "type": "string",
           "description": "Source can takes the following values:\nepp - self registration with email, phone and password;\ngplus - OAuth2 from Google+;\nfacebook - OAuth from Facebook;\n"
         }
@@ -467,7 +474,7 @@
           "type": "string",
           "description": "link to image"
         },
-        "sourse": {
+        "source": {
           "type": "string",
           "description": "Source can takes the following values:\nepp - self registration with email, phone and password;\ngplus - OAuth2 from Google+;\nfacebook - OAuth from Facebook;\n"
         }

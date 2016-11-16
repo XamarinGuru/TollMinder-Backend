@@ -33,14 +33,16 @@ class TollRoad extends Crud {
     return super._remove(this.TollRoad, _id);
   }
 
-  findOlder(timestamp, Models) {
-    console.log(timestamp);
+  findOlder(timestamp, token, Models) {
     let lastSyncDate = moment.unix(parseInt(timestamp)).toISOString();
-    console.log(lastSyncDate);
     let {WayPoint, TollPoint}  = Models;
     let TRs;
     return new Promise((resolve, reject) => {
-      super._findOlder(this.TollRoad, lastSyncDate)
+      Models.User.User.findOne({token})
+      .then(user => {
+        if (!user) return reject({message: 'Token not valid', code: 401});
+        return super._findOlder(this.TollRoad, lastSyncDate);
+      })
       .then(tollRoads => {
         TRs = tollRoads;
         let tmp = tollRoads.map(item => item._wayPoints);
@@ -49,9 +51,9 @@ class TollRoad extends Crud {
           wayPointIds = wayPointIds.concat([], tmp[i]);
         }
         let or = wayPointIds.map(item => {
-          return {_id : item}
+          return {_id: item}
         });
-        if (or.length == 0) return reject({message:'Not found', code: 404});
+        if (or.length == 0) return reject({message: 'Not found', code: 404});
         return Models.WayPoint
         .WayPoint.find({})
         .or(or)
@@ -60,7 +62,7 @@ class TollRoad extends Crud {
       })
       .then(wayPoints => {
         console.log(wayPoints);
-        if (wayPoints.length == 0) return reject({message:'Not found', code: 404});
+        if (wayPoints.length == 0) return reject({message: 'Not found', code: 404});
         let result = TRs.map(item => {
           for (let i in wayPoints) {
             let index = item._wayPoints.indexOf(wayPoints[i]._id);
@@ -88,7 +90,6 @@ class TollRoad extends Crud {
     })
   }
 }
-
 
 
 module.exports = TollRoad;

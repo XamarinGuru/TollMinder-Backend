@@ -36,7 +36,7 @@ router.post('/signin', (req, res) => {
 router.delete('/signout/:_id?', (req, res) => {
   let User = req.app.locals.settings.models.User;
   let {_id} = req.params;
-  if (!req.headers['authorization']) return res.status(400).json({err: 'Not found auth header'});
+  if (!req.headers['authorization']) return res.status(401).json({err: 'Not found auth header'});
   if (!_id) return res.status(400).json({err: 'Not found `_id` in path'});
   User.out(_id, req.headers['authorization'])
   .then(result => res.status(200).json(result))
@@ -45,7 +45,7 @@ router.delete('/signout/:_id?', (req, res) => {
 
 router.put('/:_id?', (req, res) => {
   let User = req.app.locals.settings.models.User;
-  if (!req.headers['authorization']) return res.status(400).json({err: 'Not found auth header'});
+  if (!req.headers['authorization']) return res.status(401).json({err: 'Not found auth header'});
   if (!req.params._id) return res.status(400).json({err: 'Not found `_id` in path'});
   let {name, email, photo, phone} = req.body;
   let changes = {name, email, photo, phone};

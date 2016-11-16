@@ -139,6 +139,12 @@
               "$ref": "#/definitions/User"
             }
           },
+          "302": {
+            "description": "Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {

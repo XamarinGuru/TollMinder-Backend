@@ -48,13 +48,16 @@ class User extends Crud {
       user.token = createToken(user);
       user.password = createHash(user.password);
       user.phoneCode = createRandomCode();
-      let {phone, email} = user;
+      let {phone, email, source} = user;
       this.User.find()
       .or([{phone}, {email}])
       .exec()
       .then(users => {
         if (users.length > 0) {
-          if (users[0].phone == phone && users[0].email == email) return resolve({_id: users[0]._id, token: users[0].token});
+          if ( users[0].phone == phone
+            && users[0].email == email
+            && user[0].source == source)
+            return resolve(user[0]);
           return reject({message: `User source is ${users[0].source}`, code: 302});
         }
         return super._create(this.User, user);

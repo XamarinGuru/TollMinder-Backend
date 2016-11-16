@@ -56,7 +56,7 @@ class User extends Crud {
         if (users.length > 0) {
           if ( users[0].phone == phone
             && users[0].email == email
-            && user[0].source == source)
+            && users[0].source == source)
             return resolve(user[0]);
           return reject({message: `User source is ${users[0].source}`, code: 302});
         }

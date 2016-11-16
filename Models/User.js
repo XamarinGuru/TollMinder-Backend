@@ -47,17 +47,14 @@ class User extends Crud {
       let U;
       user.token = createToken(user);
       user.password = createHash(user.password);
-      user.phoneCode = createRandomCode();
+      let phoneCode = createRandomCode()
+      user.phoneCode = crypto.createHash('md5').update(phoneCode).digest('hex');
       let {phone, email, source} = user;
       this.User.find()
       .or([{phone}, {email}])
       .exec()
       .then(users => {
         if (users.length > 0) {
-          if ( users[0].phone == phone
-            && users[0].email == email
-            && users[0].source == source)
-            return resolve(user[0]);
           return reject({message: `User source is ${users[0].source}`, code: 302});
         }
         return super._create(this.User, user);
@@ -73,7 +70,7 @@ class User extends Crud {
       .then(_ => {
         return Promise.resolve(null);
         if (U.phone) {
-          return SMS.sendSms(`Your verification code is ${U.phoneCode}`, U.phone);
+          return SMS.sendSms(`Your verification code is ${phoneCode}`, U.phone);
         } else {
           return Promise.resolve(null);
         }
@@ -140,7 +137,7 @@ class User extends Crud {
       this.User.findOne({phone})
       .exec()
       .then(user => {
-        if (user.phoneCode == code) {
+        if (user.phoneCode == crypto.createHash('md5').update(code).digest('hex')) {
           user.phoneValidate = true;
           return user.save();
         } else {
@@ -203,7 +200,26 @@ class User extends Crud {
       .then(admin => resolve({token: admin.token}))
       .catch(reject);
     })
+  }
 
+  oauth(email, source) {
+    return new Promise((resolve, reject) => {
+      this.User.findOne({})
+      .and([{email}, {source}])
+      .exec()
+      .then(user => {
+        if (!user) return reject({message: 'User not found', code: 404})
+        if (user.phoneValidate) {
+          user.token = createToken(user);
+          user.save()
+          .then(user => resolve({_id: user._id, token: user.token}));
+        } else {
+          this.remove(user._id)
+          .then(_ => reject({message: 'Phone validation is failed', code: 403}))
+        }
+      })
+      .catch(reject);
+    });
   }
 }
 

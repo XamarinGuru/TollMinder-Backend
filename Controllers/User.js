@@ -16,7 +16,7 @@ router.get('/:_id?', (req, res) => {
 router.post('/signup', (req, res) => {
   let User = req.app.locals.settings.models.User;
   let {name, phone, email, password, source, photo} = req.body;
-  if (!source && !phone) return res.status(400).json({err: 'Bad oauth'});
+  if (!source && !phone && !email) return res.status(400).json({err: 'Bad oauth'});
   else if (!phone || !password) return res.status(400).json({err: 'Missed phone or password'});
   let user = {name, phone, password, email, source, photo};
   User.create(user)
@@ -71,6 +71,14 @@ router.post('/adminAuth', (req, res) => {
   let {name, password} = req.body;
   if (!name || !password) return res.status(400).json({err: 'Bad request'});
   User.authInAdminPanel(name, password)
+  .then(result => res.status(200).json(result))
+  .catch((err) => res.status(err.code || 500).json({err: err.message}));
+});
+
+router.post('/oauth', (req, res) => {
+  let User = req.app.locals.settings.models.User;
+  let {email, source} = req.body;
+  User.oauth(email, source)
   .then(result => res.status(200).json(result))
   .catch((err) => res.status(err.code || 500).json({err: err.message}));
 });

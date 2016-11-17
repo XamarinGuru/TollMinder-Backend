@@ -21,7 +21,10 @@ router.post('/signup', (req, res) => {
   let user = {name, phone, password, email, source, photo};
   User.create(user)
   .then(result => res.status(200).json(result))
-  .catch((err) => res.status(err.code || 500).json({err: err.message}));
+  .catch((err) => {
+    console.log(err);
+    res.status(err.code || 500).json({err: err.message})
+  });
 });
 
 router.post('/signin', (req, res) => {

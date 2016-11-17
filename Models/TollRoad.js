@@ -61,7 +61,6 @@ class TollRoad extends Crud {
         .exec()
       })
       .then(wayPoints => {
-        console.log(wayPoints);
         if (wayPoints.length == 0) return reject({message: 'Not found', code: 404});
         let result = TRs.map(item => {
           for (let i in wayPoints) {
@@ -70,7 +69,6 @@ class TollRoad extends Crud {
           }
           return item;
         });
-        console.log(result);
         return resolve(result);
       })
       .catch(reject);

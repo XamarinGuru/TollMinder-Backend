@@ -11,7 +11,7 @@ const schemas = {
     email: {type: String, required: false},
     emailValidate: {type: Boolean, default: false},
     phone: {type: String, required: true},
-    phoneCode : {type: Number},
+    phoneCode : {type: String},
     phoneValidate: {type: Boolean, default: false},
     /**
      * Password is SHA256 hash string
@@ -68,6 +68,7 @@ class User extends Crud {
         }
       })
       .then(_ => {
+        //
         return Promise.resolve(null);
         if (U.phone) {
           return SMS.sendSms(`Your verification code is ${phoneCode}`, U.phone);

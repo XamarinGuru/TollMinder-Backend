@@ -125,8 +125,10 @@ class User extends Crud {
       this.User.findOne({_id})
       .exec()
       .then(user => {
+        if (!user) return reject({message: 'User not found', code: 404})
+        console.log(user);
         if (hash == createHash(user.email)) return this.update(user._id, user.token, {emailValidate: true});
-        return Promise.reject({message: 'Invalid hash', code: 400})
+        return reject({message: 'Invalid hash', code: 400})
       })
       .then(resolve)
       .catch(reject);

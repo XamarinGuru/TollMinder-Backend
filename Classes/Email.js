@@ -3,27 +3,23 @@ const conf = require('./../conf');
 
 class Email {
   constructor() {
-    this.transporter = nodemailer.createTransport({
-      transport: 'ses',
-      accessKeyId: conf.smtp.accessKey,
-      secretAccessKey: conf.smtp.secretKey
-    })
+    this.transporter = nodemailer.createTransport(conf.smtpConfig)
   }
 
   sendVerifyRequest(name, email, link) {
-    return Promise.resolve(link);
-    // dummy
-    this.transporter.sendMail({
-      from: conf.smtp.from,
-      to: email,
-      html:
-        ` <h1>Hello, ${name}</h1>
+    return new Promise((resolve, reject) => {
+      this.transporter.sendMail({
+        from: conf.fromMail,
+        to: email,
+        html: ` <h1>Hello, ${name}</h1>
           <span>
             To confirm the email, follow <a target="_blank" href="${link}">this link</a>
           </span>`
+      })
+      .then(resolve)
+      .catch(reject);
     })
-    .then(console.log)
-    .catch(console.log);
+
   }
 
   sendInvoice() {

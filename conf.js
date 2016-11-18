@@ -16,9 +16,14 @@ module.exports = {
     password: '1234'
   },
   // Info for mail service
-  smtp: {
-    accessKey: 'AKIAIQET6AEIQ4HWOXCQ',
-    secretKey: 'AsERQkGtlrT7Uq+YWb2/tixYSqVQ+LnGIrDJkv5Awg5H',
-    from: 'no-reply@tollminder.dev'
-  }
-}
+  smtpConfig : {
+    host: 'email-smtp.us-east-1.amazonaws.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'AKIAIQET6AEIQ4HWOXCQ',
+      pass: 'AsERQkGtlrT7Uq+YWb2/tixYSqVQ+LnGIrDJkv5Awg5H'
+    }
+  },
+  fromMail : 'nkreshchenko@gloriumtech.com'
+};

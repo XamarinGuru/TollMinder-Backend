@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5a1ce106-ebb9-47b5-937d-f884ccde094e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Classes/Email.js" afterPath="$PROJECT_DIR$/Classes/Email.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Controllers/Validator.js" afterPath="$PROJECT_DIR$/Controllers/Validator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Documentation/swagger.json" afterPath="$PROJECT_DIR$/Documentation/swagger.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Models/User.js" afterPath="$PROJECT_DIR$/Models/User.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf.js" afterPath="$PROJECT_DIR$/conf.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sync.js" afterPath="$PROJECT_DIR$/test/sync.js" />
     </list>
     <ignored path="tollminder.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,18 +40,18 @@
       <file leaf-file-name="User.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Models/User.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2618">
-              <caret line="119" column="29" selection-start-line="119" selection-start-column="29" selection-end-line="119" selection-end-column="29" />
+            <state relative-caret-position="551">
+              <caret line="37" column="52" selection-start-line="37" selection-start-column="52" selection-end-line="37" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sync.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="sync.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/sync.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-123">
-              <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
+            <state relative-caret-position="580">
+              <caret line="66" column="13" selection-start-line="66" selection-start-column="13" selection-end-line="66" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -82,6 +79,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Crud.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Classes/Crud.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="SyncData.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controllers/SyncData.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -102,11 +109,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="swagger.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="swagger.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Documentation/swagger.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="116" column="7" selection-start-line="116" selection-start-column="7" selection-end-line="116" selection-end-column="7" />
+            <state relative-caret-position="23">
+              <caret line="821" column="0" selection-start-line="821" selection-start-column="0" selection-end-line="821" selection-end-column="0" />
               <folding>
                 <element signature="n#!!block;n#info#0;n#!!top" expanded="false" />
                 <element signature="e#106#122#0" expanded="false" />
@@ -120,10 +127,22 @@
                 <element signature="n#!!block;n#/user/oauth#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#/user/signout/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#/file#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#get#0;n#!!block;n#/tollRoad/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#put#0;n#!!block;n#/tollRoad/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#delete#0;n#!!block;n#/tollRoad/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#get#0;n#!!block;n#/tollRoad#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#post#0;n#!!block;n#/tollRoad#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#get#0;n#!!block;n#/wayPoint/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#put#0;n#!!block;n#/wayPoint/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#delete#0;n#!!block;n#/wayPoint/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#post#0;n#!!block;n#/wayPoint#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="e#18240#19209#0" expanded="false" />
+                <element signature="n#!!block;n#delete#0;n#!!block;n#/tollPoint/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#post#0;n#!!block;n#/tollPoint#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+                <element signature="e#20969#21938#0" expanded="false" />
                 <element signature="n#!!block;n#/sync/{lastSync}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#/validator/phone#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#/validator/email/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#definitions#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -191,7 +210,6 @@
         <option value="$PROJECT_DIR$/Classes/Sms.js" />
         <option value="$PROJECT_DIR$/Controllers/SyncData.js" />
         <option value="$PROJECT_DIR$/Examples.js" />
-        <option value="$PROJECT_DIR$/Documentation/swagger.json" />
         <option value="$PROJECT_DIR$/Controllers/User.js" />
         <option value="$PROJECT_DIR$/Models/TollRoad.js" />
         <option value="$PROJECT_DIR$/test/sync.js" />
@@ -199,6 +217,7 @@
         <option value="$PROJECT_DIR$/conf.js" />
         <option value="$PROJECT_DIR$/Controllers/Validator.js" />
         <option value="$PROJECT_DIR$/Models/User.js" />
+        <option value="$PROJECT_DIR$/Documentation/swagger.json" />
       </list>
     </option>
   </component>
@@ -214,8 +233,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2165" />
-    <option name="y" value="116" />
+    <option name="x" value="2196" />
+    <option name="y" value="67" />
     <option name="width" value="1636" />
     <option name="height" value="928" />
   </component>
@@ -349,7 +368,7 @@
     <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
     <property name="prop_add_unversioned_files" value="true" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tollminder-admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gtmt-exp" />
     <property name="SearchEverywhereHistoryKey" value="task&#9;ACTION&#9;tasks.and.contexts" />
     <property name="nodejs.mocha.mocha_node_package_dir" value="/usr/lib/node_modules/mocha" />
   </component>
@@ -485,7 +504,7 @@
       <workItem from="1479285108050" duration="22660000" />
       <workItem from="1479372611366" duration="4634000" />
       <workItem from="1479392093867" duration="6450000" />
-      <workItem from="1479457757127" duration="3614000" />
+      <workItem from="1479457757127" duration="13260000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1478178944114</created>
@@ -704,7 +723,14 @@
       <option name="project" value="LOCAL" />
       <updated>1479401900023</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="fix signup method">
+      <created>1479461378311</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1479461378311</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers>
       <Redmine shared="false" url="https://redmine.gloriumdev.com">
         <option name="APIKey" value="30b5b5cb86ea2c370f2c7d06243565b397f320f7" />
@@ -730,7 +756,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190853000" />
+    <option name="totallyTimeSpent" value="200499000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -742,17 +768,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2165" y="116" width="1636" height="928" extended-state="0" />
+    <frame x="2196" y="67" width="1636" height="928" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16553007" sideWeight="0.59893996" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977462" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32858837" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16553007" sideWeight="0.40106007" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2986369" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.32779098" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="390" y="38" width="721" height="604" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16553007" sideWeight="0.40106007" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29739776" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.32779098" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="385" y="39" width="731" height="608" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3846154" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3841388" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5344418" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="1113" y="382" width="638" height="532" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -997,13 +1023,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Classes/Crud.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-448">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Documentation/swagger-ui.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
@@ -1048,39 +1067,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Documentation/swagger.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="116" column="7" selection-start-line="116" selection-start-column="7" selection-end-line="116" selection-end-column="7" />
-          <folding>
-            <element signature="n#!!block;n#info#0;n#!!top" expanded="false" />
-            <element signature="e#106#122#0" expanded="false" />
-            <element signature="e#161#189#0" expanded="false" />
-            <element signature="n#!!block;n#get#0;n#!!block;n#/user/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="e#362#487#0" expanded="false" />
-            <element signature="e#499#677#0" expanded="false" />
-            <element signature="n#!!block;n#put#0;n#!!block;n#/user/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#/user/signup#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#/user/signin#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#/user/oauth#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#/user/signout/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#/file#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#/sync/{lastSync}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#/validator/phone#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#/validator/email/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#definitions#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controllers/User.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/Validator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
@@ -1105,14 +1091,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Classes/Email.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -1123,19 +1101,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Models/User.js">
+    <entry file="file://$PROJECT_DIR$/conf.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2618">
-          <caret line="119" column="29" selection-start-line="119" selection-start-column="29" selection-end-line="119" selection-end-column="29" />
+        <state relative-caret-position="462">
+          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Classes/Crud.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controllers/User.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/sync.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-123">
-          <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
+        <state relative-caret-position="580">
+          <caret line="66" column="13" selection-start-line="66" selection-start-column="13" selection-end-line="66" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/User.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="37" column="52" selection-start-line="37" selection-start-column="52" selection-end-line="37" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Documentation/swagger.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="821" column="0" selection-start-line="821" selection-start-column="0" selection-end-line="821" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!block;n#info#0;n#!!top" expanded="false" />
+            <element signature="e#106#122#0" expanded="false" />
+            <element signature="e#161#189#0" expanded="false" />
+            <element signature="n#!!block;n#get#0;n#!!block;n#/user/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="e#362#487#0" expanded="false" />
+            <element signature="e#499#677#0" expanded="false" />
+            <element signature="n#!!block;n#put#0;n#!!block;n#/user/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#/user/signup#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#/user/signin#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#/user/oauth#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#/user/signout/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#/file#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#get#0;n#!!block;n#/tollRoad/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#put#0;n#!!block;n#/tollRoad/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#delete#0;n#!!block;n#/tollRoad/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#get#0;n#!!block;n#/tollRoad#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#post#0;n#!!block;n#/tollRoad#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#get#0;n#!!block;n#/wayPoint/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#put#0;n#!!block;n#/wayPoint/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#delete#0;n#!!block;n#/wayPoint/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#post#0;n#!!block;n#/wayPoint#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="e#18240#19209#0" expanded="false" />
+            <element signature="n#!!block;n#delete#0;n#!!block;n#/tollPoint/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#post#0;n#!!block;n#/tollPoint#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="e#20969#21938#0" expanded="false" />
+            <element signature="n#!!block;n#/sync/{lastSync}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#/validator/phone#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#/validator/email/{_id}#0;n#!!block;n#paths#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

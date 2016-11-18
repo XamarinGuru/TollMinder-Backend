@@ -35,11 +35,12 @@ const schemas = {
   }
 };
 
+const userSchema = new mongoose.Schema(schemas.user)
 class User extends Crud {
 
   constructor() {
     super();
-    this.User = mongoose.model('User', new mongoose.Schema(schemas.user));
+    this.User = mongoose.model('User', userSchema);
   }
 
   create(user) {

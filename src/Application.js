@@ -43,8 +43,8 @@ app.use((req, res, next) => {
 });
 
 // Set public dirs
-app.use('/api/doc', express.static(path.join(__dirname, 'Documentation')));
-app.use('/api/uploads', express.static(path.join(__dirname, 'Uploads')));
+app.use('/api/doc', express.static('./../Documentation'));
+app.use('/api/uploads', express.static('./../Uploads'));
 
 // Set routes
 app.use('/api/user', user);

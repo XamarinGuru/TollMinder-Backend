@@ -14,6 +14,8 @@
  *
  */
 
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
+
 window.SwaggerTranslator = {
 
   _words: [],

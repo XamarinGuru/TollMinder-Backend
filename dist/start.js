@@ -1,5 +1,7 @@
 'use strict';
 
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
+
 var app = require('./Application');
 var conf = require('./conf');
 

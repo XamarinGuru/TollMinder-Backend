@@ -2,6 +2,8 @@
 
 /* jshint quotmark: double */
 
+var regeneratorRuntime = require("babel-catch-regenerator-runtime");
+
 window.SwaggerTranslator.learn({
     "Warning: Deprecated": "警告: 廃止予定",
     "Implementation Notes": "実装メモ",

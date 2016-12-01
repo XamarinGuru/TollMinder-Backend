@@ -1,6 +1,14 @@
 'use strict';
 
-if (typeof Object.assign != 'function') {
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
+
+if (typeof _assign2.default != 'function') {
   (function () {
     Object.assign = function (target) {
       'use strict';

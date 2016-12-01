@@ -1,5 +1,7 @@
 'use strict';
 
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
+
 module.exports = {
   // Main info
   secret: 'tollminder',

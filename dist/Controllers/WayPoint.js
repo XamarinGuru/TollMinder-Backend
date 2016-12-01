@@ -1,5 +1,7 @@
 'use strict';
 
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
+
 var router = require('express').Router();
 
 router.get('/:_id?', function (req, res) {

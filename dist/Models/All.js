@@ -1,5 +1,7 @@
 'use strict';
 
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
+
 var User = require('./User');
 var TollRoadWayPoint = require('./TollRoadWayPoint');
 var TollRoad = require('./TollRoad');

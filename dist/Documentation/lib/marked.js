@@ -1,6 +1,12 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof2 = require('babel-runtime/helpers/typeof');
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
 
 /**
  * marked - a markdown parser
@@ -1159,7 +1165,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   marked.parse = marked;
 
-  if (typeof module !== 'undefined' && (typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') {
+  if (typeof module !== 'undefined' && (typeof exports === 'undefined' ? 'undefined' : (0, _typeof3.default)(exports)) === 'object') {
     module.exports = marked;
   } else if (typeof define === 'function' && define.amd) {
     define(function () {

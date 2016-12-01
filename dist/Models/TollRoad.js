@@ -1,18 +1,44 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof2 = require('babel-runtime/helpers/typeof');
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _typeof3 = _interopRequireDefault(_typeof2);
 
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+var _regenerator = require('babel-runtime/regenerator');
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+var _regenerator2 = _interopRequireDefault(_regenerator);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _get2 = require('babel-runtime/helpers/get');
+
+var _get3 = _interopRequireDefault(_get2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
 
 var mongoose = require('mongoose');
 var Crud = require('./../Classes/Crud');
@@ -31,27 +57,27 @@ function dateNow() {
 }
 
 var TollRoad = function (_Crud) {
-  _inherits(TollRoad, _Crud);
+  (0, _inherits3.default)(TollRoad, _Crud);
 
   function TollRoad() {
-    _classCallCheck(this, TollRoad);
+    (0, _classCallCheck3.default)(this, TollRoad);
 
-    var _this = _possibleConstructorReturn(this, (TollRoad.__proto__ || Object.getPrototypeOf(TollRoad)).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (TollRoad.__proto__ || (0, _getPrototypeOf2.default)(TollRoad)).call(this));
 
     _this.TollRoad = mongoose.model('TollRoad', new mongoose.Schema(schemas.TollRoad));
     return _this;
   }
 
-  _createClass(TollRoad, [{
+  (0, _createClass3.default)(TollRoad, [{
     key: 'create',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(tollRoad) {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(tollRoad) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _get(TollRoad.prototype.__proto__ || Object.getPrototypeOf(TollRoad.prototype), '_create', this).call(this, this.TollRoad, tollRoad);
+                return (0, _get3.default)(TollRoad.prototype.__proto__ || (0, _getPrototypeOf2.default)(TollRoad.prototype), '_create', this).call(this, this.TollRoad, tollRoad);
 
               case 2:
                 return _context.abrupt('return', _context.sent);
@@ -73,13 +99,13 @@ var TollRoad = function (_Crud) {
   }, {
     key: 'read',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(_id, limit, skip) {
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_id, limit, skip) {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _get(TollRoad.prototype.__proto__ || Object.getPrototypeOf(TollRoad.prototype), '_read', this).call(this, this.TollRoad, _id, '_wayPoints', limit, skip);
+                return (0, _get3.default)(TollRoad.prototype.__proto__ || (0, _getPrototypeOf2.default)(TollRoad.prototype), '_read', this).call(this, this.TollRoad, _id, '_wayPoints', limit, skip);
 
               case 2:
                 return _context2.abrupt('return', _context2.sent);
@@ -101,13 +127,13 @@ var TollRoad = function (_Crud) {
   }, {
     key: 'update',
     value: function () {
-      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(_id, changes) {
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(_id, changes) {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return _get(TollRoad.prototype.__proto__ || Object.getPrototypeOf(TollRoad.prototype), '_update', this).call(this, this.TollRoad, _id, schemas.TollRoad, changes);
+                return (0, _get3.default)(TollRoad.prototype.__proto__ || (0, _getPrototypeOf2.default)(TollRoad.prototype), '_update', this).call(this, this.TollRoad, _id, schemas.TollRoad, changes);
 
               case 2:
                 return _context3.abrupt('return', _context3.sent);
@@ -129,13 +155,13 @@ var TollRoad = function (_Crud) {
   }, {
     key: 'remove',
     value: function () {
-      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(_id) {
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      var _ref4 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(_id) {
+        return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return _get(TollRoad.prototype.__proto__ || Object.getPrototypeOf(TollRoad.prototype), '_remove', this).call(this, this.TollRoad, _id);
+                return (0, _get3.default)(TollRoad.prototype.__proto__ || (0, _getPrototypeOf2.default)(TollRoad.prototype), '_remove', this).call(this, this.TollRoad, _id);
 
               case 2:
                 return _context4.abrupt('return', _context4.sent);
@@ -157,19 +183,19 @@ var TollRoad = function (_Crud) {
   }, {
     key: 'findOlder',
     value: function () {
-      var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee6(timestamp, token, Models) {
+      var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee6(timestamp, token, Models) {
         var _this2 = this;
 
         var _ret;
 
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        return _regenerator2.default.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
                 _context6.prev = 0;
-                return _context6.delegateYield(regeneratorRuntime.mark(function _callee5() {
+                return _context6.delegateYield(_regenerator2.default.mark(function _callee5() {
                   var lastSyncDate, WayPoint, TollPoint, User, user, tollRoads, tmp, wayPointIds, i, or, wayPoints, result;
-                  return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                  return _regenerator2.default.wrap(function _callee5$(_context5) {
                     while (1) {
                       switch (_context5.prev = _context5.next) {
                         case 0:
@@ -190,7 +216,7 @@ var TollRoad = function (_Crud) {
 
                         case 7:
                           _context5.next = 9;
-                          return _get(TollRoad.prototype.__proto__ || Object.getPrototypeOf(TollRoad.prototype), '_findOlder', _this2).call(_this2, _this2.TollRoad, lastSyncDate);
+                          return (0, _get3.default)(TollRoad.prototype.__proto__ || (0, _getPrototypeOf2.default)(TollRoad.prototype), '_findOlder', _this2).call(_this2, _this2.TollRoad, lastSyncDate);
 
                         case 9:
                           tollRoads = _context5.sent;
@@ -250,7 +276,7 @@ var TollRoad = function (_Crud) {
               case 2:
                 _ret = _context6.t0;
 
-                if (!((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object")) {
+                if (!((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object")) {
                   _context6.next = 5;
                   break;
                 }
@@ -283,9 +309,9 @@ var TollRoad = function (_Crud) {
   }, {
     key: 'addWayPoint',
     value: function () {
-      var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee7(_id, _wayPoint) {
+      var _ref6 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee7(_id, _wayPoint) {
         var road;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        return _regenerator2.default.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
@@ -324,7 +350,6 @@ var TollRoad = function (_Crud) {
       return addWayPoint;
     }()
   }]);
-
   return TollRoad;
 }(Crud);
 

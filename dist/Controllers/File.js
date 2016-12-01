@@ -1,5 +1,7 @@
 'use strict';
 
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
+
 var router = require('express').Router();
 var fs = require('fs');
 var conf = require('./../conf');

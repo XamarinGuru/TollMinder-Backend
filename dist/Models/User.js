@@ -1,16 +1,40 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _regenerator = require('babel-runtime/regenerator');
 
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+var _regenerator2 = _interopRequireDefault(_regenerator);
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _get2 = require('babel-runtime/helpers/get');
+
+var _get3 = _interopRequireDefault(_get2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
 
 var mongoose = require('mongoose');
 var conf = require('./../conf');
@@ -53,23 +77,23 @@ var schemas = {
 var userSchema = new mongoose.Schema(schemas.user);
 
 var User = function (_Crud) {
-  _inherits(User, _Crud);
+  (0, _inherits3.default)(User, _Crud);
 
   function User() {
-    _classCallCheck(this, User);
+    (0, _classCallCheck3.default)(this, User);
 
-    var _this = _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (User.__proto__ || (0, _getPrototypeOf2.default)(User)).call(this));
 
     _this.User = mongoose.model('User', userSchema);
     return _this;
   }
 
-  _createClass(User, [{
+  (0, _createClass3.default)(User, [{
     key: 'create',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(user) {
+      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(user) {
         var phoneCode, phone, email, source, findedUser, newUser;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -95,7 +119,7 @@ var User = function (_Crud) {
                 throw { message: 'User source is ' + findedUser.source, code: 302 };
 
               case 11:
-                newUser = _get(User.prototype.__proto__ || Object.getPrototypeOf(User.prototype), '_create', this).call(this, this.User, user);
+                newUser = (0, _get3.default)(User.prototype.__proto__ || (0, _getPrototypeOf2.default)(User.prototype), '_create', this).call(this, this.User, user);
 
                 if (!newUser.email) {
                   _context.next = 15;
@@ -130,9 +154,9 @@ var User = function (_Crud) {
   }, {
     key: 'read',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(_id, token) {
+      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_id, token) {
         var user;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
@@ -174,9 +198,9 @@ var User = function (_Crud) {
   }, {
     key: 'update',
     value: function () {
-      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(_id, token, changes) {
+      var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(_id, token, changes) {
         var user, change, savedUser;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
@@ -226,9 +250,9 @@ var User = function (_Crud) {
   }, {
     key: 'auth',
     value: function () {
-      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(phone, password) {
+      var _ref4 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(phone, password) {
         var user;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
@@ -275,13 +299,13 @@ var User = function (_Crud) {
   }, {
     key: 'remove',
     value: function () {
-      var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(_id) {
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(_id) {
+        return _regenerator2.default.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return _get(User.prototype.__proto__ || Object.getPrototypeOf(User.prototype), '_remove', this).call(this, this.User, _id);
+                return (0, _get3.default)(User.prototype.__proto__ || (0, _getPrototypeOf2.default)(User.prototype), '_remove', this).call(this, this.User, _id);
 
               case 2:
                 return _context5.abrupt('return', _context5.sent);
@@ -303,9 +327,9 @@ var User = function (_Crud) {
   }, {
     key: 'validateEmail',
     value: function () {
-      var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee6(_id, hash) {
+      var _ref6 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee6(_id, hash) {
         var user;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        return _regenerator2.default.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
@@ -362,9 +386,9 @@ var User = function (_Crud) {
   }, {
     key: 'validatePhone',
     value: function () {
-      var _ref7 = _asyncToGenerator(regeneratorRuntime.mark(function _callee7(phone, code) {
+      var _ref7 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee7(phone, code) {
         var user;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        return _regenerator2.default.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
@@ -408,10 +432,10 @@ var User = function (_Crud) {
   }, {
     key: 'out',
     value: function () {
-      var _ref8 = _asyncToGenerator(regeneratorRuntime.mark(function _callee8(_id, token) {
+      var _ref8 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee8(_id, token) {
         var _;
 
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        return _regenerator2.default.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
@@ -445,9 +469,9 @@ var User = function (_Crud) {
   }, {
     key: 'forgotPassword',
     value: function () {
-      var _ref9 = _asyncToGenerator(regeneratorRuntime.mark(function _callee9(creadentialls) {
+      var _ref9 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee9(creadentialls) {
         var phone, email, user;
-        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+        return _regenerator2.default.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
@@ -496,9 +520,9 @@ var User = function (_Crud) {
   }, {
     key: 'authInAdminPanel',
     value: function () {
-      var _ref10 = _asyncToGenerator(regeneratorRuntime.mark(function _callee10(name, password) {
+      var _ref10 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee10(name, password) {
         var admin, user, newUser, savedAdmin;
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+        return _regenerator2.default.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
@@ -574,10 +598,10 @@ var User = function (_Crud) {
   }, {
     key: 'oauth',
     value: function () {
-      var _ref11 = _asyncToGenerator(regeneratorRuntime.mark(function _callee11(email, source) {
+      var _ref11 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee11(email, source) {
         var user, _;
 
-        return regeneratorRuntime.wrap(function _callee11$(_context11) {
+        return _regenerator2.default.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
@@ -640,7 +664,6 @@ var User = function (_Crud) {
       return oauth;
     }()
   }]);
-
   return User;
 }(Crud);
 

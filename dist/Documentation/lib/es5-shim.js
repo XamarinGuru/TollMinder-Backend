@@ -1,6 +1,28 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _defineProperty = require('babel-runtime/core-js/object/define-property');
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+var _getOwnPropertyDescriptor = require('babel-runtime/core-js/object/get-own-property-descriptor');
+
+var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
+
+var _toStringTag = require('babel-runtime/core-js/symbol/to-string-tag');
+
+var _toStringTag2 = _interopRequireDefault(_toStringTag);
+
+var _symbol = require('babel-runtime/core-js/symbol');
+
+var _symbol2 = _interopRequireDefault(_symbol);
+
+var _typeof2 = require('babel-runtime/helpers/typeof');
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
 
 /*!
  * https://github.com/es-shims/es5-shim
@@ -23,7 +45,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(factory);
-    } else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') {
+    } else if ((typeof exports === 'undefined' ? 'undefined' : (0, _typeof3.default)(exports)) === 'object') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
@@ -71,7 +93,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     /* global Symbol */
     /* eslint-disable one-var-declaration-per-line, no-redeclare, max-statements-per-line */
-    var hasToStringTag = typeof Symbol === 'function' && _typeof(Symbol.toStringTag) === 'symbol';
+    var hasToStringTag = typeof _symbol2.default === 'function' && (0, _typeof3.default)(_toStringTag2.default) === 'symbol';
     var isCallable; /* inlined from https://npmjs.com/is-callable */var fnToStr = Function.prototype.toString,
         constructorRegex = /^\s*class /,
         isES6ClassFn = function isES6ClassFn(value) {
@@ -95,7 +117,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         isCallable = function isCallable(value) {
         if (!value) {
             return false;
-        }if (typeof value !== 'function' && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== 'object') {
+        }if (typeof value !== 'function' && (typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value)) !== 'object') {
             return false;
         }if (hasToStringTag) {
             return tryFunctionObject(value);
@@ -113,7 +135,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
     },
         regexClass = '[object RegExp]';isRegex = function isRegex(value) {
-        if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== 'object') {
+        if ((typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value)) !== 'object') {
             return false;
         }return hasToStringTag ? tryRegexExec(value) : to_string.call(value) === regexClass;
     };
@@ -128,7 +150,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         stringClass = '[object String]';isString = function isString(value) {
         if (typeof value === 'string') {
             return true;
-        }if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== 'object') {
+        }if ((typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value)) !== 'object') {
             return false;
         }return hasToStringTag ? tryStringObject(value) : to_string.call(value) === stringClass;
     };
@@ -189,7 +211,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     /* replaceable with https://npmjs.com/package/es-abstract /helpers/isPrimitive */
     var isPrimitive = function isPrimitive(input) {
-        var type = typeof input === 'undefined' ? 'undefined' : _typeof(input);
+        var type = typeof input === 'undefined' ? 'undefined' : (0, _typeof3.default)(input);
         return input === null || type !== 'object' && type !== 'function';
     };
 
@@ -457,7 +479,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         if (method) {
             try {
                 method.call('foo', function (_, __, context) {
-                    if ((typeof context === 'undefined' ? 'undefined' : _typeof(context)) !== 'object') {
+                    if ((typeof context === 'undefined' ? 'undefined' : (0, _typeof3.default)(context)) !== 'object') {
                         properlyBoxesNonStrict = false;
                     }
                 });
@@ -627,7 +649,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/reduce
     var reduceCoercesToObject = false;
     if (ArrayPrototype.reduce) {
-        reduceCoercesToObject = _typeof(ArrayPrototype.reduce.call('es5', function (_, __, ___, list) {
+        reduceCoercesToObject = (0, _typeof3.default)(ArrayPrototype.reduce.call('es5', function (_, __, ___, list) {
             return list;
         })) === 'object';
     }
@@ -680,7 +702,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/reduceRight
     var reduceRightCoercesToObject = false;
     if (ArrayPrototype.reduceRight) {
-        reduceRightCoercesToObject = _typeof(ArrayPrototype.reduceRight.call('es5', function (_, __, ___, list) {
+        reduceRightCoercesToObject = (0, _typeof3.default)(ArrayPrototype.reduceRight.call('es5', function (_, __, ___, list) {
             return list;
         })) === 'object';
     }
@@ -1055,7 +1077,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
         for (var k in window) {
             try {
-                if (!blacklistedKeys['$' + k] && owns(window, k) && window[k] !== null && _typeof(window[k]) === 'object') {
+                if (!blacklistedKeys['$' + k] && owns(window, k) && window[k] !== null && (0, _typeof3.default)(window[k]) === 'object') {
                     equalsConstructorPrototype(window[k]);
                 }
             } catch (e) {
@@ -1083,7 +1105,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return toStr(value) === '[object Arguments]';
     };
     var isLegacyArguments = function isArguments(value) {
-        return value !== null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && typeof value.length === 'number' && value.length >= 0 && !isArray(value) && isCallable(value.callee);
+        return value !== null && (typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value)) === 'object' && typeof value.length === 'number' && value.length >= 0 && !isArray(value) && isCallable(value.callee);
     };
     var isArguments = isStandardArguments(arguments) ? isStandardArguments : isLegacyArguments;
 
@@ -1091,7 +1113,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         keys: function keys(object) {
             var isFn = isCallable(object);
             var isArgs = isArguments(object);
-            var isObject = object !== null && (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object';
+            var isObject = object !== null && (typeof object === 'undefined' ? 'undefined' : (0, _typeof3.default)(object)) === 'object';
             var isStr = isObject && isString(object);
 
             if (!isObject && !isFn && !isArgs) {
@@ -2006,10 +2028,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     if (supportsDescriptors) {
         var ensureNonEnumerable = function ensureNonEnumerable(obj, prop) {
             if (isEnum(obj, prop)) {
-                var desc = Object.getOwnPropertyDescriptor(obj, prop);
+                var desc = (0, _getOwnPropertyDescriptor2.default)(obj, prop);
                 if (desc.configurable) {
                     desc.enumerable = false;
-                    Object.defineProperty(obj, prop, desc);
+                    (0, _defineProperty2.default)(obj, prop, desc);
                 }
             }
         };

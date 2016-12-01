@@ -1,6 +1,16 @@
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _stringify = require("babel-runtime/core-js/json/stringify");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+var _typeof2 = require("babel-runtime/helpers/typeof");
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var regeneratorRuntime = require("babel-catch-regenerator-runtime");
 
 // Backbone.js 1.1.2
 
@@ -40,11 +50,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }, trigger: function trigger(t) {
             if (!this._events) return this;var e = o.call(arguments, 1);if (!c(this, "trigger", t, e)) return this;var i = this._events[t];var r = this._events.all;if (i) f(i, e);if (r) f(r, arguments);return this;
         }, stopListening: function stopListening(t, e, r) {
-            var s = this._listeningTo;if (!s) return this;var n = !e && !r;if (!r && (typeof e === "undefined" ? "undefined" : _typeof(e)) === "object") r = this;if (t) (s = {})[t._listenId] = t;for (var a in s) {
+            var s = this._listeningTo;if (!s) return this;var n = !e && !r;if (!r && (typeof e === "undefined" ? "undefined" : (0, _typeof3.default)(e)) === "object") r = this;if (t) (s = {})[t._listenId] = t;for (var a in s) {
                 t = s[a];t.off(e, r, this);if (n || i.isEmpty(t._events)) delete this._listeningTo[a];
             }return this;
         } };var l = /\s+/;var c = function c(t, e, i, r) {
-        if (!i) return true;if ((typeof i === "undefined" ? "undefined" : _typeof(i)) === "object") {
+        if (!i) return true;if ((typeof i === "undefined" ? "undefined" : (0, _typeof3.default)(i)) === "object") {
             for (var s in i) {
                 t[e].apply(t, [s, i[s]].concat(r));
             }return false;
@@ -77,7 +87,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }return;}
     };var d = { listenTo: "on", listenToOnce: "once" };i.each(d, function (t, e) {
         u[e] = function (e, r, s) {
-            var n = this._listeningTo || (this._listeningTo = {});var a = e._listenId || (e._listenId = i.uniqueId("l"));n[a] = e;if (!s && (typeof r === "undefined" ? "undefined" : _typeof(r)) === "object") s = this;e[t](r, s, this);return this;
+            var n = this._listeningTo || (this._listeningTo = {});var a = e._listenId || (e._listenId = i.uniqueId("l"));n[a] = e;if (!s && (typeof r === "undefined" ? "undefined" : (0, _typeof3.default)(r)) === "object") s = this;e[t](r, s, this);return this;
         };
     });u.bind = u.on;u.unbind = u.off;i.extend(e, u);var p = e.Model = function (t, e) {
         var r = t || {};e || (e = {});this.cid = i.uniqueId("c");this.attributes = {};if (e.collection) this.collection = e.collection;if (e.parse) r = this.parse(r, e) || {};r = i.defaults({}, r, i.result(this, "defaults"));this.set(r, e);this.changed = {};this.initialize.apply(this, arguments);
@@ -92,7 +102,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }, has: function has(t) {
             return this.get(t) != null;
         }, set: function set(t, e, r) {
-            var s, n, a, o, h, u, l, c;if (t == null) return this;if ((typeof t === "undefined" ? "undefined" : _typeof(t)) === "object") {
+            var s, n, a, o, h, u, l, c;if (t == null) return this;if ((typeof t === "undefined" ? "undefined" : (0, _typeof3.default)(t)) === "object") {
                 n = t;r = e;
             } else {
                 (n = {})[t] = e;
@@ -138,7 +148,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var s,
                 n,
                 a,
-                o = this.attributes;if (t == null || (typeof t === "undefined" ? "undefined" : _typeof(t)) === "object") {
+                o = this.attributes;if (t == null || (typeof t === "undefined" ? "undefined" : (0, _typeof3.default)(t)) === "object") {
                 s = t;r = e;
             } else {
                 (s = {})[t] = e;
@@ -328,7 +338,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var n = T[t];i.defaults(s || (s = {}), { emulateHTTP: e.emulateHTTP, emulateJSON: e.emulateJSON });var a = { type: n, dataType: "json" };if (!s.url) {
             a.url = i.result(r, "url") || M();
         }if (s.data == null && r && (t === "create" || t === "update" || t === "patch")) {
-            a.contentType = "application/json";a.data = JSON.stringify(s.attrs || r.toJSON(s));
+            a.contentType = "application/json";a.data = (0, _stringify2.default)(s.attrs || r.toJSON(s));
         }if (s.emulateJSON) {
             a.contentType = "application/x-www-form-urlencoded";a.data = a.data ? { model: a.data } : {};
         }if (s.emulateHTTP && (n === "PUT" || n === "DELETE" || n === "PATCH")) {

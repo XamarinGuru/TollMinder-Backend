@@ -1,22 +1,36 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _regenerator = require('babel-runtime/regenerator');
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+var _regenerator2 = _interopRequireDefault(_regenerator);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
 
 module.exports = function () {
   function Crud() {
-    _classCallCheck(this, Crud);
+    (0, _classCallCheck3.default)(this, Crud);
   }
 
-  _createClass(Crud, [{
+  (0, _createClass3.default)(Crud, [{
     key: '_create',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(model, data) {
+      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(model, data) {
         var document;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -50,9 +64,9 @@ module.exports = function () {
   }, {
     key: '_read',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(model, _id, populate, limit, skip) {
+      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(model, _id, populate, limit, skip) {
         var query;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
@@ -90,9 +104,9 @@ module.exports = function () {
   }, {
     key: '_update',
     value: function () {
-      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(model, _id, schema, changes) {
+      var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(model, _id, schema, changes) {
         var document, change;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
@@ -142,8 +156,8 @@ module.exports = function () {
   }, {
     key: '_remove',
     value: function () {
-      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(model, _id) {
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      var _ref4 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(model, _id) {
+        return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
@@ -185,8 +199,8 @@ module.exports = function () {
   }, {
     key: '_findOlder',
     value: function () {
-      var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(model, targetDate, populate) {
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(model, targetDate, populate) {
+        return _regenerator2.default.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
@@ -217,6 +231,5 @@ module.exports = function () {
       return _findOlder;
     }()
   }]);
-
   return Crud;
 }();

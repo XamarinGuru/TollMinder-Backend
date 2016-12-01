@@ -1,5 +1,7 @@
 'use strict';
 
+var regeneratorRuntime = require('babel-catch-regenerator-runtime');
+
 /**
  * @name Tollminder backend
  * @author Kreshchenko Nickolay

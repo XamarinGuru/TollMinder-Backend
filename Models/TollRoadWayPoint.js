@@ -7,10 +7,14 @@ const schemas = {
     _tollPoints: [{type: mongoose.Schema.Types.ObjectId, ref: 'TollPoint'}],
     latitude: Number,
     longitude: Number,
-    createdAt: {type: Date, default: Date.now()},
+    createdAt: {type: Date, default: dateNow()},
     updatedAt: {type: Date}
   }
 };
+
+function dateNow() {
+  return Date.now()
+}
 
 class WayPoint extends Crud {
 
@@ -19,66 +23,55 @@ class WayPoint extends Crud {
     this.WayPoint = mongoose.model('WayPoint', new mongoose.Schema(schemas.WayPoint));
   }
 
-  create(wayPoint, Models) {
-    let WP;
-    return new Promise((resolve, reject) => {
-      super._create(this.WayPoint, wayPoint)
-      .then(wayPoint => {
-        WP = wayPoint;
-        return Models.TollRoad.addWayPoint(wayPoint._tollRoad, wayPoint._id)
-      })
-      .then(_ => resolve(WP))
-      .catch(reject);
-    });
+  async create(wayPoint, Models) {
+    try {
+      let wayPoint = await super._create(this.WayPoint, wayPoint);
+      await Models.TollRoad.addWayPoint(wayPoint._tollRoad, wayPoint._id);
+      return wayPoint;
+    } catch (e) {
+      throw e;
+    }
+
   }
 
-  read(_id, limit, skip) {
-    return super._read(this.WayPoint, _id, '_tollPoints _location _tollRoad', limit, skip);
+  async read(_id, limit, skip) {
+    return await super._read(this.WayPoint, _id, '_tollPoints _location _tollRoad', limit, skip);
   }
 
-  update(_id, changes, Models) {
-    return new Promise((resolve, reject) => {
-      let WP;
-      super._update(this.WayPoint, _id, schemas.WayPoint, changes)
-      .then(wayPoint => {
-        WP = wayPoint;
-        return Models.TollRoad.update(wayPoint._tollRoad, {updatedAt: Date.now()});
-      })
-      .then(_ => resolve(WP))
-      .catch(reject)
-    });
+  async update(_id, changes, Models) {
+    try {
+      let wayPoint = await super._update(this.WayPoint, _id, schemas.WayPoint, changes);
+      await Models.TollRoad.update(wayPoint._tollRoad, {updatedAt: Date.now()});
+      return wayPoint;
+    } catch (e) {
+      throw e;
+    }
   }
 
-  remove(_id, Models) {
-    return new Promise((resolve, reject) => {
-      Models.TollRoad.TollRoad.findOne({_wayPoints: _id})
-      .exec()
-      .then(tollRoad => {
-        tollRoad._wayPoints.splice(tollRoad._wayPoints.indexOf(_id), 1);
-        tollRoad.updatedAt = Date.now();
-        return tollRoad.save();
-      })
-      .then(_ => super._remove(this.WayPoint, _id))
-      .then(resolve)
-      .catch(reject);
-    });
+  async remove(_id, Models) {
+    try {
+      let tollRoad = await Models.TollRoad.TollRoad.findOne({_wayPoints: _id}).exec();
+      tollRoad._wayPoints.splice(tollRoad._wayPoints.indexOf(_id), 1);
+      tollRoad.updatedAt = Date.now();
+      return await tollRoad.save();
+    } catch (e) {
+      throw e;
+    }
   }
 
-  findOlder(timestamp, Models) {
-    return super._findOlder(this.WayPoint, timestamp);
+  async findOlder(timestamp, Models) {
+    return await super._findOlder(this.WayPoint, timestamp);
   }
 
-  addTollPoint(_id, _tollPoint) {
-    return new Promise((resolve, reject) => {
-      this.read(_id)
-      .then(wayPoint => {
-        wayPoint._tollPoints.push(_tollPoint);
-        wayPoint.updatedAt = Date.now();
-        return wayPoint.save();
-      })
-      .then(resolve)
-      .catch(reject);
-    })
+  async addTollPoint(_id, _tollPoint) {
+    try {
+      let wayPoint = await this.read(_id);
+      wayPoint._tollPoints.push(_tollPoint);
+      wayPoint.updatedAt = Date.now();
+      return await wayPoint.save();
+    } catch (e) {
+      throw e;
+    }
   }
 }
 

@@ -13,10 +13,14 @@ const schemas = {
      *  exit
      */
     action: {type: String},
-    createdAt: {type: Date, default: Date.now()},
+    createdAt: {type: Date, default: dateNow()},
     updatedAt: {type: Date}
   }
 };
+
+function dateNow() {
+  return Date.now()
+}
 
 class TollPoint extends Crud {
 
@@ -25,53 +29,44 @@ class TollPoint extends Crud {
     this.TollPoint = mongoose.model('TollPoint', new mongoose.Schema(schemas.TollPoint));
   }
 
-  create(tollPoint, Models) {
-    let TP;
-    return new Promise((resolve, reject) => {
-      super._create(this.TollPoint, tollPoint)
-      .then(tollPoint => {
-        TP = tollPoint;
-        return Models.WayPoint.addTollPoint(tollPoint._wayPoint, tollPoint._id);
-      })
-      .then(_ => resolve(TP))
-      .catch(reject);
-    });
+  async create(tollPoint, Models) {
+    try {
+      let tollPoint = await super._create(this.TollPoint, tollPoint);
+      await Models.WayPoint.addTollPoint(tollPoint._wayPoint, tollPoint._id);
+      return tollPoint;
+    } catch (e) {
+      throw e;
+    }
   }
 
-  read(_id, limit, skip) {
-    return super._read(this.TollPoint, _id, '_wayPoint', limit, skip);
+  async read(_id, limit, skip) {
+    return await super._read(this.TollPoint, _id, '_wayPoint', limit, skip);
   }
 
-  update(_id, changes, Models) {
-    let TP;
-    return new Promise((resolve, reject) => {
-      super._update(this.TollPoint, _id, schemas.TollPoint, changes)
-      .then(tollPoint => {
-        TP = tollPoint;
-        return Models.WayPoint.update(tollPoint._wayPoint, {updatedAt: Date.now()}, Models)
-      })
-      .then(_ => resolve(TP))
-      .catch(reject);
-    });
+  async update(_id, changes, Models) {
+    try {
+      let tollPoint = await super._update(this.TollPoint, _id, schemas.TollPoint, changes)
+      await Models.WayPoint.update(tollPoint._wayPoint, {updatedAt: Date.now()}, Models)
+      return tollPoint;
+    } catch (e) {
+      throw e;
+    }
   }
 
-  remove(_id, Models) {
-    return new Promise((resolve, reject) => {
-      Models.WayPoint.WayPoint.findOne({_tollPoints: _id})
-      .exec()
-      .then(wayPoint => {
-        wayPoint._tollPoints.splice(wayPoint._tollPoints.indexOf(_id), 1);
-        wayPoint.updatedAt = Date.now();
-        return wayPoint.save();
-      })
-      .then(_ => super._remove(this.TollPoint, _id))
-      .then(resolve)
-      .catch(reject);
-    })
+  async remove(_id, Models) {
+    try {
+      let wayPoint = await Models.WayPoint.WayPoint.findOne({_tollPoints: _id}).exec()
+      wayPoint._tollPoints.splice(wayPoint._tollPoints.indexOf(_id), 1);
+      wayPoint.updatedAt = Date.now();
+      await wayPoint.save();
+      return await super._remove(this.TollPoint, _id);
+    } catch (e) {
+      throw e;
+    }
   }
 
-  findOlder(timestamp) {
-    return super._findOlder(this.TollPoint, timestamp);
+  async findOlder(timestamp) {
+    return await super._findOlder(this.TollPoint, timestamp);
   }
 }
 

@@ -11,7 +11,7 @@ const schemas = {
     email: {type: String, required: false},
     emailValidate: {type: Boolean, default: false},
     phone: {type: String, required: true},
-    phoneCode : {type: String},
+    phoneCode: {type: String},
     phoneValidate: {type: Boolean, default: false},
     /**
      * Password is SHA256 hash string
@@ -30,6 +30,7 @@ const schemas = {
      */
     photo: {type: String, default: 'http://hotchillitri.co.uk/wp-content/uploads/2016/10/empty-avatar.jpg'},
     isAdmin: {type: Boolean, default: false},
+    paymentHistory : [{type: mongoose.Schema.Types.ObjectId, ref: 'paymenthistories'}],
     createdAt: {type: Date, default: Date.now()},
     updatedAt: {type: Date}
   }
@@ -43,187 +44,152 @@ class User extends Crud {
     this.User = mongoose.model('User', userSchema);
   }
 
-  create(user) {
-    return new Promise((resolve, reject) => {
-      let U;
+  async create(user) {
+    try {
       user.token = createToken(user);
       user.password = createHash(user.password);
       let phoneCode = createRandomCode()
       user.phoneCode = crypto.createHash('md5').update(phoneCode).digest('hex');
       let {phone, email, source} = user;
-      this.User.find()
-      .or([{phone}, {email}])
-      .exec()
-      .then(users => {
-        if (users.length > 0) {
-          return reject({message: `User source is ${users[0].source}`, code: 302});
-        }
-        return super._create(this.User, user);
-      })
-      .then(user => {
-        U = user;
-        if (user.email) {
-          return Email.sendVerifyRequest(user.name, user.email, createEmailVerifyLink(user._id, user.email))
-        } else {
-          return Promise.resolve(null);
-        }
-      })
-      .then(_ => {
-        //
-        return Promise.resolve(null);
-        if (U.phone) {
-          return SMS.sendSms(`Your verification code is ${phoneCode}`, U.phone);
-        } else {
-          return Promise.resolve(null);
-        }
-      })
-      .then(_ => resolve(U))
-      .catch(reject)
-    });
+      let findedUser = await this.User.findOne().or([{phone}, {email}]).exec();
+      if (findedUser) throw {message: `User source is ${findedUser.source}`, code: 302};
+      let newUser = super._create(this.User, user);
+      if (newUser.email) await Email.sendVerifyRequest(newUser.name, newUser.email, createEmailVerifyLink(newUser._id, newUser.email));
+      // if (newUser.phone) await SMS.sendSms(`Your verification code is ${phoneCode}`, newUser.phone);
+      return newUser;
+    } catch (e) {
+      throw e;
+    }
   }
 
-  read(_id, token) {
-    return new Promise((resolve, reject) => {
-      if (!token) reject({message: 'Unauthorized', code: 403});
-      this.User.find()
-      .and([{_id}, {token}])
-      .exec()
-      .then(documents => resolve(documents[0] || false))
-      .catch(reject);
-    });
+  async read(_id, token) {
+    if (!token) throw {message: 'Unauthorized', code: 403};
+    try {
+      let user = await this.User.findOne().and([{_id}, {token}]).exec();
+      return user;
+    }
+    catch (e) {
+      throw e;
+    }
   }
 
-  update(_id, token, changes) {
-    return new Promise((resolve, reject) => {
-      this.read(_id, token)
-      .then(document => {
-        if (!document) return reject({message: 'User not found', code: 404});
-        for (let change in changes) if (schemas.user.hasOwnProperty(change)) document[change] = changes[change];
-        return resolve(document.save());
-      });
-    });
+  async update(_id, token, changes) {
+    try {
+      let user = await this.read(_id, token);
+      if (!user) throw {message: 'User not found', code: 404};
+      for (let change in changes) if (schemas.user.hasOwnProperty(change)) user[change] = changes[change];
+      let savedUser = await user.save();
+      return savedUser;
+
+    } catch (e) {
+      throw e;
+    }
   }
 
-  auth(phone, password) {
-    return new Promise((resolve, reject) => {
-      this.User.findOne({phone})
-      .exec()
-      .then(user => {
-        if (!passwordVerify(password, user.password)) return Promise.reject({message: 'Wrong password', code: 401});
-        return this.update(user._id, user.token, {token: createToken(user)})
-      })
-      .then(user => resolve({_id: user._id, token: user.token}))
-      .catch(reject);
-    });
+  async auth(phone, password) {
+    try {
+      let user = await this.User.findOne({phone}).exec();
+      if (!passwordVerify(password, user.password)) throw {message: 'Wrong password', code: 401};
+      return await this.update(user._id, user.token, {token: createToken(user)});
+
+    } catch (e) {
+      throw e;
+    }
+
   }
 
-  remove(_id) {
-    return super._remove(this.User, _id);
+  async remove(_id) {
+    return await super._remove(this.User, _id);
   }
 
-  validateEmail(_id, hash) {
-    return new Promise((resolve, reject) => {
-      this.User.findOne({_id})
-      .exec()
-      .then(user => {
-        if (!user) return reject({message: 'User not found', code: 404})
-        console.log(user);
-        if (hash == createHash(user.email)) return this.update(user._id, user.token, {emailValidate: true});
-        return reject({message: 'Invalid hash', code: 400})
-      })
-      .then(resolve)
-      .catch(reject);
-    });
+  async validateEmail(_id, hash) {
+    try {
+      let user = await this.User.findOne({_id}).exec();
+      if (!user) throw {message: 'User not found', code: 404};
+      console.log(user);
+      if (hash != createHash(user.email)) throw {message: 'Invalid hash', code: 400};
+      return await this.update(user._id, user.token, {emailValidate: true});
+
+    } catch (e) {
+      throw e;
+    }
+
   }
 
-  validatePhone(phone, code) {
-    return new Promise((resolve, reject) => {
-      this.User.findOne({phone})
-      .exec()
-      .then(user => {
-        if (user.phoneCode == crypto.createHash('md5').update(code).digest('hex')) {
-          user.phoneValidate = true;
-          return user.save();
-        } else {
-          return reject({message: 'Wrong code', code: 400});
-        }
-      })
-      .then(resolve)
-      .catch(reject);
-    });
+  async validatePhone(phone, code) {
+    try {
+      let user = this.User.findOne({phone}).exec();
+      if (user.phoneCode != crypto.createHash('md5').update(code).digest('hex')) throw {message: 'Wrong code', code: 400}
+      user.phoneValidate = true;
+      return await user.save();
+
+    } catch (e) {
+      throw e;
+    }
   }
 
-  out(_id, token) {
-    return new Promise((resolve, reject) => {
-      this.update(_id, token, {token: ''})
-      .then(user => resolve({msg: 'Success'}))
-      .catch(reject);
-    });
+  async out(_id, token) {
+    try {
+      let _ = await this.update(_id, token, {token: ''});
+      return {msg: 'Success'};
+
+    } catch (e) {
+      throw e;
+    }
   }
 
-  forgotPassword(creadentialls) {
-    return new Promise((resolve, reject) => {
+  async forgotPassword(creadentialls) {
+    try {
       let {phone, email} = creadentialls;
-      this.User.find()
-      .or([{phone}, {email}])
-      .exec()
-      .then(user => {
-        if (!user) return reject({message:'User not found', code: 404});
-        user.password = passwordGenerator(12, false);
-        return user.save();
-      })
-      .then(resolve)
-      .catch(reject);
-    });
+      let user = await this.User.find().or([{phone}, {email}]).exec()
+      if (!user) throw {message: 'User not found', code: 404};
+      user.password = passwordGenerator(12, false);
+      return await user.save();
+
+    } catch (e) {
+      throw e;
+    }
   }
 
-  authInAdminPanel(name, password) {
-    return new Promise((resolve, reject) => {
-      this.User.findOne({})
-      .and([{name}, {isAdmin: true}])
-      .exec()
-      .then(user => {
-        if (!user) {
-          let newUser = new this.User({
-            name : conf.defaultAdmin.name,
-            password: createHash(conf.defaultAdmin.password),
-            isAdmin: true,
-            phone : createRandomCode()
-          });
-          return newUser.save();
-        }
-        return Promise.resolve(user);
-      })
-      .then(admin => {
-        if (admin.name != name
-          || !passwordVerify(password, admin.password))
-          return reject({message : 'Wrong credentials', code: 401});
-        admin.token = createToken(admin);
-        return admin.save();
-      })
-      .then(admin => resolve({token: admin.token}))
-      .catch(reject);
-    })
+  async authInAdminPanel(name, password) {
+    try {
+      let admin;
+      let user = await this.User.findOne({}).and([{name}, {isAdmin: true}]).exec()
+      if (!user) {
+        let newUser = new this.User({
+          name: conf.defaultAdmin.name,
+          password: createHash(conf.defaultAdmin.password),
+          isAdmin: true,
+          phone: createRandomCode()
+        });
+        admin = await newUser.save();
+      } else admin = user;
+      if (admin.name != name || !passwordVerify(password, admin.password)) throw {
+        message: 'Wrong credentials',
+        code: 401
+      };
+      admin.token = createToken(admin);
+      let savedAdmin = await admin.save();
+      return {token: savedAdmin.token};
+    } catch (e) {
+      throw e;
+    }
   }
 
-  oauth(email, source) {
-    return new Promise((resolve, reject) => {
-      this.User.findOne({})
-      .and([{email}, {source}])
-      .exec()
-      .then(user => {
-        if (!user) return reject({message: 'User not found', code: 404})
-        if (user.phoneValidate) {
-          user.token = createToken(user);
-          user.save()
-          .then(user => resolve(user));
-        } else {
-          this.remove(user._id)
-          .then(_ => reject({message: 'Phone validation is failed', code: 403}))
-        }
-      })
-      .catch(reject);
-    });
+  async oauth(email, source) {
+    try {
+      let user = await this.User.findOne({}).and([{email}, {source}]).exec();
+      if (!user) throw {message: 'User not found', code: 404};
+      if (user.phoneValidate) {
+        user.token = createToken(user);
+        return await user.save();
+      } else {
+        let _ = await this.remove(user._id);
+        throw {message: 'Phone validation is failed', code: 403};
+      }
+    } catch(e) {
+      throw e;
+    }
   }
 }
 
@@ -250,7 +216,7 @@ function createEmailVerifyLink(_id, email) {
 
 function createRandomCode() {
   let result = '';
-  for (let i=0; i<4; i++) result += getRandomIntInclusive(0,9);
+  for (let i = 0; i < 4; i++) result += getRandomIntInclusive(0, 9);
   return result;
 }
 

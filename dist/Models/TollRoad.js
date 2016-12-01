@@ -199,7 +199,7 @@ var TollRoad = function (_Crud) {
                     while (1) {
                       switch (_context5.prev = _context5.next) {
                         case 0:
-                          lastSyncDate = moment.unix(parseInt(timestamp)).toISOString();
+                          lastSyncDate = moment.unix(~~parseInt(timestamp) / 1000).toISOString();
                           WayPoint = Models.WayPoint, TollPoint = Models.TollPoint, User = Models.User;
                           _context5.next = 4;
                           return User.User.findOne({ token: token }).exec();
@@ -322,25 +322,26 @@ var TollRoad = function (_Crud) {
               case 3:
                 road = _context7.sent;
 
+                console.log(road);
                 road._wayPoints.push(_wayPoint);
                 road.updatedAt = Date.now();
-                _context7.next = 8;
+                _context7.next = 9;
                 return road.save();
 
-              case 8:
+              case 9:
                 return _context7.abrupt('return', _context7.sent);
 
-              case 11:
-                _context7.prev = 11;
+              case 12:
+                _context7.prev = 12;
                 _context7.t0 = _context7['catch'](0);
                 throw _context7.t0;
 
-              case 14:
+              case 15:
               case 'end':
                 return _context7.stop();
             }
           }
-        }, _callee7, this, [[0, 11]]);
+        }, _callee7, this, [[0, 12]]);
       }));
 
       function addWayPoint(_x11, _x12) {

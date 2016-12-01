@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "scripts": {
     "start": "node start.js",
-    "serve": "nodemon start.js --exec babel-node",
+    "serve": "nodemon ./src/start.js --exec babel-node",
     "test": "mocha"
   },
   "dependencies": {

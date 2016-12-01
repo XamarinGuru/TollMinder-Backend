@@ -25,9 +25,9 @@ class WayPoint extends Crud {
 
   async create(wayPoint, Models) {
     try {
-      let wayPoint = await super._create(this.WayPoint, wayPoint);
-      await Models.TollRoad.addWayPoint(wayPoint._tollRoad, wayPoint._id);
-      return wayPoint;
+      let savedWayPoint = await super._create(this.WayPoint, wayPoint);
+      await Models.TollRoad.addWayPoint(savedWayPoint._tollRoad, savedWayPoint._id);
+      return savedWayPoint;
     } catch (e) {
       throw e;
     }

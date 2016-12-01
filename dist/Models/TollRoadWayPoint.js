@@ -70,23 +70,22 @@ var WayPoint = function (_Crud) {
     key: 'create',
     value: function () {
       var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(wayPoint, Models) {
-        var _wayPoint;
-
+        var savedWayPoint;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return (0, _get3.default)(WayPoint.prototype.__proto__ || (0, _getPrototypeOf2.default)(WayPoint.prototype), '_create', this).call(this, this.WayPoint, _wayPoint);
+                return (0, _get3.default)(WayPoint.prototype.__proto__ || (0, _getPrototypeOf2.default)(WayPoint.prototype), '_create', this).call(this, this.WayPoint, wayPoint);
 
               case 3:
-                _wayPoint = _context.sent;
+                savedWayPoint = _context.sent;
                 _context.next = 6;
-                return Models.TollRoad.addWayPoint(_wayPoint._tollRoad, _wayPoint._id);
+                return Models.TollRoad.addWayPoint(savedWayPoint._tollRoad, savedWayPoint._id);
 
               case 6:
-                return _context.abrupt('return', _wayPoint);
+                return _context.abrupt('return', savedWayPoint);
 
               case 9:
                 _context.prev = 9;

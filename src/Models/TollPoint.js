@@ -31,9 +31,9 @@ class TollPoint extends Crud {
 
   async create(tollPoint, Models) {
     try {
-      let tollPoint = await super._create(this.TollPoint, tollPoint);
-      await Models.WayPoint.addTollPoint(tollPoint._wayPoint, tollPoint._id);
-      return tollPoint;
+      let savedTollPoint = await super._create(this.TollPoint, tollPoint);
+      await Models.WayPoint.addTollPoint(savedTollPoint._wayPoint, savedTollPoint._id);
+      return savedTollPoint;
     } catch (e) {
       throw e;
     }

@@ -76,23 +76,22 @@ var TollPoint = function (_Crud) {
     key: 'create',
     value: function () {
       var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(tollPoint, Models) {
-        var _tollPoint;
-
+        var savedTollPoint;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return (0, _get3.default)(TollPoint.prototype.__proto__ || (0, _getPrototypeOf2.default)(TollPoint.prototype), '_create', this).call(this, this.TollPoint, _tollPoint);
+                return (0, _get3.default)(TollPoint.prototype.__proto__ || (0, _getPrototypeOf2.default)(TollPoint.prototype), '_create', this).call(this, this.TollPoint, tollPoint);
 
               case 3:
-                _tollPoint = _context.sent;
+                savedTollPoint = _context.sent;
                 _context.next = 6;
-                return Models.WayPoint.addTollPoint(_tollPoint._wayPoint, _tollPoint._id);
+                return Models.WayPoint.addTollPoint(savedTollPoint._wayPoint, savedTollPoint._id);
 
               case 6:
-                return _context.abrupt('return', _tollPoint);
+                return _context.abrupt('return', savedTollPoint);
 
               case 9:
                 _context.prev = 9;

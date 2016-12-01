@@ -35,6 +35,8 @@ class PaymentHistory extends Crud {
       history.paymentDate = Date.now();
       await history.save();
       return {msg: 'Success'};
+    } catch (e) {
+      throw e;
     }
   }
 }

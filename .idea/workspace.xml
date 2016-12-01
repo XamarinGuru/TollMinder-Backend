@@ -2,91 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a1ce106-ebb9-47b5-937d-f884ccde094e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Application.js" afterPath="$PROJECT_DIR$/src/Application.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Classes/Crud.js" afterPath="$PROJECT_DIR$/src/Classes/Crud.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Classes/Email.js" afterPath="$PROJECT_DIR$/src/Classes/Email.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Classes/LinkPay.js" afterPath="$PROJECT_DIR$/src/Classes/LinkPay.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Classes/PushNotification.js" afterPath="$PROJECT_DIR$/src/Classes/PushNotification.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Classes/Sms.js" afterPath="$PROJECT_DIR$/src/Classes/Sms.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Controllers/File.js" afterPath="$PROJECT_DIR$/src/Controllers/File.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Controllers/SyncData.js" afterPath="$PROJECT_DIR$/src/Controllers/SyncData.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Controllers/TollPoint.js" afterPath="$PROJECT_DIR$/src/Controllers/TollPoint.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Controllers/TollRoad.js" afterPath="$PROJECT_DIR$/src/Controllers/TollRoad.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Controllers/User.js" afterPath="$PROJECT_DIR$/src/Controllers/User.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Controllers/Validator.js" afterPath="$PROJECT_DIR$/src/Controllers/Validator.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Controllers/WayPoint.js" afterPath="$PROJECT_DIR$/src/Controllers/WayPoint.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/css/print.css" afterPath="$PROJECT_DIR$/src/Documentation/css/print.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/css/reset.css" afterPath="$PROJECT_DIR$/src/Documentation/css/reset.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/css/screen.css" afterPath="$PROJECT_DIR$/src/Documentation/css/screen.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/css/style.css" afterPath="$PROJECT_DIR$/src/Documentation/css/style.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/css/typography.css" afterPath="$PROJECT_DIR$/src/Documentation/css/typography.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/fonts/DroidSans-Bold.ttf" afterPath="$PROJECT_DIR$/src/Documentation/fonts/DroidSans-Bold.ttf" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/fonts/DroidSans.ttf" afterPath="$PROJECT_DIR$/src/Documentation/fonts/DroidSans.ttf" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/collapse.gif" afterPath="$PROJECT_DIR$/src/Documentation/images/collapse.gif" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/expand.gif" afterPath="$PROJECT_DIR$/src/Documentation/images/expand.gif" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/explorer_icons.png" afterPath="$PROJECT_DIR$/src/Documentation/images/explorer_icons.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/favicon-16x16.png" afterPath="$PROJECT_DIR$/src/Documentation/images/favicon-16x16.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/favicon-32x32.png" afterPath="$PROJECT_DIR$/src/Documentation/images/favicon-32x32.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/favicon.ico" afterPath="$PROJECT_DIR$/src/Documentation/images/favicon.ico" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/logo_small.png" afterPath="$PROJECT_DIR$/src/Documentation/images/logo_small.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/pet_store_api.png" afterPath="$PROJECT_DIR$/src/Documentation/images/pet_store_api.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/throbber.gif" afterPath="$PROJECT_DIR$/src/Documentation/images/throbber.gif" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/images/wordnik_api.png" afterPath="$PROJECT_DIR$/src/Documentation/images/wordnik_api.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/index.html" afterPath="$PROJECT_DIR$/src/Documentation/index.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/ca.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/ca.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/en.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/en.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/es.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/es.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/fr.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/fr.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/geo.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/geo.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/it.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/it.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/ja.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/ja.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/ko-kr.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/ko-kr.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/pl.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/pl.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/pt.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/pt.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/ru.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/ru.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/tr.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/tr.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/translator.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/translator.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lang/zh-cn.js" afterPath="$PROJECT_DIR$/src/Documentation/lang/zh-cn.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/backbone-min.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/backbone-min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/es5-shim.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/es5-shim.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/handlebars-4.0.5.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/handlebars-4.0.5.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/highlight.9.1.0.pack.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/highlight.9.1.0.pack.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/highlight.9.1.0.pack_extended.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/highlight.9.1.0.pack_extended.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/jquery-1.8.0.min.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/jquery-1.8.0.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/jquery.ba-bbq.min.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/jquery.ba-bbq.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/jquery.slideto.min.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/jquery.slideto.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/jquery.wiggle.min.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/jquery.wiggle.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/js-yaml.min.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/js-yaml.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/jsoneditor.min.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/jsoneditor.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/lodash.min.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/lodash.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/marked.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/marked.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/object-assign-pollyfill.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/object-assign-pollyfill.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/sanitize-html.min.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/sanitize-html.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/lib/swagger-oauth.js" afterPath="$PROJECT_DIR$/src/Documentation/lib/swagger-oauth.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/o2c.html" afterPath="$PROJECT_DIR$/src/Documentation/o2c.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/swagger-ui.js" afterPath="$PROJECT_DIR$/src/Documentation/swagger-ui.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/swagger-ui.min.js" afterPath="$PROJECT_DIR$/src/Documentation/swagger-ui.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Documentation/swagger.json" afterPath="$PROJECT_DIR$/src/Documentation/swagger.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Models/All.js" afterPath="$PROJECT_DIR$/src/Models/All.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Models/PaymentHistory.js" afterPath="$PROJECT_DIR$/src/Models/PaymentHistory.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Models/TollPoint.js" afterPath="$PROJECT_DIR$/src/Models/TollPoint.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Models/TollRoad.js" afterPath="$PROJECT_DIR$/src/Models/TollRoad.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Models/TollRoadWayPoint.js" afterPath="$PROJECT_DIR$/src/Models/TollRoadWayPoint.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Models/Transaction.js" afterPath="$PROJECT_DIR$/src/Models/Transaction.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Models/User.js" afterPath="$PROJECT_DIR$/src/Models/User.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/conf.js" afterPath="$PROJECT_DIR$/src/conf.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/locations.bson" afterPath="$PROJECT_DIR$/src/dump/locations.bson" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/locations.metadata.json" afterPath="$PROJECT_DIR$/src/dump/locations.metadata.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/tollpoints.bson" afterPath="$PROJECT_DIR$/src/dump/tollpoints.bson" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/tollpoints.metadata.json" afterPath="$PROJECT_DIR$/src/dump/tollpoints.metadata.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/tollroads.bson" afterPath="$PROJECT_DIR$/src/dump/tollroads.bson" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/tollroads.metadata.json" afterPath="$PROJECT_DIR$/src/dump/tollroads.metadata.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/users.bson" afterPath="$PROJECT_DIR$/src/dump/users.bson" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/users.metadata.json" afterPath="$PROJECT_DIR$/src/dump/users.metadata.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/waypoints.bson" afterPath="$PROJECT_DIR$/src/dump/waypoints.bson" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dump/waypoints.metadata.json" afterPath="$PROJECT_DIR$/src/dump/waypoints.metadata.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/start.js" afterPath="$PROJECT_DIR$/src/start.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test/sync.js" afterPath="$PROJECT_DIR$/src/test/sync.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tollminder.iws" />
@@ -521,7 +436,7 @@
       <workItem from="1480325208922" duration="2090000" />
       <workItem from="1480413447372" duration="8012000" />
       <workItem from="1480499542328" duration="1994000" />
-      <workItem from="1480594997804" duration="872000" />
+      <workItem from="1480594997804" duration="941000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1478178944114</created>
@@ -761,7 +676,14 @@
       <option name="project" value="LOCAL" />
       <updated>1480595301045</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="build">
+      <created>1480595877395</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1480595877395</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers>
       <Redmine shared="false" url="https://redmine.gloriumdev.com">
         <option name="APIKey" value="30b5b5cb86ea2c370f2c7d06243565b397f320f7" />
@@ -787,7 +709,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="248294000" />
+    <option name="totallyTimeSpent" value="248363000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -806,7 +728,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32858837" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11409396" sideWeight="0.47047618" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.336374" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.336374" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25199544" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="7" y="671" width="1033" height="388" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4013683" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -855,7 +777,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="create database schema" />
     <MESSAGE value="create self auth logic" />
     <MESSAGE value="models finaly" />
     <MESSAGE value="add swagger and writed docs for user entity" />
@@ -880,7 +801,8 @@
     <MESSAGE value="fix signup method" />
     <MESSAGE value="add documentation" />
     <MESSAGE value="add documentation&#10;some fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="add documentation&#10;some fixed" />
+    <MESSAGE value="build" />
+    <option name="LAST_COMMIT_MESSAGE" value="build" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

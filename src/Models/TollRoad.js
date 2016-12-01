@@ -39,7 +39,7 @@ class TollRoad extends Crud {
 
   async findOlder(timestamp, token, Models) {
     try {
-      let lastSyncDate = moment.unix(~~parseInt(timestamp)/1000).toISOString();
+      let lastSyncDate = moment.unix(parseInt(timestamp)).toISOString();
       let {WayPoint, TollPoint, User}  = Models;
       let user = await User.User.findOne({token}).exec();
       if (!user) throw {message: 'Token not valid', code: 401};

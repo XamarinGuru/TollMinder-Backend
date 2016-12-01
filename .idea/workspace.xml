@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5a1ce106-ebb9-47b5-937d-f884ccde094e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/conf.js" afterPath="$PROJECT_DIR$/dist/conf.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/conf.js" afterPath="$PROJECT_DIR$/src/conf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/Models/TollRoad.js" afterPath="$PROJECT_DIR$/dist/Models/TollRoad.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Models/TollRoad.js" afterPath="$PROJECT_DIR$/src/Models/TollRoad.js" />
     </list>
     <ignored path="tollminder.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,21 +37,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="conf.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="conf.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/conf.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+            <state relative-caret-position="352">
+              <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TollRoad.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TollRoad.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Models/TollRoad.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="70" column="13" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
+            <state relative-caret-position="157">
+              <caret line="41" column="37" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -153,10 +153,10 @@
         <option value="$PROJECT_DIR$/dist/Application.js" />
         <option value="$PROJECT_DIR$/src/Application.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/Models/TollRoad.js" />
         <option value="$PROJECT_DIR$/src/Models/TollRoadWayPoint.js" />
         <option value="$PROJECT_DIR$/src/Models/TollPoint.js" />
         <option value="$PROJECT_DIR$/src/conf.js" />
+        <option value="$PROJECT_DIR$/src/Models/TollRoad.js" />
       </list>
     </option>
   </component>
@@ -423,7 +423,7 @@
       <workItem from="1480325208922" duration="2090000" />
       <workItem from="1480413447372" duration="8012000" />
       <workItem from="1480499542328" duration="1994000" />
-      <workItem from="1480594997804" duration="5332000" />
+      <workItem from="1480594997804" duration="5521000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1478178944114</created>
@@ -726,7 +726,14 @@
       <option name="project" value="LOCAL" />
       <updated>1480600444327</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="build">
+      <created>1480600589603</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1480600589603</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers>
       <Redmine shared="false" url="https://redmine.gloriumdev.com">
         <option name="APIKey" value="30b5b5cb86ea2c370f2c7d06243565b397f320f7" />
@@ -752,7 +759,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="252754000" />
+    <option name="totallyTimeSpent" value="252943000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -771,7 +778,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32858837" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3056742" sideWeight="0.46907216" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.336374" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.336374" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25199544" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="7" y="671" width="1033" height="388" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4013683" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1137,14 +1144,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Models/TollRoad.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="70" column="13" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/Models/TollRoadWayPoint.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1161,6 +1160,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Models/TollPoint.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
@@ -1169,10 +1176,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/conf.js">
+    <entry file="file://$PROJECT_DIR$/src/Models/TollRoad.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+        <state relative-caret-position="157">
+          <caret line="41" column="37" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="37" />
           <folding />
         </state>
       </provider>

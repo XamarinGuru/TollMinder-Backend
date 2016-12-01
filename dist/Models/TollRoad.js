@@ -199,7 +199,7 @@ var TollRoad = function (_Crud) {
                     while (1) {
                       switch (_context5.prev = _context5.next) {
                         case 0:
-                          lastSyncDate = moment.unix(~~parseInt(timestamp) / 1000).toISOString();
+                          lastSyncDate = moment.unix(parseInt(timestamp)).toISOString();
                           WayPoint = Models.WayPoint, TollPoint = Models.TollPoint, User = Models.User;
                           _context5.next = 4;
                           return User.User.findOne({ token: token }).exec();

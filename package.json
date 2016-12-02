@@ -5,7 +5,9 @@
     "start": "node start.js",
     "build" : "babel ./src --out-dir dist",
     "serve": "nodemon ./src/start.js --exec babel-node",
+    "clean": "rm -rf ./dist",
     "deploy": "./deploy.sh",
+    "buildAndDeloy": "npm run build && npm run deploy && npm run clean",
     "test": "mocha"
   },
   "dependencies": {

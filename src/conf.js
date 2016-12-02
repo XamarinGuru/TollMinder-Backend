@@ -4,7 +4,7 @@ module.exports = {
   host: 'http://54.152.103.212/api',
   port: 7000,
   mongoURI: 'mongodb://localhost/tollminder',
-  uploadDir: '/home/ubuntu/tollminder-backend/Uploads',
+  uploadDir: '/home/ubuntu/backend/Uploads',
 
   googleAPIKey : 'AIzaSyBEacqW7NBeaCpNgMgpHcA9GVHWvanZrK8',
 

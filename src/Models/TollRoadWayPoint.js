@@ -53,6 +53,7 @@ class WayPoint extends Crud {
       let tollRoad = await Models.TollRoad.TollRoad.findOne({_wayPoints: _id}).exec();
       tollRoad._wayPoints.splice(tollRoad._wayPoints.indexOf(_id), 1);
       tollRoad.updatedAt = Date.now();
+      await this.WayPoint.remove({_id});
       return await tollRoad.save();
     } catch (e) {
       throw e;

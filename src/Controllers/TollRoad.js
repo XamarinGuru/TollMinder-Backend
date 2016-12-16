@@ -29,7 +29,7 @@ router.put('/:_id?', (req, res) => {
 router.delete('/:_id?', (req, res) => {
   if (!req.params._id) return res.status(400).json({err: 'Not found `_id` in path'});
   let {TollRoad} = req.app.locals.settings.models;
-  TollRoad.remove(req.params._id)
+  TollRoad.remove(req.params._id, req.app.locals.settings.models)
   .then(msg => res.status(200).json(msg))
   .catch((err) => res.status(err.code || 500).json({err: err.message}));
 });

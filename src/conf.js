@@ -2,7 +2,7 @@ module.exports = {
   // Main info
   secret: 'tollminder',
   host: 'http://54.152.103.212/api',
-  port: 7000,
+  port: 7001,
   mongoURI: 'mongodb://localhost/tollminder',
   uploadDir: '/home/ubuntu/backend/Uploads',
 
@@ -15,6 +15,7 @@ module.exports = {
     name: 'admin',
     password: '1234'
   },
+  tripStatuses: ['payed', 'notPayed', 'notFinished'],
   // Info for mail service
   smtpConfig : {
     host: 'email-smtp.us-east-1.amazonaws.com',

@@ -33,8 +33,18 @@ class TollRoad extends Crud {
     return await super._update(this.TollRoad, _id, schemas.TollRoad, changes);
   }
 
-  async remove(_id) {
-    return await super._remove(this.TollRoad, _id);
+  async remove(_id, Models) {
+    try {
+      let tollRoad = await this.read(_id);
+      for (let wayPoint of tollRoad._wayPoints) {
+        let some = await Models.WayPoint.remove(wayPoint._id, Models);
+        console.log(some);
+      }
+      return await super._remove(this.TollRoad, _id);
+    } catch (e) {
+      throw e;
+    }
+
   }
 
   async findOlder(timestamp, token, Models) {

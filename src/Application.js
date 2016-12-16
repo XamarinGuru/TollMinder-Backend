@@ -32,6 +32,8 @@ const tollRoad = require('./Controllers/TollRoad');
 const wayPoint = require('./Controllers/WayPoint');
 const tollPoint = require('./Controllers/TollPoint');
 const sync = require('./Controllers/SyncData');
+const matrix = require('./Controllers/Matrix');
+const rate = require('./Controllers/Rate');
 
 // Attach controllers
 app.use((req, res, next) => {
@@ -56,5 +58,7 @@ app.use('/api/validator', validator);
 app.use('/api/tollRoad', tollRoad);
 app.use('/api/wayPoint', wayPoint);
 app.use('/api/tollPoint', tollPoint);
+app.use('/api/matrix', matrix);
+app.use('/api/rate', rate);
 
 module.exports = app;

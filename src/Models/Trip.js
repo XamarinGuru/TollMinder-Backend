@@ -6,6 +6,8 @@ const schemas = {
   Trip: {
     _user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     _tollRoad: {type: mongoose.Schema.Types.ObjectId, ref: 'TollRoad'},
+    _startWayPoint: {type: mongoose.Schema.Types.ObjectId, ref: 'WayPoint'},
+    _endWayPoint: {type: mongoose.Schema.Types.ObjectId, ref: 'WayPoint'},
     _rate: {type: mongoose.Schema.Types.ObjectId, ref: 'Rate'},
     _transaction: {type: mongoose.Schema.Types.ObjectId, ref: 'Transaction'},
     tripDate: {type: Date},

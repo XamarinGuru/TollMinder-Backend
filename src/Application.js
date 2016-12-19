@@ -8,7 +8,6 @@
 // Require dependencies
 const express = require('express');
 const app = express();
-const path = require('path');
 const conf = require('./conf');
 const mongoose = require('mongoose');
 

@@ -30,7 +30,7 @@ const schemas = {
      */
     photo: {type: String, default: 'http://hotchillitri.co.uk/wp-content/uploads/2016/10/empty-avatar.jpg'},
     isAdmin: {type: Boolean, default: false},
-    paymentHistory : [{type: mongoose.Schema.Types.ObjectId, ref: 'paymenthistories'}],
+    autoBilling: {type: Boolean, default: false},
     createdAt: {type: Date, default: Date.now()},
     updatedAt: {type: Date}
   }

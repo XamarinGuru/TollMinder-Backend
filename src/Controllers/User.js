@@ -50,8 +50,8 @@ router.put('/:_id?', (req, res) => {
   let User = req.app.locals.settings.models.User;
   if (!req.headers['authorization']) return res.status(401).json({err: 'Not found auth header'});
   if (!req.params._id) return res.status(400).json({err: 'Not found `_id` in path'});
-  let {name, email, photo, phone} = req.body;
-  let changes = {name, email, photo, phone};
+  let {name, email, phoneValidate} = req.body;
+  let changes = {name, email, phoneValidate};
   User.update(req.params._id, req.headers['authorization'], changes)
   .then(result => res.status(200).json(result))
   .catch((err) => res.status(err.code || 500).json({err: err.message}));

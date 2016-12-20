@@ -27,7 +27,9 @@ class Trip extends Crud {
     return await super._read(this.Trip, _id);
   }
 
-  async create(trip) {
+  async create(trip, Models) {
+    let rate = await Models.Rate.Rate.find({ _startWayPoint: trip._startWayPoint, _endWayPoint: trip._endWayPoint});
+    trip._rate = rate.id;
     return await super._create(this.Trip, trip);
   }
 

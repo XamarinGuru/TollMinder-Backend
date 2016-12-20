@@ -8,7 +8,7 @@ router.post('/', (req ,res) => {
   let {file} = req.files;
   console.log(file);
 
-  if (!fs.existsSync(conf.uploadDir)) fs.mkdirSync(conf.uploadDir, 777);
+  if (!fs.existsSync(conf.uploadDir)) fs.mkdirSync(conf.uploadDir, '0777');
   let filename = `${Date.now()}-${file.name}`.replace(/ /igm, '_');
   file.mv(`${conf.uploadDir}/${filename}`, (err) => {
     if (err) return res.status(500).json(err);
@@ -17,9 +17,11 @@ router.post('/', (req ,res) => {
 });
 
 router.post('/convertHtmlToPdf', (req ,res) => {
-  if (!fs.existsSync(conf.uploadDir)) fs.mkdirSync(conf.uploadDir, 777);
+  if (!fs.existsSync(conf.uploadDir)) fs.mkdirSync(conf.uploadDir, '0777');
+  let {Trip} = req.app.locals.settings.models;
+
   let fileName = generateName();
-  console.log(req.body.html)
+  console.log(req.body.html);
   Converter.htmlToPDF(req.body.html.trim(), `${conf.uploadDir}/${fileName}`)
   .then(() => res.status(200).json({link : `${conf.host}/uploads/${fileName}`}))
   .catch((err) => res.status(500).json(err));

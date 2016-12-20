@@ -43,6 +43,14 @@ class Trip extends Crud {
       throw e;
     }
   }
+
+  async findBetweenDate(from, to) {
+    try {
+      return await this.Trip.find({ paymentDate: { $gte: from.toISOString(), $lt: to.toISOString() }});
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 module.exports = Trip;

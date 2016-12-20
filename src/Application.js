@@ -33,6 +33,7 @@ const tollPoint = require('./Controllers/TollPoint');
 const sync = require('./Controllers/SyncData');
 const matrix = require('./Controllers/Matrix');
 const rate = require('./Controllers/Rate');
+const trip = require('./Controllers/Trip');
 
 // Attach controllers
 app.use((req, res, next) => {
@@ -59,5 +60,6 @@ app.use('/api/wayPoint', wayPoint);
 app.use('/api/tollPoint', tollPoint);
 app.use('/api/matrix', matrix);
 app.use('/api/rate', rate);
+app.use('/api/trip', trip);
 
 module.exports = app;

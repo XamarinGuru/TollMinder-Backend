@@ -3,12 +3,12 @@ const router = require('express').Router();
 router.post('/', (req, res) => {
   let {Trip} = req.app.locals.settings.models;
   if (req.body.showAll) {
-    Trip.Trip.find()
+    Trip.Trip.find().populate('_tollRoad _rate').exec()
     .then(trips => res.json({ trips }))
     .catch(err => res.status(500).json(err));
   } else if (req.body.range) {
     Trip.findBetweenDate(req.body.range.from, req.body.range.to)
-        .then(trips => res.json({ trips }))
+        .then(trips => res.json({ trips: trips }))
         .catch(err => res.status(500).json(err));
   }
 });

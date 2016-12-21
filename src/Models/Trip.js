@@ -29,7 +29,7 @@ class Trip extends Crud {
 
   async create(trip, Models) {
     let rate = await Models.Rate.Rate.find({ _startWayPoint: trip._startWayPoint, _endWayPoint: trip._endWayPoint});
-    trip._rate = rate.id;
+    trip._rate = rate[0] ? rate[0].id : null;
     return await super._create(this.Trip, trip);
   }
 
@@ -46,9 +46,9 @@ class Trip extends Crud {
     }
   }
 
-  async findBetweenDate(from, to) {
+  async findBetweenDate(user, from, to) {
     try {
-      return await this.Trip.find({ paymentDate: { $gte: new Date(from), $lt: new Date(to) }})
+      return await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }})
           .populate('_tollRoad _rate').exec();
     } catch (e) {
       throw e;

@@ -17,16 +17,16 @@ router.post('/', (req ,res) => {
   });
 });
 
-router.post('/convertHtmlToPdf', (req ,res) => {
+router.post('/convertDataToPdf', (req ,res) => {
   if (!fs.existsSync(conf.uploadDir)) fs.mkdirSync(conf.uploadDir, '0777');
+  let fileName = generateName();
   let {Trip} = req.app.locals.settings.models;
-  let query = req.body.showAll ? {} : { paymentDate: { $gte: new Date(req.body.range.from), $lt: new Date(req.body.range.to) }};
-  Trip.find(query).populate('_tollRoad _rate').exec()
+  let query = req.body.showAll ? { _user: req.body.user } :
+      { paymentDate: { $gte: new Date(req.body.range.from), $lt: new Date(req.body.range.to)}, _user: req.body.user };
+  Trip.Trip.find(query).populate('_tollRoad _rate').exec()
     .then(trips => {
       let html = generateHtml(trips);
-      let fileName = generateName();
-      console.log(html);
-      Converter.htmlToPDF(html.trim(), `${conf.uploadDir}/${fileName}`);
+      return Converter.htmlToPDF(html, `${conf.uploadDir}/${fileName}`);
     })
     .then(() => res.status(200).json({link : `${conf.host}/uploads/${fileName}`}))
     .catch((err) => res.status(500).json(err));
@@ -48,43 +48,33 @@ function generateName() {
   return `${Date.now()}-${crypto.randomBytes(8).toString('hex')}.pdf`;
 }
 
-
 function generateHtml(data) {
-  let transform = {"<>":"table","html":[
-    {"<>":"tbody","html":[
-      {"<>":"tr","html":[
-        {"<>":"td","html":"Billing Date"},
-        {"<>":"td","html":"Transaction ID"},
-        {"<>":"td","html":"Toll Road"},
-        {"<>":"td","html":"Amount"}
-      ]}
-    ]}
-  ]};
   let dataTemp = data.map(trip => {
     return {
-      paymentDate: trip.paymentDate,
-      transaction: trip._transaction, // look in transaction schema which field "transaction ID"
-      tollRoad: trip._tollRoad.name,
-      amount: trip._rate.cost
+      paymentDate: trip.paymentDate.toISOString(),
+      transaction: trip._transaction || 'transaction id', // look in transaction schema which field "transaction ID"
+      tollRoad: trip._tollRoad || 'name',
+      amount: trip._rate || 'cost'
     }
   });
-  data.map(() => {
-    json.html[0].html.push({
-      "<>": "tr",
-      "html": [{
-        "<>": "td",
-        "html": "${paymentDate}"
-      },{
-        "<>": "td",
-        "html": "${transaction}"
-      },{
-        "<>": "td",
-        "html": "${tollRoad}"
-      }, {
-        "<>": "td",
-        "html": "${amount}"
-      }]
-    });
-  });
-  return json2html.transform(dataTemp, transform);
+  let transform = {
+    "<>": "tr",
+    "html": [{
+      "<>": "td",
+      "html": "${paymentDate}"
+    },{
+      "<>": "td",
+      "html": "${transaction}"
+    },{
+      "<>": "td",
+      "html": "${tollRoad}"
+    }, {
+      "<>": "td",
+      "html": "${amount}"
+    }]
+  };
+  let html = json2html.transform(dataTemp, transform);
+  html = '<table border="1" cellpadding="5" cellspacing="0"><tbody><tr><td>Billing Date</td><td>Transaction ID</td><td>' +
+      'Toll Road</td><td>Amount</td></tr>' + html + '</tbody></table>';
+  return html;
 }

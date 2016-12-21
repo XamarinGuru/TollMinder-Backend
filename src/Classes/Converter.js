@@ -15,8 +15,7 @@ class Converter {
       },
     };
     return new Promise((resolve, reject) => {
-      let changedHtml = html.replace(/md-table/, 'border="1" cellpadding="5" cellspacing="0"')
-      htmlToPdf.create(changedHtml, options)
+      htmlToPdf.create(html, options)
       .toFile(pdfDist, (err, success) => {
         if (err) return reject(err);
         return resolve(success);

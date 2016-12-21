@@ -74,6 +74,19 @@ class WayPoint extends Crud {
       throw e;
     }
   }
+
+  async deleteWayPointsWithoutTollRoad({TollPoint}) {
+    let wayPoints = await this.WayPoint.find().populate('_tollRoad _tollPoints').exec();
+    for (let wayPoint of wayPoints) {
+      if (wayPoint._tollRoad == null) {
+        for (let tollPoint in wayPoint._tollPoints) {
+          await TollPoint.TollPoint.remove({_id: tollPoint._id});
+        }
+        await this.WayPoint.remove({_id});
+      }
+    }
+    return true;
+  }
 }
 
 module.exports = WayPoint;

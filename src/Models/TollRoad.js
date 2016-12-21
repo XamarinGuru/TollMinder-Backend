@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Crud = require('./../Classes/Crud');
 const moment = require('moment');
+const conf = require('./../conf');
 const schemas = {
   TollRoad: {
     name: {type: String},
@@ -51,7 +52,8 @@ class TollRoad extends Crud {
     try {
       let lastSyncDate = moment.unix(parseInt(timestamp)).toISOString();
       let {WayPoint, TollPoint, User}  = Models;
-      let user = await User.User.findOne({token}).exec();
+      if (token == conf.superToken) let user = await User.User.findOne({isAdmin: true}).exec();
+      else let user = await User.User.findOne({token}).exec();
       if (!user) throw {message: 'Token not valid', code: 401};
       let tollRoads = await super._findOlder(this.TollRoad, lastSyncDate);
       let tmp = tollRoads.map(item => item._wayPoints);

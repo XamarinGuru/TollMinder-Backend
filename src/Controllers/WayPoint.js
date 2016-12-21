@@ -1,5 +1,12 @@
 const router = require('express').Router();
 
+router.get('/deleteInvalidWayPoints', (req, res) => {
+  let {WayPoint, TollRoad, TollPoint} = req.app.locals.settings.models;
+  WayPoint.deleteWayPointsWithoutTollRoad({TollPoint})
+  .then(_ => res.status(200).json({message: 'success'}))
+  .catch((err) => res.status(err.code || 500).json({err: err.message}));
+});
+
 router.get('/:_id?', (req, res) => {
   let {WayPoint} = req.app.locals.settings.models;
   WayPoint.read(req.params._id)

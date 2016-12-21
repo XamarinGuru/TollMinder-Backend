@@ -28,6 +28,7 @@ class Trip extends Crud {
   }
 
   async create(trip) {
+
     return await super._create(this.Trip, trip);
   }
 

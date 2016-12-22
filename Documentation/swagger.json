@@ -1084,6 +1084,99 @@
           }
         }
       }
+    },
+    "/trip": {
+      "post": {
+        "description": "Create trip",
+        "tags": [
+          "Trip"
+        ],
+        "parameters": [
+          {
+            "name": "_user",
+            "in": "formData",
+            "required": true,
+            "type" : "string",
+            "description": "User id"
+          },
+          {
+            "name": "_startWayPoint",
+            "in": "formData",
+            "required": true,
+            "type" : "string",
+            "description": "WayPoint id"
+          },
+          {
+            "name": "_endWayPoint",
+            "in": "formData",
+            "required": false,
+            "type" : "string",
+            "description": "WayPoint id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trip object",
+            "schema": {
+              "$ref": "#/definitions/Trip"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/trip/paymentHistory": {
+      "get": {
+        "description": "Get trips by range of payment date",
+        "tags": [
+          "Trip"
+        ],
+        "parameters": [
+          {
+            "name": "_user",
+            "in": "formData",
+            "required": true,
+            "type" : "string",
+            "description": "User id"
+          },
+          {
+            "name": "from",
+            "in": "formData",
+            "required": true,
+            "type" : "string",
+            "description": "Payment date from which to search"
+          },
+          {
+            "name": "to",
+            "in": "formData",
+            "required": true,
+            "type" : "string",
+            "description": "Payment date to which to search"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of trips objects",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1278,6 +1371,35 @@
         },
         "action": {
           "type": "string"
+        }
+      }
+    },
+    "Trip": {
+      "type": "object",
+      "properties": {
+        "_user": {
+          "type": "string",
+          "description": "User id"
+        },
+        "_startWayPoint": {
+          "type": "string",
+          "description": "WayPoint id"
+        },
+        "_endWayPoint": {
+          "type": "string",
+          "description": "WayPoint id"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of trip"
+        },
+        "tripDate": {
+          "type": "string",
+          "description": "Date of trip"
+        },
+        "_rate": {
+          "type": "string",
+          "description": "Rate id"
         }
       }
     },

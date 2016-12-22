@@ -10,7 +10,7 @@ const schemas = {
     _endWayPoint: {type: mongoose.Schema.Types.ObjectId, ref: 'WayPoint'},
     _rate: {type: mongoose.Schema.Types.ObjectId, ref: 'Rate'},
     _transaction: {type: mongoose.Schema.Types.ObjectId, ref: 'Transaction'},
-    tripDate: {type: Date},
+    tripDate: {type: Date, default: Date.now },
     paymentDate: {type: Date},
     status: {type: String, enum: conf.tripStatuses}
   }
@@ -27,8 +27,10 @@ class Trip extends Crud {
     return await super._read(this.Trip, _id);
   }
 
-  async create(trip) {
-
+  async create(trip, Models) {
+    let rate = await Models.Rate.Rate.find({ _startWayPoint: trip._startWayPoint, _endWayPoint: trip._endWayPoint});
+    trip._rate = rate[0] ? rate[0].id : null;
+    trip.status = trip.status || 'notPayed';
     return await super._create(this.Trip, trip);
   }
 

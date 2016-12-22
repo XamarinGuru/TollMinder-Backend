@@ -1130,7 +1130,7 @@
         }
       }
     },
-    "/trip/range": {
+    "/trip/paymentHistory": {
       "get": {
         "description": "Get trips by range of payment date",
         "tags": [

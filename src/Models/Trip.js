@@ -44,6 +44,17 @@ class Trip extends Crud {
       throw e;
     }
   }
+
+  async findBetweenDate(user, from, to) {
+    try {
+      return await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }})
+          .populate('_tollRoad _rate').exec();
+    } catch (e) {
+      throw e;
+    }
+  }
+
+
 }
 
 module.exports = Trip;

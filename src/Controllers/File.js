@@ -17,7 +17,7 @@ router.post('/', (req ,res) => {
   });
 });
 
-router.post('/convertDataToPdf', (req ,res) => {
+router.post('/paymentHistoryPdf', (req ,res) => {
   if (!fs.existsSync(conf.uploadDir)) fs.mkdirSync(conf.uploadDir, '0777');
   let fileName = generateName();
   let {Trip} = req.app.locals.settings.models;
@@ -51,7 +51,7 @@ function generateName() {
 function generateHtml(data) {
   let dataTemp = data.map(trip => {
     return {
-      paymentDate: trip.paymentDate.toISOString(),
+      paymentDate: trip.paymentDate.toLocaleString(),
       transaction: trip._transaction || 'transaction id', // look in transaction schema which field "transaction ID"
       tollRoad: trip._tollRoad || 'name',
       amount: trip._rate || 'cost'

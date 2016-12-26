@@ -25,23 +25,23 @@ class Matrix extends Crud {
   async create(matrix, Models) {
     let point = {}, i = 0;
     //Check for Unknown point
-    for (let point of matrix._startWayPoints) {
-      if (point === 'Unknown') {
-        point = await Models.WayPoint.create({ name: point });
-        matrix._startWayPoints[i] = point._id;
-        break;
-      }
-      i++;
-    }
-    i = 0;
-    for (let point of matrix._endWayPoints) {
-      if (point === 'Unknown') {
-        point = await Models.WayPoint.create({ name: point});
-        matrix._endWayPoints[i] = point._id;
-        break;
-      }
-      i++;
-    }
+    // for (let point of matrix._startWayPoints) {
+    //   if (point === 'Unknown') {
+    //     point = await Models.WayPoint.create({ name: point });
+    //     matrix._startWayPoints[i] = point._id;
+    //     break;
+    //   }
+    //   i++;
+    // }
+    // i = 0;
+    // for (let point of matrix._endWayPoints) {
+    //   if (point === 'Unknown') {
+    //     point = await Models.WayPoint.create({ name: point});
+    //     matrix._endWayPoints[i] = point._id;
+    //     break;
+    //   }
+    //   i++;
+    // }
 
     let savedMatrix = await super._create(this.Matrix, matrix);
     let {_startWayPoints, _endWayPoints} = savedMatrix;

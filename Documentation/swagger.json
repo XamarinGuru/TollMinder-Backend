@@ -328,6 +328,43 @@
         }
       }
     },
+    "/file/paymentHistoryPdf": {
+      "post": {
+        "description": "Get link to payment history pdf file",
+        "tags": [
+          "File"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PaymentHistoryFields"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Link to your file",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "link": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/tollRoad/{_id}" : {
       "get": {
         "description": "Get tollroad by _id",
@@ -1165,7 +1202,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Trip"
               }
             }
           },
@@ -1400,6 +1437,33 @@
         "_rate": {
           "type": "string",
           "description": "Rate id"
+        }
+      }
+    },
+    "PaymentHistoryFields": {
+      "type": "object",
+      "properties": {
+        "_user": {
+          "type": "string",
+          "description": "User id"
+        },
+        "showAll": {
+          "type": "boolean",
+          "description": "If true show all history"
+        },
+        "range": {
+          "type": "object",
+          "description": "Range payment date",
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "Payment date from which to search"
+            },
+            "to": {
+              "type": "string",
+              "description": "Payment date to which to search"
+            }
+          }
         }
       }
     },

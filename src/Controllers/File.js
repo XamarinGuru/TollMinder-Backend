@@ -53,8 +53,8 @@ function generateHtml(data) {
     return {
       paymentDate: trip.paymentDate.toLocaleString(),
       transaction: trip._transaction || 'transaction id', // look in transaction schema which field "transaction ID"
-      tollRoad: trip._tollRoad || 'name',
-      amount: trip._rate || 'cost'
+      tollRoad: trip._tollRoad ? trip._tollRoad.name : 'name',
+      amount: trip._rate ? trip._rate.cost : 'cost'
     }
   });
   let transform = {

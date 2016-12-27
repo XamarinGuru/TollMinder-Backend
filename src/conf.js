@@ -1,10 +1,12 @@
 module.exports = {
   // Main info
   secret: 'tollminder',
-  host: 'http://tollminder.com/api',
+  host: 'http://tollminder.com/api', //prod
+  // host: 'http://localhost:7000/api', //dev
   port: 7000,
   mongoURI: 'mongodb://localhost/tollminder',
-  uploadDir: '/home/ubuntu/backend/Uploads',
+  uploadDir: '/home/ubuntu/backend/Uploads', //production
+  // uploadDir: '/home/kolya/Projects/tollminder-backend/Uploads', //dev
   superToken: 'LM9NJSUN3GDQU8BFPPCUPpCRtLnd89NZXLSUUR9DBjjSR32EBQxCbHX963ycqcjv',
   googleAPIKey : 'AIzaSyBEacqW7NBeaCpNgMgpHcA9GVHWvanZrK8',
 

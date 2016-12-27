@@ -9,8 +9,8 @@ router.get('/:_id?', (req, res) => {
 
 router.post('/', (req, res) => {
   let Models = req.app.locals.settings.models;
-  let {_wayPoint, name, latitude, longitude, action} = req.body;
-  let newTollPoint = {_wayPoint, name, latitude, longitude, action};
+  let {_wayPoint, name, latitude, longitude, action, radius} = req.body;
+  let newTollPoint = {_wayPoint, name, latitude, longitude, action, radius};
   Models.TollPoint.create(newTollPoint, Models)
   .then(tollPoint => res.status(200).json(tollPoint))
   .catch((err) => res.status(err.code || 500).json({err: err.message}));
@@ -19,8 +19,8 @@ router.post('/', (req, res) => {
 router.put('/:_id?', (req, res) => {
   if (!req.params._id) return res.status(400).json({err: 'Not found `_id` in path'});
   let Models = req.app.locals.settings.models;
-  let {_wayPoint, name, latitude, longitude, action} = req.body;
-  let changes = {_wayPoint, name, latitude, longitude, action};
+  let {_wayPoint, name, latitude, longitude, action, radius} = req.body;
+  let changes = {_wayPoint, name, latitude, longitude, action, radius};
   Models.TollPoint.update(req.params._id, changes, Models)
   .then(tollPoint => res.status(200).json(tollPoint))
   .catch((err) => res.status(err.code || 500).json({err: err.message}));

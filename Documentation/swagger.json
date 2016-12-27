@@ -328,6 +328,44 @@
         }
       }
     },
+    "/file/paymentHistoryPdf": {
+      "post": {
+        "description": "Get link to payment history pdf file",
+        "tags": [
+          "File"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "in range object: 'from' and 'to' params take DateTime strings",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PaymentHistoryFields"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Link to your file",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "link": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/tollRoad/{_id}" : {
       "get": {
         "description": "Get tollroad by _id",
@@ -533,7 +571,7 @@
           "200": {
             "description": "Array of toll roads",
             "schema": {
-                "$ref": "#/definitions/CreateTollRoadResponse"
+              "$ref": "#/definitions/CreateTollRoadResponse"
 
             }
           },
@@ -1112,6 +1150,13 @@
             "required": false,
             "type" : "string",
             "description": "WayPoint id"
+          },
+          {
+            "name": "_tollRoad",
+            "in": "formData",
+            "required": true,
+            "type" : "string",
+            "description": "TollRoad id"
           }
         ],
         "responses": {
@@ -1165,7 +1210,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Trip"
               }
             }
           },
@@ -1389,6 +1434,10 @@
           "type": "string",
           "description": "WayPoint id"
         },
+        "_tollRoad": {
+          "type": "object",
+          "description": "Status of trip"
+        },
         "status": {
           "type": "string",
           "description": "Status of trip"
@@ -1397,9 +1446,44 @@
           "type": "string",
           "description": "Date of trip"
         },
-        "_rate": {
+        "paymentDate": {
           "type": "string",
-          "description": "Rate id"
+          "description": "Date of payment"
+        },
+        "_rate": {
+          "type": "object",
+          "description": "Rate object"
+        },
+        "_transaction": {
+          "type": "string",
+          "description": "Transaction id"
+        }
+      }
+    },
+    "PaymentHistoryFields": {
+      "type": "object",
+      "properties": {
+        "_user": {
+          "type": "string",
+          "description": "User id"
+        },
+        "showAll": {
+          "type": "boolean",
+          "description": "If true show all history"
+        },
+        "range": {
+          "type": "object",
+          "description": "Range payment date",
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "Payment date from which to search"
+            },
+            "to": {
+              "type": "string",
+              "description": "Payment date to which to search"
+            }
+          }
         }
       }
     },

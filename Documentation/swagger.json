@@ -338,6 +338,7 @@
           {
             "name": "body",
             "in": "body",
+            "description": "in range object: 'from' and 'to' params take DateTime strings",
             "required": true,
             "schema": {
               "$ref": "#/definitions/PaymentHistoryFields"
@@ -570,7 +571,7 @@
           "200": {
             "description": "Array of toll roads",
             "schema": {
-                "$ref": "#/definitions/CreateTollRoadResponse"
+              "$ref": "#/definitions/CreateTollRoadResponse"
 
             }
           },
@@ -1149,6 +1150,13 @@
             "required": false,
             "type" : "string",
             "description": "WayPoint id"
+          },
+          {
+            "name": "_tollRoad",
+            "in": "formData",
+            "required": true,
+            "type" : "string",
+            "description": "TollRoad id"
           }
         ],
         "responses": {
@@ -1426,6 +1434,10 @@
           "type": "string",
           "description": "WayPoint id"
         },
+        "_tollRoad": {
+          "type": "object",
+          "description": "Status of trip"
+        },
         "status": {
           "type": "string",
           "description": "Status of trip"
@@ -1434,9 +1446,17 @@
           "type": "string",
           "description": "Date of trip"
         },
-        "_rate": {
+        "paymentDate": {
           "type": "string",
-          "description": "Rate id"
+          "description": "Date of payment"
+        },
+        "_rate": {
+          "type": "object",
+          "description": "Rate object"
+        },
+        "_transaction": {
+          "type": "string",
+          "description": "Transaction id"
         }
       }
     },

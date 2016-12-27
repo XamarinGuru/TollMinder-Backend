@@ -12,6 +12,7 @@ const schemas = {
      *  bridge
      *  exit
      */
+    radius: {type: Number},
     action: {type: String},
     createdAt: {type: Date, default: dateNow()},
     updatedAt: {type: Date}

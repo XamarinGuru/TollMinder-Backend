@@ -74,7 +74,7 @@ function generateHtml(data) {
     }]
   };
   let html = json2html.transform(dataTemp, transform);
-  html = '<table border="1" cellpadding="5" cellspacing="0"><tbody><tr><td>Billing Date</td><td>Transaction ID</td><td>' +
+  html = '<table border="1" cellpadding="5" cellspacing="0" style="font-size: 12px"><tbody><tr><td>Billing Date</td><td>Transaction ID</td><td>' +
       'Toll Road</td><td>Amount</td></tr>' + html + '</tbody></table>';
   return html;
 }

@@ -12,7 +12,7 @@ module.exports = class Crud {
   async _read(model, _id, populate, limit, skip) {
     try {
       let query = _id ? model.findOne({_id}) : model.find();
-      query.limit(limit || 20);
+      query.limit(limit || 0);
       query.skip(skip || 0);
       if (populate) query.populate(populate);
       return await query.exec();

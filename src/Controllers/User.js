@@ -17,7 +17,8 @@ router.post('/signup', (req, res) => {
   let User = req.app.locals.settings.models.User;
   let {name, phone, email, password, source, photo} = req.body;
   if (!source && !phone && !email) return res.status(400).json({err: 'Bad oauth'});
-  else if (!phone || !password) return res.status(400).json({err: 'Missed phone or password'});
+  //removed password because over oauth user does'nt have password
+  else if (!phone) return res.status(400).json({err: 'Missed phone'});
   let user = {name, phone, password, email, source, photo};
   User.create(user)
   .then(result => res.status(200).json(result))

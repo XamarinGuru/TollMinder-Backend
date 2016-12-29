@@ -47,16 +47,21 @@ class User extends Crud {
   async create(user) {
     try {
       user.token = createToken(user);
+      user.password = user.password || '';
       user.password = createHash(user.password);
       let phoneCode = createRandomCode()
       user.phoneCode = crypto.createHash('md5').update(phoneCode).digest('hex');
       let {phone, email, source} = user;
       let findedUser = await this.User.findOne().or([{phone}, {email}]).exec();
-      if (findedUser) throw {message: `User source is ${findedUser.source}`, code: 302};
-      let newUser = super._create(this.User, user);
-      if (newUser.email) await Email.sendVerifyRequest(newUser.name, newUser.email, createEmailVerifyLink(newUser._id, newUser.email));
-      // if (newUser.phone) await SMS.sendSms(`Your verification code is ${phoneCode}`, newUser.phone);
-      return newUser;
+      if (findedUser) {
+        return findedUser;
+        // throw {message: `User source is ${findedUser.source}`, code: 302};
+      } else {
+        let newUser = super._create(this.User, user);
+        if (newUser.email) await Email.sendVerifyRequest(newUser.name, newUser.email, createEmailVerifyLink(newUser._id, newUser.email));
+        // if (newUser.phone) await SMS.sendSms(`Your verification code is ${phoneCode}`, newUser.phone);
+        return newUser;
+      }
     } catch (e) {
       throw e;
     }

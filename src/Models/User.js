@@ -7,12 +7,18 @@ const Email = require('./../Classes/Email');
 const SMS = require('./../Classes/Sms');
 const schemas = {
   user: {
-    name: {type: String, default: 'Anonymous'},
+    firstname: {type: String, default: 'Anonymous'},
+    lastname: {type: String },
     email: {type: String, required: false},
     emailValidate: {type: Boolean, default: false},
     phone: {type: String, required: true},
     phoneCode: {type: String},
     phoneValidate: {type: Boolean, default: false},
+    driverLicense: {
+      state: String,
+      category: String,
+      number: String
+    },
     /**
      * Password is SHA256 hash string
      */

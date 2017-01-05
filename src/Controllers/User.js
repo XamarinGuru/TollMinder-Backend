@@ -16,10 +16,12 @@ router.get('/:_id?', (req, res) => {
 router.post('/signup', (req, res) => {
   let User = req.app.locals.settings.models.User;
   let {name, phone, email, password, source, photo} = req.body;
+  let [firstname, lastname] = name.split(' ');
+  lastname = lastname || '';
   if (!source && !phone && !email) return res.status(400).json({err: 'Bad oauth'});
   //removed password because over oauth user does'nt have password
   else if (!phone) return res.status(400).json({err: 'Missed phone'});
-  let user = {name, phone, password, email, source, photo};
+  let user = {firstname, lastname, phone, password, email, source, photo};
   User.create(user)
   .then(result => res.status(200).json(result))
   .catch((err) => {
@@ -52,7 +54,9 @@ router.put('/:_id?', (req, res) => {
   if (!req.headers['authorization']) return res.status(401).json({err: 'Not found auth header'});
   if (!req.params._id) return res.status(400).json({err: 'Not found `_id` in path'});
   let {name, email, phoneValidate} = req.body;
-  let changes = {name, email, phoneValidate};
+  let [firstname, lastname] = name.split(' ');
+  lastname = lastname || '';
+  let changes = {firstname, lastname, email, phoneValidate};
   User.update(req.params._id, req.headers['authorization'], changes)
   .then(result => res.status(200).json(result))
   .catch((err) => res.status(err.code || 500).json({err: err.message}));
@@ -70,6 +74,7 @@ router.post('/forgotPassword', (req, res) => {
   }
 });
 
+//TODO: on admin change name to firstname
 router.post('/adminAuth', (req, res) => {
   let User = req.app.locals.settings.models.User;
   let {name, password} = req.body;

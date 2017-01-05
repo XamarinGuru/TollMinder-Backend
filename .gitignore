@@ -2,3 +2,5 @@ node_modules
 .idea/*
 .net
 Uploads
+ecosystem.config.js
+dist

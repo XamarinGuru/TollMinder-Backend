@@ -1176,7 +1176,7 @@
       }
     },
     "/trip/paymentHistory": {
-      "get": {
+      "post": {
         "description": "Get trips by range of payment date",
         "tags": [
           "Trip"
@@ -1208,9 +1208,14 @@
           "200": {
             "description": "Array of trips objects",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Trip"
+              "type": "object",
+              "properties": {
+                "trips": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Trip"
+                  }
+                }
               }
             }
           },

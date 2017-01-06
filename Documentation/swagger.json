@@ -1468,7 +1468,7 @@
     "PaymentHistoryFields": {
       "type": "object",
       "properties": {
-        "_user": {
+        "user": {
           "type": "string",
           "description": "User id"
         },

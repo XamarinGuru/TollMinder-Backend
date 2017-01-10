@@ -49,8 +49,17 @@ class Trip extends Crud {
 
   async findBetweenDate(user, from, to) {
     try {
-      return await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }})
+      let trips = await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }})
           .populate('_tollRoad _rate').exec();
+      let filteredTrips = trips.map(trip => {
+        return {
+          tollRoadName: trip._tollRoad.name,
+          cost: trip._rate.cost,
+          paymentDate: trip.paymentDate,
+          _transaction: trip._transaction
+        }
+      });
+      return filteredTrips;
     } catch (e) {
       throw e;
     }

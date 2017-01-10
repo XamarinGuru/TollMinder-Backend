@@ -3,7 +3,7 @@ const router = require('express').Router();
 router.post('/paymentHistory', (req, res) => {
   let {Trip} = req.app.locals.settings.models;
   Trip.findBetweenDate(req.body.user, req.body.from, req.body.to)
-        .then(trips => res.json({ trips: trips }))
+        .then(trips => res.json(trips))
         .catch(err => res.status(400).json(err));
 });
 

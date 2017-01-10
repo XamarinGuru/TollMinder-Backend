@@ -1208,14 +1208,9 @@
           "200": {
             "description": "Array of trips objects",
             "schema": {
-              "type": "object",
-              "properties": {
-                "trips": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Trip"
-                  }
-                }
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TripPaymentHistory"
               }
             }
           },
@@ -1458,6 +1453,27 @@
         "_rate": {
           "type": "object",
           "description": "Rate object"
+        },
+        "_transaction": {
+          "type": "string",
+          "description": "Transaction id"
+        }
+      }
+    },
+    "TripPaymentHistory": {
+      "type": "object",
+      "properties": {
+        "tollRoadName": {
+          "type": "string",
+          "description": "name of tollRoad"
+        },
+        "paymentDate": {
+          "type": "string",
+          "description": "Date of payment"
+        },
+        "cost": {
+          "type": "string",
+          "description": "cost of trip"
         },
         "_transaction": {
           "type": "string",

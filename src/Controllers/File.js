@@ -28,7 +28,7 @@ router.post('/paymentHistoryPdf', (req ,res) => {
       let html = generateHtml(trips);
       return Converter.htmlToPDF(html, `${conf.uploadDir}/${fileName}`);
     })
-    .then(() => res.status(200).json({link : `${conf.host}/uploads/${fileName}`}))
+    .then(() => res.status(200).json(`${conf.host}/uploads/${fileName}`))
     .catch((err) => res.status(500).json(err));
 });
 

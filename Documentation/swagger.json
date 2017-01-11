@@ -349,12 +349,7 @@
           "200": {
             "description": "Link to your file",
             "schema": {
-              "type": "object",
-              "properties": {
-                "link": {
-                  "type": "string"
-                }
-              }
+              "type": "string"
             }
           },
           "400": {

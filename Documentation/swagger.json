@@ -1227,9 +1227,13 @@
           "type": "string",
           "description": "Unique identifier."
         },
-        "name": {
+        "firstname": {
           "type": "string",
-          "description": "User name"
+          "description": "User first name"
+        },
+        "lastname": {
+          "type": "string",
+          "description": "User last name"
         },
         "email": {
           "type": "string",
@@ -1255,6 +1259,23 @@
           "type": "boolean",
           "description": "Phone validation passed?"
         },
+        "driverLicense": {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string",
+              "description": "category of license plate"
+            },
+            "number": {
+              "type": "string",
+              "description": "license number"
+            },
+            "state": {
+              "type": "string",
+              "description": "the state of USA"
+            }
+          }
+        },
         "photo": {
           "type": "string",
           "description": "link to image"
@@ -1272,6 +1293,10 @@
     "SignUpFields": {
       "type": "object",
       "properties": {
+        "name": {
+          "type": "string",
+          "description": "User name"
+        },
         "name": {
           "type": "string",
           "description": "User name"

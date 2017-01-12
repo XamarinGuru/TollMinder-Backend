@@ -19,6 +19,9 @@ const schemas = {
       category: String,
       number: String
     },
+    address: { type: String },
+    state: { type: String },
+    zipCode: { type: String},
     /**
      * Password is SHA256 hash string
      */

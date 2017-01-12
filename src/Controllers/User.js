@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+//TODO: remove field "name" at all in post and put
+
 router.get('/:_id?', (req, res) => {
   let User = req.app.locals.settings.models.User;
   if (!req.headers['authorization']) return res.status(403).json({err: 'Not found auth header'});
@@ -15,9 +17,7 @@ router.get('/:_id?', (req, res) => {
 // Sign up (phone strategy)
 router.post('/signup', (req, res) => {
   let User = req.app.locals.settings.models.User;
-  let {name, phone, email, password, source, photo} = req.body;
-  let [firstname, lastname] = name.split(' ');
-  lastname = lastname || '';
+  let {firstname, lastname, phone, email, password, source, photo} = req.body;
   if (!source && !phone && !email) return res.status(400).json({err: 'Bad oauth'});
   //removed password because over oauth user does'nt have password
   else if (!phone) return res.status(400).json({err: 'Missed phone'});
@@ -53,10 +53,14 @@ router.put('/:_id?', (req, res) => {
   let User = req.app.locals.settings.models.User;
   if (!req.headers['authorization']) return res.status(401).json({err: 'Not found auth header'});
   if (!req.params._id) return res.status(400).json({err: 'Not found `_id` in path'});
-  let {name, email, phoneValidate} = req.body;
-  let [firstname, lastname] = name.split(' ');
-  lastname = lastname || '';
-  let changes = {firstname, lastname, email, phoneValidate};
+  let {name, email, phoneValidate, driverLicense, address} = req.body;
+  let firstname, lastname;
+  if (name) {
+    [firstname, lastname] = name.split(' ');
+  }
+  lastname = lastname || req.body.lastname || '';
+  firstname = firstname || req.body.firstname || '';
+  let changes = {firstname, lastname, email, phoneValidate, driverLicense, address};
   User.update(req.params._id, req.headers['authorization'], changes)
   .then(result => res.status(200).json(result))
   .catch((err) => res.status(err.code || 500).json({err: err.message}));

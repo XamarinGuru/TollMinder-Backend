@@ -165,20 +165,20 @@ class User extends Crud {
     }
   }
 
-  async authInAdminPanel(name, password) {
+  async authInAdminPanel(firstname, password) {
     try {
       let admin;
-      let user = await this.User.findOne({}).and([{name}, {isAdmin: true}]).exec()
+      let user = await this.User.findOne({}).and([{firstname}, {isAdmin: true}]).exec()
       if (!user) {
         let newUser = new this.User({
-          name: conf.defaultAdmin.name,
+          firstname: conf.defaultAdmin.name,
           password: createHash(conf.defaultAdmin.password),
           isAdmin: true,
           phone: createRandomCode()
         });
         admin = await newUser.save();
       } else admin = user;
-      if (admin.name != name || !passwordVerify(password, admin.password)) throw {
+      if (admin.firstname != firstname || !passwordVerify(password, admin.password)) throw {
         message: 'Wrong credentials',
         code: 401
       };

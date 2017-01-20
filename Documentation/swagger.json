@@ -116,6 +116,55 @@
         }
       }
     },
+    "/user/{_id}/token": {
+      "get": {
+        "description": "Validate mobile token",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User object",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/user/signup": {
       "post": {
         "description": "Register user in system",
@@ -235,6 +284,7 @@
         }
       }
     },
+
     "/user/signout/{_id}": {
       "delete": {
         "description": "Sign out",

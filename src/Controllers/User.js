@@ -96,4 +96,11 @@ router.post('/oauth', (req, res) => {
   .catch((err) => res.status(err.code || 500).json({err: err.message}));
 });
 
+router.get('/:id/token', (req, res) => {
+  let User = req.app.locals.settings.models.User;
+  User.validateMobileToken(req.params.id, req.headers['authorization'])
+      .then(user => res.status(200).json(user.mobileToken))
+      .catch(err => res.status(err.code || 500).json({err: err.message}));
+});
+
 module.exports = router;

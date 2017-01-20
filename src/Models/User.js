@@ -27,6 +27,8 @@ const schemas = {
      */
     password: {type: String, required: false},
     token: {type: String, required: false},
+    mobileToken: {type: String, required: false},
+    expiredToken: { type: Date },
     /**
      * Source can takes the following values:
      *  'epp'*String (default) - self registration with email, phone and password
@@ -56,6 +58,8 @@ class User extends Crud {
   async create(user) {
     try {
       user.token = createToken(user);
+      user.mobileToken = createToken(user);
+      user.expiredToken = Date.now() + 60 * 1000 * 24 * 60;
       user.password = user.password || '';
       user.password = createHash(user.password);
       let phoneCode = createRandomCode()
@@ -79,7 +83,7 @@ class User extends Crud {
   async read(_id, token) {
     if (!token) throw {message: 'Unauthorized', code: 403};
     try {
-      let user = await this.User.findOne().and([{_id}, {token}]).exec();
+      let user = await this.User.findOne().and([{_id}, { $or: [{token: token}, { mobileToken: token }]}]).exec();
       return user;
     }
     catch (e) {
@@ -104,8 +108,12 @@ class User extends Crud {
     try {
       let user = await this.User.findOne({phone}).exec();
       if (!passwordVerify(password, user.password)) throw {message: 'Wrong password', code: 401};
-      return await this.update(user._id, user.token, {token: createToken(user)});
-
+      let changes = {
+        token: createToken(user),
+        mobileToken: createToken(user),
+        expiredToken: Date.now() + 60 * 1000 * 24 * 60
+      }
+      return await this.update(user._id, user.token, );
     } catch (e) {
       throw e;
     }
@@ -137,6 +145,19 @@ class User extends Crud {
       user.phoneValidate = true;
       return await user.save();
 
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async validateMobileToken(userId, token) {
+    try {
+      let user = await this.User.findOne({ _id: userId });
+      if (user.expiredToken.getTime() < Date.now() && user.mobileToken === token) {
+        user.mobileToken = createToken(user);
+        user.expiredToken = Date.now() + 60 * 1000 * 24 * 60;
+      }
+      return user;
     } catch (e) {
       throw e;
     }

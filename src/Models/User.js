@@ -153,11 +153,15 @@ class User extends Crud {
   async validateMobileToken(userId, token) {
     try {
       let user = await this.User.findOne({ _id: userId });
-      if (user.expiredToken.getTime() < Date.now() && user.mobileToken === token) {
+      if (!user.mobileToken) {
         user.mobileToken = createToken(user);
         user.expiredToken = Date.now() + 60 * 1000 * 24 * 60;
       }
-      return user;
+      if (user.mobileToken && user.expiredToken.getTime() < Date.now() && user.mobileToken === token) {
+        user.mobileToken = createToken(user);
+        user.expiredToken = Date.now() + 60 * 1000 * 24 * 60;
+      }
+      return user.save();
     } catch (e) {
       throw e;
     }

@@ -16,9 +16,10 @@ const schemas = {
     phoneValidate: {type: Boolean, default: false},
     driverLicense: {
       state: String,
-      category: String,
-      number: String
+      vehicleClass: String,
+      licensePlate: String
     },
+    city: { type: String },
     address: { type: String },
     state: { type: String },
     zipCode: { type: String},

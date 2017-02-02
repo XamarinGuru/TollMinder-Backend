@@ -1309,16 +1309,30 @@
           "type": "boolean",
           "description": "Phone validation passed?"
         },
+        "address": {
+          "type": "string",
+          "description": "Address"
+        },
+        "city": {
+          "type": "string",
+          "description": "city"
+        },
+        "state": {
+          "type": "string",
+          "description": "State"
+        },
+        "zipCode": {
+          "type": "string",
+          "description": "Zip code"
+        },
         "driverLicense": {
           "type": "object",
           "properties": {
-            "category": {
-              "type": "string",
-              "description": "category of license plate"
+            "licensePlate": {
+              "type": "string"
             },
-            "number": {
-              "type": "string",
-              "description": "license number"
+            "vehicleClass": {
+              "type": "string"
             },
             "state": {
               "type": "string",
@@ -1343,11 +1357,11 @@
     "SignUpFields": {
       "type": "object",
       "properties": {
-        "name": {
+        "firstname": {
           "type": "string",
           "description": "User name"
         },
-        "name": {
+        "lastname": {
           "type": "string",
           "description": "User name"
         },

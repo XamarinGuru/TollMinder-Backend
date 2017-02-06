@@ -13,6 +13,7 @@ const schemas = {
     emailValidate: {type: Boolean, default: false},
     phone: {type: String, required: true},
     phoneCode: {type: String},
+    facebookId: {type: String, required: false},
     phoneValidate: {type: Boolean, default: false},
     driverLicense: {
       state: String,

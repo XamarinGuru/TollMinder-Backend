@@ -17,11 +17,11 @@ router.get('/:_id?', (req, res) => {
 // Sign up (phone strategy)
 router.post('/signup', (req, res) => {
   let User = req.app.locals.settings.models.User;
-  let {firstname, lastname, phone, email, password, source, photo} = req.body;
-  if (!source && !phone && !email) return res.status(400).json({err: 'Bad oauth'});
+  let {firstname, lastname, phone, email, password, source, photo, facebookId} = req.body;
+  if (!source && !phone && !email && !facebookId) return res.status(400).json({err: 'Bad oauth'});
   //removed password because over oauth user does'nt have password
   else if (!phone) return res.status(400).json({err: 'Missed phone'});
-  let user = {firstname, lastname, phone, password, email, source, photo};
+  let user = {firstname, lastname, phone, password, email, source, photo, facebookId};
   User.create(user)
   .then(result => res.status(200).json(result))
   .catch((err) => {
@@ -90,8 +90,8 @@ router.post('/adminAuth', (req, res) => {
 
 router.post('/oauth', (req, res) => {
   let User = req.app.locals.settings.models.User;
-  let {email, source} = req.body;
-  User.oauth(email, source)
+  let {facebookId, source, email} = req.body;
+  User.oauth(facebookId, source, email)
   .then(result => res.status(200).json(result))
   .catch((err) => res.status(err.code || 500).json({err: err.message}));
 });

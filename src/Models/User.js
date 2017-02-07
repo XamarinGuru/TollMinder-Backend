@@ -67,7 +67,13 @@ class User extends Crud {
       let phoneCode = createRandomCode()
       user.phoneCode = crypto.createHash('md5').update(phoneCode).digest('hex');
       let {phone, email, source} = user;
-      let findedUser = await this.User.findOne().or([{phone}, {email}]).exec();
+      let findedUser;
+      if(phone) {
+        findedUser = await this.User.findOne({phone}).exec();
+      }
+      else if(email) {
+        findedUser = await this.User.findOne({email}).exec();
+      }
       if (findedUser) {
         return findedUser;
         // throw {message: `User source is ${findedUser.source}`, code: 302};
@@ -219,10 +225,21 @@ class User extends Crud {
 
   async oauth(facebookId, source, email) {
     try {
-      if(!facebookId && !source && !email) {
+      if((!facebookId && !source) || (!email && !source)) {
         throw {message: 'User not found', code: 404};
       }
-      let user = await this.User.findOne({}).or([{ $and: [{email}, {source}]}, { $and: [{facebookId}, {source}]}]).exec();
+      let user;
+      if(facebookId && source=="facebook") {
+        user = await this.User.find(
+          {$and:[{facebookId}, {source}]}
+        ).exec();
+      }
+      else if(email && source == "gplus") {
+        user = await this.User.find(
+            {$and:[{email}, {source}] }
+        ).exec();
+      }
+      user = user[0];
       if (!user) throw {message: 'User not found', code: 404};
       if (user.phoneValidate) {
         user.token = createToken(user);

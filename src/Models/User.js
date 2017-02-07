@@ -219,6 +219,9 @@ class User extends Crud {
 
   async oauth(facebookId, source, email) {
     try {
+      if(!facebookId && !source && !email) {
+        throw {message: 'User not found', code: 404};
+      }
       let user = await this.User.findOne({}).or([{ $and: [{email}, {source}]}, { $and: [{facebookId}, {source}]}]).exec();
       if (!user) throw {message: 'User not found', code: 404};
       if (user.phoneValidate) {

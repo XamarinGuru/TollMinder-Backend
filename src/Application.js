@@ -34,6 +34,7 @@ const sync = require('./Controllers/SyncData');
 const matrix = require('./Controllers/Matrix');
 const rate = require('./Controllers/Rate');
 const trip = require('./Controllers/Trip');
+const payment = require('./Controllers/Payment');
 
 // Attach controllers
 app.use((req, res, next) => {
@@ -53,6 +54,7 @@ app.use('/api/user', user);
 app.use('/api/sync', sync);
 app.use('/api/file', file);
 app.use('/api/validator', validator);
+app.use('/api/payment', payment);
 
 // Routes for admin panel
 app.use('/api/tollRoad', tollRoad);

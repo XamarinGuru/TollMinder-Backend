@@ -28,5 +28,10 @@ module.exports = {
       pass: 'AsERQkGtlrT7Uq+YWb2/tixYSqVQ+LnGIrDJkv5Awg5H'
     }
   },
-  fromMail : 'nkreshchenko@gloriumtech.com'
+  fromMail : 'nkreshchenko@gloriumtech.com',
+  //Info for Authorize .NET payment system
+  payment: {
+    apiLoginID: '7Jd6hKUC6Ptt',
+    transactionKey: '75jfwm5eR6L2pL5U'
+  }
 };

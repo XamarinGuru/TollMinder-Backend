@@ -45,7 +45,23 @@ const schemas = {
     isAdmin: {type: Boolean, default: false},
     autoBilling: {type: Boolean, default: false},
     createdAt: {type: Date, default: Date.now()},
-    updatedAt: {type: Date}
+    updatedAt: {type: Date},
+    customerProfileId: { type: String },
+    subscriptions: [
+        {
+          paymentProfileId: String,
+          interval: Number,
+          unit: String,
+          enabled: Boolean
+        }
+    ],
+    paymentProfiles: [
+      {
+        paymentProfileId: String,
+        // Saving 4 last digits of the card number
+        cardNum: String
+      }
+    ]
   }
 };
 
@@ -251,6 +267,27 @@ class User extends Crud {
     } catch(e) {
       throw e;
     }
+  }
+
+  async updatePaymentProfile(userId, token, changes) {
+    let updateQuery;
+    let user = await this.User.findOne().and([{_id: userId}, { $or: [{token: token}, { mobileToken: token }]}]).exec();
+    if (changes.customerPaymentProfileIdList) {
+      let paymentProfile = {
+        paymentProfileId: changes.customerPaymentProfileIdList[0],
+        cardNum: changes.cardNum
+      }
+      user.customerProfileId = changes.customerProfileId;
+      user.paymentProfiles.push(paymentProfile);
+    } else {
+      let paymentProfile = {
+        paymentProfileId: changes.customerPaymentProfileId,
+        cardNum: changes.cardNum
+      }
+      user.paymentProfiles.push(paymentProfile);
+    }
+    console.log(updateQuery);
+    return await user.save();
   }
 }
 

@@ -270,7 +270,6 @@ class User extends Crud {
   }
 
   async updatePaymentProfile(userId, token, changes) {
-    let updateQuery;
     let user = await this.User.findOne().and([{_id: userId}, { $or: [{token: token}, { mobileToken: token }]}]).exec();
     if (changes.customerPaymentProfileIdList) {
       let paymentProfile = {
@@ -286,7 +285,6 @@ class User extends Crud {
       }
       user.paymentProfiles.push(paymentProfile);
     }
-    console.log(updateQuery);
     return await user.save();
   }
 }

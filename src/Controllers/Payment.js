@@ -16,21 +16,22 @@ router.post('/card', (req, res) => {
   }
   const token = req.headers['authorization'];
   try {
-    Models.PaymentSystem.setCreditCard({ creditCardNumber, expirationYear, expirationMonth, cardCode });
+    Models.PaymentSystem.setCreditCardSync({ creditCardNumber, expirationYear, expirationMonth, cardCode });
   } catch (error) {
     //TODO: explanation of specific field errors
     res.status(400).json({ err: 'Not valid format of data' });
   }
   Models.User.read(userId, token).then(user => {
     if (!user.customerProfileId) return Models.PaymentSystem.createCustomerProfile(user);
-
-    return Models.PaymentSystem.createPaymentProfile(user).then(result => {
-      return Promise.resolve({
-        customerProfileId: user.customerProfileId,
-        customerPaymentProfileId: result.customerPaymentProfileId,
-        cardNum: result.cardNum
-      });
-    })
+    return new Promise((resolve, reject) => {
+      Models.PaymentSystem.createPaymentProfile(user).then(result => {
+        resolve({
+          customerProfileId: user.customerProfileId,
+          customerPaymentProfileId: result.customerPaymentProfileId,
+          cardNum: result.cardNum
+        });
+      }).catch(err => reject(err));
+    });
   }).then(result => {
     return Models.User.updatePaymentProfile(userId, token, result);
   }).then(user => {
@@ -56,5 +57,6 @@ router.post('/charge', (req, res) => {
     res.status(error.code || 500).json(error);
   })
 });
+
 
 module.exports = router;

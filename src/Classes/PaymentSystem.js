@@ -57,19 +57,19 @@ class PaymentSystem {
       transaction.transactionId = response.getTransactionResponse().getTransId();
       transaction._user = userId;
       //Check enum values
-      transaction.status = transaction.path('status').enumValues(response.getTransactionResponse().getResponseCode() - 1);
+      transaction.status = Transaction.schema.path('status').enumValues[response.getTransactionResponse().getResponseCode() - 1];
       transaction.save().then(result => {
-        if (result.status === 'Error') {
+        if (result.status !== 'Error') {
           return Promise.resolve(result);
         } else {
-          return Promise.reject({ error: response.getErrors()})
+          return Promise.reject({ error: response.getTransactionResponse().getErrors().error[0]})
         }
       }).catch(error => {
         return Promise.reject(error);
       })
     } else {
       return Promise.reject({
-        error: response.getErrors()
+        error: response.getTransactionResponse().getErrors().error[0]
       });
     }
   }
@@ -129,7 +129,7 @@ class PaymentSystem {
               cardNum: cardNum.slice(cardNum.length - 4, cardNum.length)
             });
           } else {
-            reject(response.getErrors());
+            reject({ error: response.getMessages().getMessage()[0].getCode() });
           }
         } else {
           reject(new Error('Null response'));
@@ -163,14 +163,13 @@ class PaymentSystem {
       profile.setPayment(paymentType);
 
       // Now validation mode is in TEST_MODE, need to change than to Live
-      const createRequest = new ApiContracts.CreateCustomerPaymentProfileRequest({
-        paymentProfile: profile,
-        customerProfileId: user.customerProfileId,
-        merchantAuthentication: this.merchantAuthenticationType,
-        validationMode: ApiContracts.ValidationModeEnum.TESTMODE
-      });
+      const createRequest = new ApiContracts.CreateCustomerPaymentProfileRequest();
+      createRequest.setPaymentProfile(profile);
+      createRequest.setCustomerProfileId(user.customerProfileId);
+      createRequest.setValidationMode(ApiContracts.ValidationModeEnum.TESTMODE);
+      createRequest.setMerchantAuthentication(this.merchantAuthenticationType);
 
-      const customerController = new ApiControllers.CreateCustomerPaymentProfileController(createRequest.toJSON());
+      const customerController = new ApiControllers.CreateCustomerPaymentProfileController(createRequest.getJSON());
       customerController.execute(() => {
         const apiResponse = customerController.getResponse();
         const response = new ApiContracts.CreateCustomerPaymentProfileResponse(apiResponse);
@@ -183,7 +182,7 @@ class PaymentSystem {
               cardNum: cardNum.slice(cardNum.length - 4, cardNum.length)
             });
           } else {
-            reject(response.getErrors());
+            reject({ error: response.getMessages().getMessage()[0].getText() });
           }
         } else {
           reject(new Error('Null response'));
@@ -214,12 +213,11 @@ class PaymentSystem {
       transactionRequestType.setProfile(profileToCharge);
       transactionRequestType.setAmount(amount);
 
-      const createRequest = new ApiContracts.CreateTransactionRequest({
-        transactionRequest: transactionRequestType,
-        merchantAuthentication: this.merchantAuthenticationType
-      });
+      const createRequest = new ApiContracts.CreateTransactionRequest();
+      createRequest.setTransactionRequest(transactionRequestType);
+      createRequest.setMerchantAuthentication(this.merchantAuthenticationType);
 
-      let transactionController = new ApiControllers.CreateTransactionController(createRequest);
+      let transactionController = new ApiControllers.CreateTransactionController(createRequest.getJSON());
       transactionController.execute(function () {
         const apiResponse = transactionController.getResponse();
         const response = new ApiContracts.CreateTransactionResponse(apiResponse);
@@ -313,7 +311,7 @@ class PaymentSystem {
           if (response.getMessages().getResultCode() === ApiContracts.MessageTypeEnum.OK) {
             resolve(response);
           } else {
-            reject(response.getErrors());
+            reject({ error: response.getMessages().getMessage()[0].getCode() });
           }
         } else {
           reject(new Error('Null response'));
@@ -365,7 +363,11 @@ class PaymentSystem {
     return { error: null, value};
   }
 
-  setCreditCard(data) {
+  /**
+   * Create credit card type object
+   * @param data - payment data object which corresponds to paymentData schema
+   */
+  setCreditCardSync(data) {
     let {error, value} = this.validatePaymentData(data);
     if (error) throw error;
     value.expirationDate = `${value.expirationMonth}${value.expirationYear}`;

@@ -269,6 +269,14 @@ class User extends Crud {
     }
   }
 
+  /**
+   * Update payment profile. If there is no payment profile it will create customerProfileId and new paymentProfile.
+   * If one payment profile already exist, it will add new paymentProfile to existing array
+   * @param {string} userId
+   * @param {token} token
+   * @param {object} changes - contains paymentProfileId and cardNum (, customerProfileId - if first time)
+   * @returns {Promise.<*>}
+   */
   async updatePaymentProfile(userId, token, changes) {
     try {
       let user = await this.User.findOne().and([{_id: userId}, { $or: [{token: token}, { mobileToken: token }]}]).exec();

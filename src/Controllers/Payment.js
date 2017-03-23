@@ -57,5 +57,57 @@ router.post('/charge', (req, res) => {
   })
 });
 
+//Currently creates month subscription
+router.post('/subscription/enable', (req, res) => {
+  const Models = req.app.locals.settings.models;
+  let { userId, paymentProfileId } = req.body;
+  if (!userId) return res.status(400).json({ err: 'One of the parameters is missing'});
+
+  Models.User.read(userId, req.headers['authorization']).then(user => {
+    // Check if user have already enabled subscription
+    for (let subs of user.subscriptions) {
+      if (subs.enabled) {
+        return res.status(405).json({ err: 'Subscription already exist'});
+      }
+    }
+
+    let index = null;
+    user.subscriptions.forEach((subs, i) => { if (subs.paymentProfileId === paymentProfileId) index = i});
+    if (index) {
+      user.subscriptions[index].enabled = true;
+    } else {
+      user.subscriptions.push({
+        paymentProfileId: paymentProfileId,
+        unit: unit,
+        interval: interval,
+        enabled: true
+      });
+    }
+    return user.save();
+  }).then(result => {
+    res.status(200).json({ message: 'Subscription enabled'});
+  }).catch(error => {
+    res.status(err.code || 500).json({err: error.message });
+  });
+});
+
+router.post('/subscription/disable', (req, res) => {
+  const Models = req.app.locals.settings.models;
+  let { userId, paymentProfileId } = req.body;
+  if (!userId) return res.status(400).json({ err: 'One of the parameters is missing'});
+
+  Models.User.read(userId, req.headers['authorization']).then(user => {
+    user.subscriptions.forEach(subs => {
+      if (subs.paymentProfileId === paymentProfileId) {
+        subs.enabled = false;
+      }
+    });
+    return user.save();
+  }).then(result => {
+    res.status(200).json({ message: 'Subscription disabled'});
+  }).catch(error => {
+    res.status(err.code || 500).json({err: error.message });
+  });
+});
 
 module.exports = router;

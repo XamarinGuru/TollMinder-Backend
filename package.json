@@ -11,6 +11,7 @@
     "test": "mocha"
   },
   "dependencies": {
+    "async": "^2.1.5",
     "authorizenet": "^1.0.2",
     "babel-catch-regenerator-runtime": "^0.3.0",
     "babel-regenerator-runtime": "^6.5.0",
@@ -22,6 +23,7 @@
     "html-to-pdf": "^0.1.11",
     "joi": "^10.2.2",
     "moment": "^2.16.0",
+    "mongodb": "^2.2.25",
     "mongoose": "4.4.0",
     "node-json2html": "^1.1.1",
     "nodemailer": "^2.6.4",

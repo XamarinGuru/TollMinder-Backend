@@ -37,8 +37,8 @@ class Trip extends Crud {
   async setPayed(_id) {
     try {
       let history = await this.read(_id);
-      if (history.payed) throw {message: 'This transaction has been already payed', code: 409};
-      history.payed = true;
+      if (history.status === 'payed') throw {message: 'This transaction has been already payed', code: 409};
+      history.status = 'payed';
       history.paymentDate = Date.now();
       await history.save();
       return {msg: 'Success'};

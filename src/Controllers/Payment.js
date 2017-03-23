@@ -67,7 +67,7 @@ router.post('/subscription/enable', (req, res) => {
     // Check if user have already enabled subscription
     for (let subs of user.subscriptions) {
       if (subs.enabled) {
-        return res.status(405).json({ err: 'Subscription already exist'});
+        return res.status(409).json({ err: 'Subscription already exist. You need to disable previous one at first.'});
       }
     }
 
@@ -78,8 +78,8 @@ router.post('/subscription/enable', (req, res) => {
     } else {
       user.subscriptions.push({
         paymentProfileId: paymentProfileId,
-        unit: unit,
-        interval: interval,
+        unit: 'month',
+        interval: '1',
         enabled: true
       });
     }
@@ -87,7 +87,7 @@ router.post('/subscription/enable', (req, res) => {
   }).then(result => {
     res.status(200).json({ message: 'Subscription enabled'});
   }).catch(error => {
-    res.status(err.code || 500).json({err: error.message });
+    res.status(error.code || 500).json({err: error.message });
   });
 });
 

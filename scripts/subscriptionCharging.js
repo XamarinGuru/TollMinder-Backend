@@ -40,6 +40,12 @@ MongoClient.connect(conf.mongoURI, (err, db) => {
           callback1(null, sum);
         });
       }, (err, sumArray) => {
+        //TODO: charge each customer profile for each sum
+        if (err) {
+          console.error(err);
+          db.close();
+        }
+
 
       });
     });

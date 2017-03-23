@@ -270,22 +270,27 @@ class User extends Crud {
   }
 
   async updatePaymentProfile(userId, token, changes) {
-    let user = await this.User.findOne().and([{_id: userId}, { $or: [{token: token}, { mobileToken: token }]}]).exec();
-    if (changes.customerPaymentProfileIdList) {
-      let paymentProfile = {
-        paymentProfileId: changes.customerPaymentProfileIdList[0],
-        cardNum: changes.cardNum
+    try {
+      let user = await this.User.findOne().and([{_id: userId}, { $or: [{token: token}, { mobileToken: token }]}]).exec();
+      if (changes.customerPaymentProfileIdList) {
+        let paymentProfile = {
+          paymentProfileId: changes.customerPaymentProfileIdList[0],
+          cardNum: changes.cardNum
+        }
+        user.customerProfileId = changes.customerProfileId;
+        user.paymentProfiles.push(paymentProfile);
+      } else {
+        let paymentProfile = {
+          paymentProfileId: changes.customerPaymentProfileId,
+          cardNum: changes.cardNum
+        }
+        user.paymentProfiles.push(paymentProfile);
       }
-      user.customerProfileId = changes.customerProfileId;
-      user.paymentProfiles.push(paymentProfile);
-    } else {
-      let paymentProfile = {
-        paymentProfileId: changes.customerPaymentProfileId,
-        cardNum: changes.cardNum
-      }
-      user.paymentProfiles.push(paymentProfile);
+      let result =  await user.save();
+      return { customerProfileId: result.customerProfileId, paymentProfiles: result.paymentProfiles };
+    } catch(err) {
+      return Promise.reject(err);
     }
-    return await user.save();
   }
 }
 

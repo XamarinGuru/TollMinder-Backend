@@ -1267,9 +1267,173 @@
           }
         }
       }
+    },
+    "/payment/card": {
+      "post": {
+        "description": "Added new card. If it is first card, it will create customer profile",
+        "tags": [
+          "Payment"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "payment card data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CardData"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "customerProfileId": {
+                  "type": "string"
+                },
+                "paymentProfiles": {
+                  "type": "array",
+                  "items": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "paymentProfileId": {
+                          "type": "string"
+                        },
+                        "cardNum": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/payment/charge": {
+      "post": {
+        "description": "Make payment request",
+        "tags": [
+          "Payment"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "data for making charge request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChargeRequest"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "ChargeRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "paymentProfileId": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        }
+      }
+    },
+    "CardData": {
+      "type": "object",
+      "properties": {
+        "creditCardNumber": {
+          "type": "string"
+        },
+        "expirationMonth": {
+          "type": "string"
+        },
+        "expirationYear": {
+          "type": "string"
+        },
+        "cardCode": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
     "User": {
       "type": "object",
       "properties": {

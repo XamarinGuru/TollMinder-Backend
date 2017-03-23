@@ -83,6 +83,7 @@ class PaymentSystem {
     return new Promise((resolve, reject) => {
       const paymentType = new ApiContracts.PaymentType({ creditCard: this.creditCard });
 
+      validateProfileFields(user);
       const customerAddress = new ApiContracts.CustomerAddressType({
         firstName: user.firstname,
         lastName: user.lastname,
@@ -231,14 +232,14 @@ class PaymentSystem {
   }
 
   /**
-   * Creates subscription
+   * Creates subscription on Authorize.Net service
    * @param {string} customerProfileId
    * @param {string} customerPaymentProfileId
    * @param {string} customerAddressId
    * @param {object} intervalData - contains two props - {length}, {unit}
    * @returns {Promise}
    */
-  createSubscription(customerProfileId, customerPaymentProfileId, customerAddressId, intervalData) {
+  createSubscriptionAuthorizeNet(customerProfileId, customerPaymentProfileId, customerAddressId, intervalData) {
     return new Promise((resolve, reject) => {
       const interval = new ApiContracts.PaymentScheduleType.Interval();
       if (intervalData) {
@@ -265,10 +266,9 @@ class PaymentSystem {
       arbSubscription.setProfile(customerProfileIdType);
       arbSubscription.setAmount(100);
 
-      const createRequest = new ApiContracts.ARBCreateSubscriptionRequest({
-        merchantAuthentication: this.merchantAuthenticationType,
-        subscription: arbSubscription
-      });
+      const createRequest = new ApiContracts.ARBCreateSubscriptionRequest();
+      createRequest.setSubscription(arbSubscription);
+      createRequest.setMerchantAuthentication(this.merchantAuthenticationType);
 
       const subscriptionController = new ApiControllers.ARBCreateSubscriptionController(createRequest.getJSON());
       subscriptionController.execute(() => {
@@ -280,7 +280,7 @@ class PaymentSystem {
           if (response.getMessages().getResultCode() === ApiContracts.MessageTypeEnum.OK) {
             resolve(response);
           } else {
-            reject(response.getErrors());
+            reject({ message: response.getMessages().getMessage()[0].getCode() });
           }
         } else {
           reject(new Error('Null response'));
@@ -296,10 +296,9 @@ class PaymentSystem {
    */
   getCustomerProfile(customerProfileId) {
     return new Promise((resolve, reject) => {
-      const getRequest = new ApiContracts.GetCustomerProfileRequest({
-        customerProfileId: customerProfileId,
-        merchantAuthentication: this.merchantAuthenticationType
-      });
+      const getRequest = new ApiContracts.GetCustomerProfileRequest();
+      getRequest.setMerchantAuthentication(this.merchantAuthenticationType);
+      getRequest.setCustomerProfileId(customerProfileId);
 
       const customerController = new ApiControllers.GetCustomerProfileController(getRequest.getJSON());
       customerController.execute(() => {
@@ -311,7 +310,7 @@ class PaymentSystem {
           if (response.getMessages().getResultCode() === ApiContracts.MessageTypeEnum.OK) {
             resolve(response);
           } else {
-            reject({ error: response.getMessages().getMessage()[0].getCode() });
+            reject({ message: response.getMessages().getMessage()[0].getCode() });
           }
         } else {
           reject(new Error('Null response'));
@@ -321,16 +320,15 @@ class PaymentSystem {
   }
 
   /**
-   * Cancel subscription
+   * Cancel subscription on Authorize.Net service
    * @param {string} subscriptionId
    * @returns {Promise}
    */
-  cancelSubscription(subscriptionId) {
+  cancelSubscriptionAuthorizeNet(subscriptionId) {
     return new Promise((resolve, reject) => {
-      const cancelRequest = new ApiContracts.ARBCancelSubscriptionRequest({
-        merchantAuthentication: this.merchantAuthenticationType,
-        subscriptionId: subscriptionId
-      });
+      const cancelRequest = new ApiContracts.ARBCancelSubscriptionRequest();
+      cancelRequest.setMerchantAuthentication(this.merchantAuthenticationType);
+      cancelRequest.setSubscriptionId(subscriptionId);
 
       const cancelSubscriptionController = new ApiControllers.ARBCancelSubscriptionController(cancelRequest.getJSON());
       cancelSubscriptionController.execute(() => {
@@ -342,7 +340,7 @@ class PaymentSystem {
           if (response.getMessages().getResultCode() === ApiContracts.MessageTypeEnum.OK) {
             resolve(response);
           } else {
-            reject(response.getErrors());
+            reject({ message: response.getMessages().getMessage()[0].getCode() });
           }
         } else {
           reject(new Error('Null response'));
@@ -354,12 +352,18 @@ class PaymentSystem {
 
 
   /**
+   * Validate payment data
    * @param data - payment data object which corresponds to paymentData schema
    * @returns {Object} - two props {error} and {value}
    */
   validatePaymentData(data) {
     let {error, value} = Joi.validate(data, paymentDataSchema);
-    if (error) return { error };
+    if (error) return { error: { message: error.details[0].message} };
+    // Validate month and year not to be in the past
+    if ((+value.expirationMonth < (new Date()).getMonth() + 1 ) ||
+        (+value.expirationYear < new Date().getFullYear().toString().slice(2,4))) {
+      return { error: { message: 'Expiration date must be in future'} };
+    }
     return { error: null, value};
   }
 
@@ -380,7 +384,7 @@ class PaymentSystem {
 
 // Schema for payment data
 const paymentDataSchema = Joi.object().keys({
-  creditCardNumber: Joi.string().creditCard().required(),
+  creditCardNumber: Joi.string().creditCard().required().min(13).max(16),
   expirationMonth: Joi.string().regex(/^[0-9]+$/, 'numbers').length(2).required(),
   expirationYear: Joi.string().regex(/^[0-9]+$/, 'numbers').min(2).max(4).required(),
   cardCode: Joi.string().min(3).max(4).required()
@@ -393,6 +397,14 @@ function getRandomString(text){
 
 function getDate(){
   return (new Date()).toISOString().substring(0, 10) ;
+}
+
+function validateProfileFields({ firstname, lastname, address, city, state, phone, email}) {
+  if (firstname && lastname && address && city && state && phone && email) {
+   return true;
+  } else {
+    throw { message: 'Missing some of the profile fields required for creating customer profile'};
+  }
 }
 
 module.exports = PaymentSystem;

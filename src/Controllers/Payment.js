@@ -18,8 +18,7 @@ router.post('/card', (req, res) => {
   try {
     Models.PaymentSystem.setCreditCardSync({ creditCardNumber, expirationYear, expirationMonth, cardCode });
   } catch (error) {
-    //TODO: explanation of specific field errors
-    res.status(400).json({ err: 'Not valid format of data' });
+    return res.status(400).json({ err:  error.message });
   }
   Models.User.read(userId, token).then(user => {
     if (!user.customerProfileId) return Models.PaymentSystem.createCustomerProfile(user);
@@ -37,7 +36,7 @@ router.post('/card', (req, res) => {
   }).then(user => {
     res.status(200).json(user);
   }).catch(error => {
-    res.status(error.code || 500).json({ error: error });
+    res.status(error.code || 500).json({ err: error.message });
   });
 });
 
@@ -54,7 +53,7 @@ router.post('/charge', (req, res) => {
   }).then(result => {
     res.status(200).json({ message: 'Transaction successfully passed'});
   }).catch(error => {
-    res.status(error.code || 500).json(error);
+    res.status(error.code || 500).json({ err: error.message });
   })
 });
 

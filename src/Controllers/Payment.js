@@ -8,6 +8,19 @@ router.use((req, res, next) => {
   }
 });
 
+router.get('/:userId/cards', (req, res) => {
+  const Models = req.app.locals.settings.models;
+  let { userId } = req.params;
+
+  if (!userId) return res.status(400).json({ err: 'One of the parameters is missing'});
+
+  Models.User.read(userId, req.headers['authorization']).then(user => {
+    res.status(200).json(user.paymentProfiles);
+  }).catch(error => {
+    res.status(error.code || 500).json({ err: error.message });
+  })
+});
+
 router.post('/card', (req, res) => {
   const Models = req.app.locals.settings.models;
   let {creditCardNumber, expirationMonth, expirationYear, cardCode, userId} = req.body;
@@ -40,22 +53,49 @@ router.post('/card', (req, res) => {
   });
 });
 
+router.delete('/card', (req, res) => {
+  const Models = req.app.locals.settings.models;
+  let {userId, paymentProfileId} = req.body;
+
+  if (!userId || !paymentProfileId) return res.status(400).json({ err: 'One of the parameters is missing'});
+
+  Models.User.read(userId, req.headers['authorization']).then(user => {
+    if (!user.customerProfileId) return Promise.reject({ code: 409, message: 'Customer profile does not exist'});
+    return new Promise((resolve, reject) => {
+      Models.PaymentSystem.deleteCustomerPaymentProfile(user.customerProfileId, paymentProfileId).then(result => {
+        user.paymentProfiles = user.paymentProfiles.filter(v => v.paymentProfileId !== paymentProfileId);
+        return user.save();
+      }).then(res => resolve(res))
+        .catch(error => reject(error));
+    })
+  }).then(user => {
+    res.status(200).json();
+  }).catch(error => {
+    res.status(error.code || 500).json({ err: error.message });
+  });
+});
+
 router.post('/charge', (req, res) => {
   const Models = req.app.locals.settings.models;
   let {userId, paymentProfileId, amount} = req.body;
 
-  if (!userId || !paymentProfileId || !amount) return res.status(400).json({ err: 'One of the parameters is missing'});
+  if (!userId || !paymentProfileId || !amount) {
+    return res.status(400).json({ err: 'One of the parameters is missing'});
+  }
 
   Models.User.read(userId, req.headers['authorization']).then(user => {
     return Models.PaymentSystem.chargeCustomerProfile(user.customerProfileId, paymentProfileId, amount);
   }).then(response => {
     return Models.PaymentSystem.createTransaction(Models.Transaction.Transaction, response, userId);
+  }).then(transaction => {
+    return Models.Trip.setPayed(tripId, transaction.updatedAt);
   }).then(result => {
-    res.status(200).json({ message: 'Transaction successfully passed'});
+    res.status(200).json({ message: 'Transaction approved'});
   }).catch(error => {
     res.status(error.code || 500).json({ err: error.message });
   })
 });
+
 
 //Currently creates month subscription
 router.post('/subscription/enable', (req, res) => {

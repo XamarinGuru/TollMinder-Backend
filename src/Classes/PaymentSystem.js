@@ -49,7 +49,7 @@ class PaymentSystem {
    * @param {Mongoose.Model} Transaction - model
    * @param {TransactionResponse} response - transaction response
    * @param {string} userId - user id
-   * @returns {Promise|Promise.<*>}
+   * @returns {Promise|Promise.<*>} Resolve {Mongoose.Object} transaction
    */
   createTransaction(Transaction, response, userId) {
     if (response.getMessages().getResultCode() === ApiContracts.MessageTypeEnum.OK) {
@@ -190,6 +190,37 @@ class PaymentSystem {
         }
       })
     })
+  }
+
+  /**
+   * Delete customer payment profile from Authorize.Net
+   * @param {string} customerProfileId
+   * @param {string} customerPaymentProfileId
+   * @returns {Promise}
+   */
+  deleteCustomerPaymentProfile(customerProfileId, customerPaymentProfileId) {
+    return new Promise((resolve, reject) => {
+        const deleteRequest = new ApiContracts.DeleteCustomerPaymentProfileRequest();
+        deleteRequest.setCustomerProfileId(customerProfileId);
+        deleteRequest.setCustomerPaymentProfileId(customerPaymentProfileId);
+        deleteRequest.setMerchantAuthentication(this.merchantAuthenticationType);
+
+        const deleteController = new ApiControllers.DeleteCustomerPaymentProfileController(deleteRequest.getJSON());
+        deleteController.execute(() => {
+          const apiResponse = deleteController.getResponse();
+          const response = new ApiContracts.DeleteCustomerPaymentProfileResponse(apiResponse);
+
+          if (response !== null) {
+            if (response.getMessages().getResultCode() === ApiContracts.MessageTypeEnum.OK) {
+              resolve({});
+            } else {
+              reject({ error: response.getMessages().getMessage()[0].getText() });
+            }
+          } else {
+            reject(new Error('Null response'));
+          }
+        })
+    });
   }
 
   /**

@@ -1202,6 +1202,13 @@
             "required": true,
             "type" : "string",
             "description": "TollRoad id"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "auth token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -1247,6 +1254,13 @@
             "required": true,
             "type" : "string",
             "description": "Payment date to which to search"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "auth token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -1256,6 +1270,48 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/TripPaymentHistory"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/:userId/notPayed": {
+      "post": {
+        "description": "Get all notPayed trips for specified user",
+        "tags": [
+          "Trip"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of trips objects and amount",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "trips": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/TripPaymentHistory"
+                  }
+                },
+                "amount": {
+                  "type": "number"
+                }
               }
             }
           },
@@ -1339,6 +1395,60 @@
             }
           }
         }
+      },
+      "delete": {
+        "description": "Delete card",
+        "tags": [
+          "Payment"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string"
+                },
+                "paymentProfileId": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete successfully"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
       }
     },
     "/payment/charge": {
@@ -1373,6 +1483,60 @@
               "properties": {
                 "message": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/:userId/cards": {
+      "get": {
+        "description": "Get all user cards",
+        "tags": [
+          "Payment"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "paymentProfileId": {
+                    "type": "string"
+                  },
+                  "cardNum": {
+                    "type": "string"
+                  }
                 }
               }
             }

@@ -34,12 +34,12 @@ class Trip extends Crud {
     return await super._create(this.Trip, trip);
   }
 
-  async setPayed(_id) {
+  async setPayed(_id, transactionDate) {
     try {
       let history = await this.read(_id);
       if (history.status === 'payed') throw {message: 'This transaction has been already payed', code: 409};
       history.status = 'payed';
-      history.paymentDate = Date.now();
+      history.paymentDate = transactionDate;
       await history.save();
       return {msg: 'Success'};
     } catch (e) {
@@ -50,13 +50,13 @@ class Trip extends Crud {
   async findBetweenDate(user, from, to) {
     try {
       let trips = await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }})
-          .populate('_tollRoad _rate').exec();
+          .populate('_tollRoad _rate _transaction').exec();
       let filteredTrips = trips.map(trip => {
         return {
           tollRoadName: trip._tollRoad.name,
           cost: trip._rate.cost,
           paymentDate: trip.paymentDate,
-          _transaction: trip._transaction
+          _transaction: trip._transaction ? trip._transaction.transactionId : ''
         }
       });
       return filteredTrips;
@@ -65,6 +65,28 @@ class Trip extends Crud {
     }
   }
 
+  async getNotPayedTripsAmount(userId) {
+    try {
+      let trips = await this.Trip.find({ _user: userId, status: 'notPayed'})
+            .populate('_rate _tollRoad _transaction').exec();
+
+      let amount = trips.reduce((prev, curr, i) => {
+        if (i === 1) return prev._rate.cost + curr._rate.cost;
+        else return prev + curr._rate.cost;
+      });
+      const filteredTrips = trips.map(trip => {
+        return {
+          tollRoadName: trip._tollRoad.name,
+          cost: trip._rate.cost,
+          paymentDate: trip.paymentDate,
+          _transaction: trip._transaction ? trip._transaction.transactionId : ''
+        }
+      });
+      return { trips: filteredTrips, amount };
+    } catch (err) {
+      throw err;
+    }
+  }
 
 }
 

@@ -1282,13 +1282,19 @@
         }
       }
     },
-    "/:userId/notPayed": {
+    "/{userId}/notPayed": {
       "post": {
         "description": "Get all notPayed trips for specified user",
         "tags": [
           "Trip"
         ],
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "authorization",
             "in": "header",
@@ -1508,13 +1514,19 @@
         }
       }
     },
-    "/:userId/cards": {
+    "/{userId}/cards": {
       "get": {
         "description": "Get all user cards",
         "tags": [
           "Payment"
         ],
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "authorization",
             "in": "header",

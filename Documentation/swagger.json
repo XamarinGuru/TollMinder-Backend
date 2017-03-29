@@ -1283,7 +1283,7 @@
       }
     },
     "/{userId}/notPayed": {
-      "post": {
+      "get": {
         "description": "Get all notPayed trips for specified user",
         "tags": [
           "Trip"

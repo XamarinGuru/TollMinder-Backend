@@ -119,7 +119,7 @@ class User extends Crud {
     try {
       let user = await this.read(_id, token);
       if (!user) throw {message: 'User not found', code: 404};
-      for (let change in changes) if (schemas.user.hasOwnProperty(change)) user[change] = changes[change];
+      for (let change in changes) user[change] = changes[change];
       let savedUser = await user.save();
       return savedUser;
 

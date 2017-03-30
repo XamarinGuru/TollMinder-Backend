@@ -10,6 +10,7 @@ const express = require('express');
 const app = express();
 const conf = require('./conf');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 // Connect to database
 mongoose.Promise = global.Promise;
@@ -19,7 +20,8 @@ mongoose.connect(conf.mongoURI);
 const models = require("./Models/All");
 
 // Configure application
-app.use(require('body-parser')());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(require('express-fileupload')());
 
 app.set('models', models);

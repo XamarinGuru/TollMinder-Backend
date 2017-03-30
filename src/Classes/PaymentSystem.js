@@ -58,15 +58,7 @@ class PaymentSystem {
       transaction._user = userId;
       //Check enum values
       transaction.status = Transaction.schema.path('status').enumValues[response.getTransactionResponse().getResponseCode() - 1];
-      transaction.save().then(result => {
-        if (result.status !== 'Error') {
-          return Promise.resolve(result);
-        } else {
-          return Promise.reject({ error: response.getTransactionResponse().getErrors().error[0]})
-        }
-      }).catch(error => {
-        return Promise.reject(error);
-      })
+      return transaction.save();
     } else {
       return Promise.reject({
         error: response.getTransactionResponse().getErrors().error[0]

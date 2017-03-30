@@ -88,7 +88,7 @@ router.post('/charge', (req, res) => {
   }).then(response => {
     return Models.PaymentSystem.createTransaction(Models.Transaction.Transaction, response, userId);
   }).then(transaction => {
-    return Models.Trip.setPayed(tripId, transaction.updatedAt);
+    return Models.Trip.setAllPayedByUserId(userId, transaction.id,transaction.updatedAt);
   }).then(result => {
     res.status(200).json({ message: 'Transaction approved'});
   }).catch(error => {

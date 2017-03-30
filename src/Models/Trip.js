@@ -34,13 +34,14 @@ class Trip extends Crud {
     return await super._create(this.Trip, trip);
   }
 
-  async setPayed(_id, transactionDate) {
+  async setPayed(_id, transactionId, transactionDate) {
     try {
-      let history = await this.read(_id);
-      if (history.status === 'payed') throw {message: 'This transaction has been already payed', code: 409};
-      history.status = 'payed';
-      history.paymentDate = transactionDate;
-      await history.save();
+      let trip = await this.read(_id);
+      if (trip.status === 'payed') throw {message: 'This transaction has been already payed', code: 409};
+      trip.status = 'payed';
+      trip._transaction = transactionId;
+      trip.paymentDate = transactionDate;
+      await trip.save();
       return {msg: 'Success'};
     } catch (e) {
       throw e;
@@ -83,6 +84,29 @@ class Trip extends Crud {
         }
       });
       return { trips: filteredTrips, amount };
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  /**
+   *  Set all notPayed user trips to payed and add transaction id and date to trips
+   * @param {string} userId
+   * @param {string} transactionId
+   * @param {Date} transactionDate
+   * @returns {Promise.<*|Promise>}
+   */
+  async setAllPayedByUserId(userId, transactionId, transactionDate) {
+    try {
+      let trips = await this.Trip.find({ _user: userId, status: 'notPayed' });
+      trips.forEach(v => {
+        v._transaction = transactionId;
+        v.paymentDate = transactionDate;
+        v.status = 'payed';
+        return v;
+      });
+      let promises = trips.map(v => v.save());
+      return Promise.all(promises);
     } catch (err) {
       throw err;
     }

@@ -83,7 +83,8 @@ class PaymentSystem {
         city: user.city,
         state: user.state,
         country: 'USA',
-        phoneNumber: user.phone
+        phoneNumber: user.phone,
+        zip: user.zipCode
       });
 
       const customerPaymentProfileType = new ApiContracts.CustomerPaymentProfileType();
@@ -141,6 +142,7 @@ class PaymentSystem {
       const paymentType = new ApiContracts.PaymentType({
         creditCard: this.creditCard
       });
+      validateProfileFields(user);
       const customerAddress = new ApiContracts.CustomerAddressType({
         firstName: user.firstname,
         lastName: user.lastname,
@@ -148,7 +150,8 @@ class PaymentSystem {
         city: user.city,
         state: user.state,
         country: 'USA',
-        phoneNumber: user.phone
+        phoneNumber: user.phone,
+        zip: user.zipCode
       });
 
       const profile = new ApiContracts.CustomerPaymentProfileType();
@@ -422,8 +425,8 @@ function getDate(){
   return (new Date()).toISOString().substring(0, 10) ;
 }
 
-function validateProfileFields({ firstname, lastname, address, city, state, phone, email}) {
-  if (firstname && lastname && address && city && state && phone && email) {
+function validateProfileFields({ firstname, lastname, address, city, state, phone, email, zipCode}) {
+  if (firstname && lastname && address && city && state && phone && email && zipCode) {
    return true;
   } else {
     throw { message: 'Missing some of the profile fields required for creating customer profile'};

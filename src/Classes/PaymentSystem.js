@@ -123,7 +123,7 @@ class PaymentSystem {
               cardNum: cardNum.slice(cardNum.length - 4, cardNum.length)
             });
           } else {
-            reject({ error: response.getMessages().getMessage()[0].getCode() });
+            reject({ message: response.getMessages().getMessage()[0].getCode() });
           }
         } else {
           reject(new Error('Null response'));
@@ -178,7 +178,7 @@ class PaymentSystem {
               cardNum: cardNum.slice(cardNum.length - 4, cardNum.length)
             });
           } else {
-            reject({ error: response.getMessages().getMessage()[0].getText() });
+            reject({ message: response.getMessages().getMessage()[0].getText(), code: 400 });
           }
         } else {
           reject(new Error('Null response'));
@@ -209,7 +209,7 @@ class PaymentSystem {
             if (response.getMessages().getResultCode() === ApiContracts.MessageTypeEnum.OK) {
               resolve({});
             } else {
-              reject({ error: response.getMessages().getMessage()[0].getText() });
+              reject({ message: response.getMessages().getMessage()[0].getText() });
             }
           } else {
             reject(new Error('Null response'));

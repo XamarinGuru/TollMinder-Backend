@@ -1514,7 +1514,7 @@
         }
       }
     },
-    "/{userId}/cards": {
+    "/payment/{userId}/cards": {
       "get": {
         "description": "Get all user cards",
         "tags": [

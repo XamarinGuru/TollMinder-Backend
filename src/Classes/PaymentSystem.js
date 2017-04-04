@@ -386,7 +386,7 @@ class PaymentSystem {
     let {error, value} = Joi.validate(data, paymentDataSchema);
     if (error) return { error: { message: error.details[0].message} };
     // Validate month and year not to be in the past
-    if ((+value.expirationMonth < (new Date()).getMonth() + 1 ) ||
+    if ((+value.expirationMonth < (new Date()).getMonth() + 1 ) &&
         (+value.expirationYear < new Date().getFullYear().toString().slice(2,4))) {
       return { error: { message: 'Expiration date must be in future'} };
     }

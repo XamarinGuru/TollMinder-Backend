@@ -295,7 +295,7 @@ class User extends Crud {
         user.paymentProfiles.push(paymentProfile);
       }
       let result =  await user.save();
-      return { customerProfileId: result.customerProfileId, paymentProfiles: result.paymentProfiles };
+      return { paymentProfiles: result.paymentProfiles };
     } catch(err) {
       return Promise.reject(err);
     }

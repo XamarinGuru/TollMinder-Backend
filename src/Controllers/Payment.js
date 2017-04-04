@@ -15,7 +15,7 @@ router.get('/:userId/cards', (req, res) => {
   if (!userId) return res.status(400).json({ err: 'One of the parameters is missing'});
 
   Models.User.read(userId, req.headers['authorization']).then(user => {
-    res.status(200).json(user.paymentProfiles);
+    res.status(200).json({ paymentProfiles: user.paymentProfiles});
   }).catch(error => {
     res.status(error.code || 500).json({ err: error.message });
   })

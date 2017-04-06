@@ -53,17 +53,13 @@ class Trip extends Crud {
       let trips = await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }, status: status })
           .populate('_tollRoad _rate _transaction').exec();
 
-      //Check if rate exists
-      if (trips.filter(trip => trip._rate && trip._rate.cost).length !== trips.length) {
-        return Promise.reject({ message: "Some trips do not have rates", code: 409 });
-      }
 
       let filteredTrips = trips.map(trip => {
         return {
-          tollRoadName: trip._tollRoad.name,
-          cost: trip._rate.cost,
+          tollRoadName: trip._tollRoad ? trip._tollRoad.name : 'No road name',
+          cost: trip._rate ? trip._rate.cost : 0,
           paymentDate: trip.paymentDate,
-          _transaction: trip._transaction ? trip._transaction.transactionId : ''
+          _transaction: trip._transaction ? trip._transaction.transactionId : 'No transaction Id'
         }
       });
       return filteredTrips;

@@ -10,9 +10,9 @@ router.use((req, res, next) => {
 
 router.post('/paymentHistory', (req, res) => {
   let {Trip} = req.app.locals.settings.models;
-  Trip.findBetweenDate(req.body.user, req.body.from, req.body.to)
+  Trip.findBetweenDate(req.body.user, req.body.from, req.body.to, "payed")
         .then(trips => res.json(trips))
-        .catch(err => res.status(400).json(err));
+        .catch(err => res.status(err.code || 500).json({ err: err.message }));
 });
 
 router.post('/', (req, res) => {

@@ -48,10 +48,16 @@ class Trip extends Crud {
     }
   }
 
-  async findBetweenDate(user, from, to) {
+  async findBetweenDate(user, from, to, status) {
     try {
-      let trips = await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }})
+      let trips = await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }, status: status })
           .populate('_tollRoad _rate _transaction').exec();
+
+      //Check if rate exists
+      if (trips.filter(trip => trip._rate && trip._rate.cost).length !== trips.length) {
+        return Promise.reject({ message: "Some trips do not have rates", code: 409 });
+      }
+
       let filteredTrips = trips.map(trip => {
         return {
           tollRoadName: trip._tollRoad.name,

@@ -71,6 +71,15 @@ class Trip extends Crud {
       let trips = await this.Trip.find({ _user: userId, status: 'notPayed'})
             .populate('_rate _tollRoad _transaction').exec();
 
+      if (trips.length == 0) {
+        return { trips: [], amount: 0};
+      }
+
+      //Check if rate exists
+      if (trips.filter(trip => trip._rate && trip._rate.cost).length !== trips.length) {
+        return Promise.reject({ message: "Some trips do not have rates", code: 409 });
+      }
+
       let amount = trips.reduce((prev, curr, i) => {
         if (i === 1) return prev._rate.cost + curr._rate.cost;
         else return prev + curr._rate.cost;

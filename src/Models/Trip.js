@@ -34,29 +34,32 @@ class Trip extends Crud {
     return await super._create(this.Trip, trip);
   }
 
-  async setPayed(_id) {
+  async setPayed(_id, transactionId, transactionDate) {
     try {
-      let history = await this.read(_id);
-      if (history.payed) throw {message: 'This transaction has been already payed', code: 409};
-      history.payed = true;
-      history.paymentDate = Date.now();
-      await history.save();
+      let trip = await this.read(_id);
+      if (trip.status === 'payed') throw {message: 'This transaction has been already payed', code: 409};
+      trip.status = 'payed';
+      trip._transaction = transactionId;
+      trip.paymentDate = transactionDate;
+      await trip.save();
       return {msg: 'Success'};
     } catch (e) {
       throw e;
     }
   }
 
-  async findBetweenDate(user, from, to) {
+  async findBetweenDate(user, from, to, status) {
     try {
-      let trips = await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }})
-          .populate('_tollRoad _rate').exec();
+      let trips = await this.Trip.find({ _user: user, paymentDate: { $gte: new Date(from), $lt: new Date(to) }, status: status })
+          .populate('_tollRoad _rate _transaction').exec();
+
+
       let filteredTrips = trips.map(trip => {
         return {
-          tollRoadName: trip._tollRoad.name,
-          cost: trip._rate.cost,
+          tollRoadName: trip._tollRoad ? trip._tollRoad.name : 'No road name',
+          cost: trip._rate ? trip._rate.cost : 0,
           paymentDate: trip.paymentDate,
-          _transaction: trip._transaction
+          _transaction: trip._transaction ? trip._transaction.transactionId : 'No transaction Id'
         }
       });
       return filteredTrips;
@@ -65,6 +68,60 @@ class Trip extends Crud {
     }
   }
 
+  async getNotPayedTripsAmount(userId) {
+    try {
+      let trips = await this.Trip.find({ _user: userId, status: 'notPayed'})
+            .populate('_rate _tollRoad _transaction').exec();
+
+      if (trips.length == 0) {
+        return { trips: [], amount: 0};
+      }
+
+      //Check if rate exists
+      if (trips.filter(trip => trip._rate && trip._rate.cost).length !== trips.length) {
+        return Promise.reject({ message: "Some trips do not have rates", code: 409 });
+      }
+
+      let amount = trips.reduce((prev, curr, i) => {
+        if (i === 1) return prev._rate.cost + curr._rate.cost;
+        else return prev + curr._rate.cost;
+      });
+      const filteredTrips = trips.map(trip => {
+        return {
+          tollRoadName: trip._tollRoad.name,
+          cost: trip._rate.cost,
+          paymentDate: trip.paymentDate,
+          _transaction: trip._transaction ? trip._transaction.transactionId : ''
+        }
+      });
+      return { trips: filteredTrips, amount };
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  /**
+   *  Set all notPayed user trips to payed and add transaction id and date to trips
+   * @param {string} userId
+   * @param {string} transactionId
+   * @param {Date} transactionDate
+   * @returns {Promise.<*|Promise>}
+   */
+  async setAllPayedByUserId(userId, transactionId, transactionDate) {
+    try {
+      let trips = await this.Trip.find({ _user: userId, status: 'notPayed' });
+      trips.forEach(v => {
+        v._transaction = transactionId;
+        v.paymentDate = transactionDate;
+        v.status = 'payed';
+        return v;
+      });
+      let promises = trips.map(v => v.save());
+      return Promise.all(promises);
+    } catch (err) {
+      throw err;
+    }
+  }
 
 }
 

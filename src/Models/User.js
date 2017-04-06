@@ -45,7 +45,23 @@ const schemas = {
     isAdmin: {type: Boolean, default: false},
     autoBilling: {type: Boolean, default: false},
     createdAt: {type: Date, default: Date.now()},
-    updatedAt: {type: Date}
+    updatedAt: {type: Date},
+    customerProfileId: { type: String },
+    subscriptions: [
+        {
+          paymentProfileId: String,
+          interval: Number,
+          unit: String,
+          enabled: Boolean
+        }
+    ],
+    paymentProfiles: [
+      {
+        paymentProfileId: String,
+        // Saving 4 last digits of the card number
+        cardNum: String
+      }
+    ]
   }
 };
 
@@ -103,7 +119,7 @@ class User extends Crud {
     try {
       let user = await this.read(_id, token);
       if (!user) throw {message: 'User not found', code: 404};
-      for (let change in changes) if (schemas.user.hasOwnProperty(change)) user[change] = changes[change];
+      for (let change in changes) user[change] = changes[change];
       let savedUser = await user.save();
       return savedUser;
 
@@ -250,6 +266,38 @@ class User extends Crud {
       }
     } catch(e) {
       throw e;
+    }
+  }
+
+  /**
+   * Update payment profile. If there is no payment profile it will create customerProfileId and new paymentProfile.
+   * If one payment profile already exist, it will add new paymentProfile to existing array
+   * @param {string} userId
+   * @param {token} token
+   * @param {object} changes - contains paymentProfileId and cardNum (, customerProfileId - if first time)
+   * @returns {Promise.<*>}
+   */
+  async updatePaymentProfile(userId, token, changes) {
+    try {
+      let user = await this.User.findOne().and([{_id: userId}, { $or: [{token: token}, { mobileToken: token }]}]).exec();
+      if (changes.customerPaymentProfileIdList) {
+        let paymentProfile = {
+          paymentProfileId: changes.customerPaymentProfileIdList[0],
+          cardNum: changes.cardNum
+        }
+        user.customerProfileId = changes.customerProfileId;
+        user.paymentProfiles.push(paymentProfile);
+      } else {
+        let paymentProfile = {
+          paymentProfileId: changes.customerPaymentProfileId,
+          cardNum: changes.cardNum
+        }
+        user.paymentProfiles.push(paymentProfile);
+      }
+      let result =  await user.save();
+      return { paymentProfiles: result.paymentProfiles };
+    } catch(err) {
+      return Promise.reject(err);
     }
   }
 }

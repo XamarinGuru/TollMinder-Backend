@@ -5,6 +5,8 @@ const TollPoint = require('./TollPoint');
 const Matrix = require('./Matrix');
 const Rate = require('./Rate');
 const Trip = require('./Trip');
+const Transaction = require('./Transaction');
+const PaymentSystem = require('../Classes/PaymentSystem');
 
 module.exports = {
   User: new User,
@@ -13,5 +15,7 @@ module.exports = {
   TollRoad: new TollRoad,
   Matrix: new Matrix,
   Rate: new Rate,
-  Trip: new Trip
+  Trip: new Trip,
+  PaymentSystem: new PaymentSystem,
+  Transaction: new Transaction
 };

@@ -1282,7 +1282,7 @@
         }
       }
     },
-    "/{userId}/notPayed": {
+    "/trip/{userId}/notPayed": {
       "get": {
         "description": "Get all notPayed trips for specified user",
         "tags": [

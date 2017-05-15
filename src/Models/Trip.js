@@ -82,10 +82,9 @@ class Trip extends Crud {
         return Promise.reject({ message: "Some trips do not have rates", code: 409 });
       }
 
-      let amount = trips.reduce((prev, curr, i) => {
-        if (i === 1) return prev._rate.cost + curr._rate.cost;
-        else return prev + curr._rate.cost;
-      });
+      let amount = trips.reduce((prev, curr) => {
+        return prev + curr._rate.cost;
+      }, 0);
       const filteredTrips = trips.map(trip => {
         return {
           tollRoadName: trip._tollRoad.name,

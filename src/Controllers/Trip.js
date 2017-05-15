@@ -17,6 +17,12 @@ router.post('/paymentHistory', (req, res) => {
 
 router.post('/', (req, res) => {
   let Models = req.app.locals.settings.models;
+  let { _user, _startWayPoint, _endWayPoint, _tollRoad } = req.body;
+
+  if (!_user || !_startWayPoint || !_endWayPoint) {
+    return res.status(400).json({ err: 'One of the required parameters is missing'});
+  }
+
   Models.Trip.create(req.body, Models)
   .then(trip => res.status(200).json(trip))
   .catch(err => res.status(400).json(err));

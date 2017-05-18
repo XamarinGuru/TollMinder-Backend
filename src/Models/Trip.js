@@ -71,7 +71,7 @@ class Trip extends Crud {
     }
   }
 
-  async getNotPayedTripsAmount(userId) {
+  async getNotPayedTripsAmount(userId, fullInfo) {
     try {
       let trips = await this.Trip.find({ _user: userId, status: 'notPayed'})
             .populate('_rate _tollRoad _transaction').exec();
@@ -89,6 +89,10 @@ class Trip extends Crud {
       let amount = filteredTrips.reduce((prev, curr) => {
         return prev + curr._rate.cost;
       }, 0);
+
+      if (fullInfo) {
+        return filteredTrips;
+      }
 
       filteredTrips = filteredTrips.map(trip => {
         return {

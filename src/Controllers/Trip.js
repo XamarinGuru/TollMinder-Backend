@@ -25,7 +25,9 @@ router.post('/', (req, res) => {
 
   Models.Trip.create(req.body, Models)
   .then(trip => res.status(200).json(trip))
-  .catch(err => res.status(400).json(err));
+  .catch(err => {
+    res.status(err.code || 400).json({ err: err.message });
+  });
 });
 
 router.get('/:userId/notPayed', (req, res) => {

@@ -29,6 +29,9 @@ class Trip extends Crud {
 
   async create(trip, Models) {
     let rate = await Models.Rate.Rate.find({ _startWayPoint: trip._startWayPoint, _endWayPoint: trip._endWayPoint});
+    if (!rate[0]) {
+      throw { message: 'There is no rate for current trip road.', code: 409 };
+    }
     trip._rate = rate[0] ? rate[0].id : null;
     trip.status = trip.status || 'notPayed';
     return await super._create(this.Trip, trip);
@@ -77,15 +80,17 @@ class Trip extends Crud {
         return { trips: [], amount: 0};
       }
 
-      //Check if rate exists
-      if (trips.filter(trip => trip._rate && trip._rate.cost).length !== trips.length) {
-        return Promise.reject({ message: "Some trips do not have rates", code: 409 });
-      }
+      // //Check if rate exists
+      // if (trips.filter(trip => trip._rate && trip._rate.cost).length !== trips.length) {
+      //   return Promise.reject({ message: "Some trips do not have rates", code: 409 });
+      // }
+      let filteredTrips = trips.filter(trip => trip._rate && trip._rate.cost);
 
-      let amount = trips.reduce((prev, curr) => {
+      let amount = filteredTrips.reduce((prev, curr) => {
         return prev + curr._rate.cost;
       }, 0);
-      const filteredTrips = trips.map(trip => {
+
+      filteredTrips = filteredTrips.map(trip => {
         return {
           tollRoadName: trip._tollRoad.name,
           cost: trip._rate.cost,
